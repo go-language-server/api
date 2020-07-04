@@ -1,0 +1,684 @@
+// Copyright 2020 The Go Language Server Authors
+// SPDX-License-Identifier: BSD-3-Clause
+
+syntax = "proto3";
+
+package lsp.protocol;
+
+import "google/api/field_behavior.proto";
+import "google/protobuf/any.proto";
+import "google/protobuf/struct.proto";
+import "google/protobuf/wrappers.proto";
+
+import "lsp/uri/uri.proto";
+
+option cc_enable_arenas = true;
+option csharp_namespace = "Lsp.Protocol";
+option go_package = "go.lsp.dev/api/protocol";
+option java_multiple_files = true;
+option java_outer_classname = "ProtocolProto";
+option java_package = "dev.lsp.protocol";
+option objc_class_prefix = "LSPP";
+option php_namespace = "Lsp\\Protocol";
+option ruby_package = "Lsp::Protocol";
+option swift_prefix = "LSPP";
+
+// Position in a text document expressed as zero-based line and zero-based character offset.
+// A position is between two characters like an ‘insert’ cursor in a editor.
+// Special values like for example -1 to denote the end of a line are not supported.
+message Position {
+  // Line position in a document (zero-based).
+  int32 line = 1 [(google.api.field_behavior) = REQUIRED];
+
+  // Character offset on a line in a document (zero-based). Assuming that the line is
+  // represented as a string, the `character` value represents the gap between the
+  // `character` and `character + 1`.
+  //
+  // If the character value is greater than the line length it defaults back to the
+  // line length.
+  //
+  // The offsets are based on a UTF-16 string representation.
+  int32 character = 2 [(google.api.field_behavior) = REQUIRED];
+}
+
+// Range in a text document expressed as (zero-based) start and end positions.
+//
+// A range is comparable to a selection in an editor. Therefore the end position is exclusive.
+// If you want to specify a range that contains a line including the line ending character(s)
+// then use an end position denoting the start of the next line.
+message Range {
+  // The range's start position.
+  Position start = 1 [(google.api.field_behavior) = REQUIRED];
+
+  // The range's end position.
+  Position end = 2 [(google.api.field_behavior) = REQUIRED];
+}
+
+// Location represents a location inside a resource, such as a line inside a text file.
+message Location {
+  // The text document's uri.
+  lsp.uri.URI uri = 1 [(google.api.field_behavior) = REQUIRED];
+
+  // The location's range.
+  Range range = 2 [(google.api.field_behavior) = REQUIRED];
+}
+
+// LocationLink represents a link between a source and a target location.
+message LocationLink {
+  // Optional. The span of the origin of this link.
+  //
+  // Used as the underlined span for mouse interaction. Defaults to the word range at
+  // the mouse position.
+  Range origin_selection_range = 1;
+
+  // The target resource identifier of this link.
+  lsp.uri.URI target_uri = 2 [(google.api.field_behavior) = REQUIRED];
+
+  // The full target range of this link.
+  //
+  // If the target for example is a symbol then target range is the range enclosing this symbol not
+  // including leading/trailing whitespace but everything else like comments. This information is
+  // typically used to highlight the range in the editor.
+  Range target_range = 3 [(google.api.field_behavior) = REQUIRED];
+
+  // The range that should be selected and revealed when this link is being followed, e.g the name
+  // of a function. Must be contained by the the `targetRange`. See also
+  // [DocumentSymbol#range][DocumentSymbol].
+  Range target_selection_range = 4 [(google.api.field_behavior) = REQUIRED];
+}
+
+// Diagnostic represents a diagnostic, such as a compiler error or warning. Diagnostic objects are
+// only valid in the scope of a resource.
+message Diagnostic {
+  // The range at which the message applies.
+  Range range = 1 [(google.api.field_behavior) = REQUIRED];
+
+  // Optional. The diagnostic's severity. Can be omitted. If omitted it is up to the
+  // client to interpret diagnostics as error, warning, info or hint.
+  DiagnosticSeverity severity = 2;
+
+  // Optional. The diagnostic's code, which might appear in the user interface.
+  google.protobuf.Int32Value code = 3;
+
+  // Optional. A human-readable string describing the source of this
+  // diagnostic, e.g. 'typescript' or 'super lint'.
+  google.protobuf.StringValue source = 4;
+
+  // The diagnostic's message.
+  string message = 5 [(google.api.field_behavior) = REQUIRED];
+
+  // Optional. Additional metadata about the diagnostic.
+  //
+  // @since 3.15.0
+  repeated DiagnosticTag tags = 6;
+
+  // Optional. An array of related diagnostic information, e.g. when symbol-names within
+  // a scope collide all definitions can be marked via this property.
+  // (-- api-linter: core::0140::abbreviations=disabled --)
+  repeated DiagnosticRelatedInformation related_information = 7;
+}
+
+// DiagnosticRelatedInformation represents a related message and source code location for a
+// diagnostic.
+//
+// This should be used to point to code locations that cause or are related to a diagnostics,
+// e.g when duplicating a symbol in a scope.
+// (-- api-linter: core::0140::abbreviations=disabled --)
+message DiagnosticRelatedInformation {
+  // The location of this related diagnostic information.
+  Location location = 1 [(google.api.field_behavior) = REQUIRED];
+
+  // The message of this related diagnostic information.
+  string message = 2 [(google.api.field_behavior) = REQUIRED];
+}
+
+// DiagnosticSeverity represents a diagnostic severity level.
+enum DiagnosticSeverity {
+  // Conventional default for enums. Do not use this.
+  DIAGNOSTIC_SEVERITY_UNSPECIFIED = 0;
+
+  // Reports an error.
+  ERROR = 1;
+
+  // Reports a warning.
+  WARNING = 2;
+
+  // Reports an information.
+  // (-- api-linter: core::0140::abbreviations=disabled --)
+  INFORMATION = 3;
+
+  // Reports a hint.
+  HINT = 4;
+}
+
+// DiagnosticTag is the diagnostic tags.
+//
+// @since 3.15.0
+enum DiagnosticTag {
+  // Conventional default for enums. Do not use this.
+  DIAGNOSTIC_TAG_UNSPECIFIED = 0;
+
+  // Unused or unnecessary code.
+  //
+  // Clients are allowed to render diagnostics with this tag faded out instead of having
+  // an error squiggle.
+  UNNECESSARY = 1;
+
+  // Deprecated or obsolete code.
+  //
+  // Clients are allowed to rendered diagnostics with this tag strike through.
+  DEPRECATED = 2;
+}
+
+// Command represents a reference to a command.
+//
+// Provides a title which will be used to represent a command in the UI. Commands are identified by
+// a string identifier. The recommended way to handle commands is to implement their execution on
+// the server side if the client and server provides the corresponding capabilities.
+// Alternatively the tool extension code could handle the command.
+//
+// The protocol currently doesn’t specify a set of well-known commands.
+message Command {
+  // Title of the command, like `save`.
+  string title = 1 [(google.api.field_behavior) = REQUIRED];
+
+  // The identifier of the actual command handler.
+  string command = 2 [(google.api.field_behavior) = REQUIRED];
+
+  // Arguments that the command handler should be
+  // invoked with.
+  // (-- api-linter: core::0140::reserved-words=disabled --)
+  repeated google.protobuf.Any arguments = 3;
+}
+
+// TextEdit is a textual edit applicable to a text document.
+message TextEdit {
+  // The range of the text document to be manipulated. To insert
+  // text into a document create a range where start === end.
+  Range range = 1 [(google.api.field_behavior) = REQUIRED];
+
+  // The string to be inserted. For delete operations use an
+  // empty string.
+  string new_text = 2 [(google.api.field_behavior) = REQUIRED];
+}
+
+// TextDocumentEdit describes textual changes on a single text document.
+//
+// The text document is referred to as a VersionedTextDocumentIdentifier to allow clients to check
+// the text document version before an edit is applied. A TextDocumentEdit describes all changes on
+// a version Si and after they are applied move the document to version Si+1. So the creator of a
+// TextDocumentEdit doesn’t need to sort the array of edits or do any kind of ordering. However the
+// edits must be non overlapping.
+message TextDocumentEdit {
+  // The text document to change.
+  VersionedTextDocumentIdentifier text_document = 1 [(google.api.field_behavior) = REQUIRED];
+
+  // The edits to be applied.
+  repeated TextEdit edits = 2 [(google.api.field_behavior) = REQUIRED];
+}
+
+// CreateFileOptions is the options to create a file.
+message CreateFileOptions {
+  // Optional. Overwrite existing file. Overwrite wins over `ignoreIfExists`.
+  bool overwrite = 1;
+
+  // Optional. Ignore if exists.
+  bool ignore_if_exists = 2;
+}
+
+// CreateFile create file operation.
+message CreateFile {
+  // The kind of CreateFile message.
+  // (-- api-linter: core::0192::only-leading-comments=disabled --)
+  string kind = 1 [(google.api.field_behavior) = REQUIRED]; // always 'create'
+
+  // The resource to create.
+  lsp.uri.URI uri = 2 [(google.api.field_behavior) = REQUIRED];
+
+  // Optional. Additional options
+  CreateFileOptions options = 3;
+}
+
+// RenameFileOptions is the options to rename a file.
+message RenameFileOptions {
+  // Optional. Overwrite target if existing. Overwrite wins over `ignoreIfExists`.
+  bool overwrite = 1;
+
+  // Optional. Ignores if target exists.
+  bool ignore_if_exists = 2;
+}
+
+// RenameFile rename file operation.
+message RenameFile {
+  // The kind of RenameFile message.
+  //
+  // always 'rename'
+  string kind = 1 [(google.api.field_behavior) = REQUIRED];
+
+  // The old (existing) location.
+  lsp.uri.URI old_uri = 2 [(google.api.field_behavior) = REQUIRED];
+
+  // The new location.
+  lsp.uri.URI new_uri = 3 [(google.api.field_behavior) = REQUIRED];
+
+  // Optional. Rename options.
+  RenameFileOptions options = 4;
+}
+
+// DeleteFileOptions is the options to delete a file.
+message DeleteFileOptions {
+  // Optional. Delete the content recursively if a folder is denoted.
+  bool recursive = 1;
+
+  // Optional. Ignore the operation if the file doesn't exist.
+  bool ignore_if_exists = 2;
+}
+
+// DeleteFile delete file operation.
+message DeleteFile {
+  // The kind of DeleteFile message.
+  //
+  // always 'delete'
+  string kind = 1 [(google.api.field_behavior) = REQUIRED];
+
+  // The file to delete.
+  lsp.uri.URI uri = 2 [(google.api.field_behavior) = REQUIRED];
+
+  // Optional. Delete options.
+  DeleteFileOptions options = 3;
+}
+
+// FileResourceChange allow servers to create, rename and delete files and folders via the client.
+//
+// Note that the names talk about files but the operations are supposed to work on files and
+// folders. This is in line with other naming in the Language Server Protocol (see file watchers
+// which can watch files and folders).
+//
+// New in version 3.13.
+message FileResourceChange {
+  oneof file {
+    // CreateFile create file operation.
+    CreateFile create_file = 1;
+
+    // RenameFile rename file operation.
+    RenameFile rename_file = 2;
+
+    // DeleteFile delete file operation.
+    DeleteFile delete_file = 3;
+  }
+}
+
+// WorkspaceEdit a workspace edit represents changes to many resources managed in the workspace. The
+// edit should either provide changes or documentChanges. If the client can handle versioned
+// document edits and if documentChanges are present, the latter are preferred over changes.
+message WorkspaceEdit {
+
+  message TextEdits {
+    repeated TextEdit text_edits = 1;
+  }
+
+  message TextDocumentEdits {
+    repeated TextDocumentEdit text_document_edits = 1;
+  }
+
+  message CreateFiles {
+    repeated CreateFile create_files = 1;
+  }
+
+  message RenameFiles {
+    repeated RenameFile rename_files = 1;
+  }
+
+  message DeleteFiles {
+    repeated DeleteFile delete_files = 1;
+  }
+
+  // Holds changes to existing resources.
+  //
+  // The map key is lsp.uri.URI
+  // (-- api-linter: core::0192::only-leading-comments=disabled --)
+  map<string, TextEdits> changes = 1;
+
+  // document_changes Depending on the client capability
+  // `workspace.workspaceEdit.resourceOperations` document changes are either an array of
+  // `TextDocumentEdit`s to express changes to n different text documents where each text document
+  // edit addresses a specific version of a text document. Or it can contain above
+  // `TextDocumentEdit`s mixed with create, rename and delete file / folder operations.
+  //
+  // Whether a client supports versioned document edits is expressed via
+  // `workspace.workspaceEdit.documentChanges` client capability.
+  //
+  // If a client neither supports `documentChanges` nor `workspace.workspaceEdit.resourceOperations`
+  // then only plain `TextEdit`s using the `changes` property are supported.
+  oneof document_changes {
+    TextDocumentEdits text_document_edits = 2;
+
+    CreateFiles create_files = 3;
+
+    RenameFiles rename_files = 4;
+
+    DeleteFiles delete_files = 5;
+  }
+}
+
+// WorkspaceEditClientCapabilities ResourceOperationKind and FailureHandlingKind and the client
+// capability workspace.workspaceEdit.resourceOperations as well as
+// workspace.workspaceEdit.failureHandling.
+//
+// New in version 3.13.
+//
+// The capabilities of a workspace edit has evolved over the time. Clients can describe their
+// support using the following client capability:
+// - property path (optional): workspace.workspaceEdit
+// - property type: WorkspaceEditClientCapabilities defined as follows.
+message WorkspaceEditClientCapabilities {
+  // Optional. The client supports versioned document changes in `WorkspaceEdit`s.
+  bool document_changes = 1;
+
+  // The resource operations the client supports. Clients should at least
+  // support 'create', 'rename' and 'delete' files and folders.
+  //
+  // @since 3.13.0
+  repeated ResourceOperationKind resource_operations = 2;
+
+  // Optional. The failure handling strategy of a client if applying the workspace edit
+  // fails.
+  //
+  // @since 3.13.0
+  FailureHandlingKind failure_handling = 3;
+}
+
+// ResourceOperationKind is the kind of resource operations supported by the client.
+enum ResourceOperationKind {
+  // Conventional default for enums. Do not use this.
+  RESOURCE_OPERATION_KIND_UNSPECIFIED = 0;
+
+  // Supports creating new files and folders.
+  CREATE = 1;
+
+  // Supports renaming existing files and folders.
+  RENAME = 2;
+
+  // Supports deleting existing files and folders.
+  DELETE = 3;
+}
+
+enum FailureHandlingKind {
+  // Conventional default for enums. Do not use this.
+  FAILURE_HANDLING_KIND_UNSPECIFIED = 0;
+
+  // Applying the workspace change is simply aborted if one of the changes provided
+  // fails. All operations executed before the failing operation stay executed.
+  ABORT = 1;
+
+  // All operations are executed transactional. That means they either all
+  // succeed or no changes at all are applied to the workspace.
+  TRANSACTIONAL = 2;
+
+  // If the workspace edit contains only textual file changes they are executed transactional.
+  // If resource changes (create, rename or delete file) are part of the change the failure
+  // handling strategy is abort.
+  TEXT_ONLY_TRANSACTIONAL = 3;
+
+  // The client tries to undo the operations already executed. But there is no
+  // guarantee that this is succeeding.
+  UNDO = 4;
+}
+
+// TextDocumentIdentifier text documents are identified using a URI. On the protocol level, URIs are
+// passed as strings. The corresponding JSON structure looks like this:
+// (-- api-linter: core::0140::abbreviations=disabled --)
+message TextDocumentIdentifier {
+  // The text document's URI.
+  lsp.uri.URI uri = 1 [(google.api.field_behavior) = REQUIRED];
+}
+
+// TextDocumentItem an item to transfer a text document from the client to the server.
+message TextDocumentItem {
+  // The text document's URI.
+  lsp.uri.URI uri = 1 [(google.api.field_behavior) = REQUIRED];
+
+  // The text document's language identifier.
+  string language_id = 2 [(google.api.field_behavior) = REQUIRED];
+
+  // The version number of this document (it will increase after each
+  // change, including undo/redo).
+  int32 version = 3 [(google.api.field_behavior) = REQUIRED];
+
+  // The content of the opened text document.
+  string text = 4 [(google.api.field_behavior) = REQUIRED];
+}
+
+// (-- api-linter: core::0140::abbreviations=disabled --)
+message VersionedTextDocumentIdentifier {
+  // TextDocumentIdentifier text documents are identified using a URI. On the protocol level, URIs
+  // are passed as strings.
+  TextDocumentIdentifier text_document_identifier = 1 [(google.api.field_behavior) = REQUIRED];
+
+  // Optional. The version number of this document. If a versioned text document identifier
+  // is sent from the server to the client and the file is not open in the editor
+  // (the server has not received an open notification before) the server can send
+  // `null` to indicate that the version is known and the content on disk is the
+  // master (as speced with document content ownership).
+  //
+  // The version number of a document will increase after each change, including
+  // undo/redo. The number doesn't need to be consecutive.
+  bool version = 2;
+}
+
+// TextDocumentPositionParams was TextDocumentPosition in 1.0 with inlined parameters.
+// A parameter literal used in requests to pass a text document and a position inside that document.
+message TextDocumentPositionParams {
+  // The text document.
+  TextDocumentIdentifier text_document = 1 [(google.api.field_behavior) = REQUIRED];
+
+  // The position inside the text document.
+  Position position = 2 [(google.api.field_behavior) = REQUIRED];
+}
+
+// DocumentFilter is a document filter denotes a document through properties like language, scheme
+// or pattern. An example is a filter that applies to TypeScript files on disk. Another example is a
+// filter the applies to JSON files with name package.json:
+message DocumentFilter {
+  // Optional. A language id, like `typescript`.
+  //
+  // (-- api-linter: core::0143::standardized-codes=disabled --)
+  google.protobuf.StringValue language = 1;
+
+  // Optional. A URI [scheme](#lsp.uri.Scheme), like `file` or `untitled`.
+  google.protobuf.StringValue scheme = 2;
+
+  // Optional. A glob pattern, like `*.{ts,js}`.
+  //
+  // Glob patterns can have the following syntax:
+  // - `*` to match one or more characters in a path segment
+  // - `?` to match on one character in a path segment
+  // - `**` to match any number of path segments, including none
+  // - `{}` to group conditions (e.g. `**​/*.{ts,js}` matches all TypeScript and JavaScript files)
+  // - `[]` to declare a range of characters to match in a path segment (e.g., `example.[0-9]` to
+  // match on `example.0`, `example.1`, …)
+  // - `[!...]` to negate a range of characters to match in a path segment (e.g., `example.[!0-9]`
+  // to match on `example.a`, `example.b`, but not `example.0`)
+  google.protobuf.StringValue pattern = 3;
+}
+
+// StaticRegistrationOptions can be used to register a feature in the initialize result with a given
+// server control ID to be able to un-register the feature later on. Static registration options to
+// be returned in the initialize request.
+message StaticRegistrationOptions {
+  // Optional. The id used to register the request. The id can be used to deregister
+  // the request again. See also Registration#id.
+  google.protobuf.StringValue id = 1;
+}
+
+// TextDocumentRegistrationOptions options to dynamically register for requests for a set of text
+// documents.
+message TextDocumentRegistrationOptions {
+  // DocumentSelector is a document selector is the combination of one or more document filters.
+  message DocumentSelector {
+    repeated DocumentFilter document_selector = 1;
+  }
+
+  // A document selector to identify the scope of the registration. If set to null
+  // the document selector provided on the client side will be used.
+  oneof document_selector {
+    DocumentSelector selector = 1;
+    google.protobuf.NullValue empty = 2;
+  } // nullable
+}
+
+// MarkupKind describes the content type that a client supports in various
+// result literals like `Hover`, `ParameterInfo` or `CompletionItem`.
+//
+// Please note that `MarkupKinds` must not start with a `$`. This kinds
+// are reserved for internal usage.
+enum MarkupKind {
+  // Conventional default for enums. Do not use this.
+  MARKUP_KIND_UNSPECIFIED = 0;
+
+  // Plain text is supported as a content format
+  PLAIN_TEXT = 1;
+
+  // Markdown is supported as a content format
+  MARKDOWN = 2;
+}
+
+// MarkupContent is a MarkupContent literal represents a string value which content can be
+// represented in different formats. Currently plaintext and markdown are supported formats. A
+// MarkupContent is usually used in documentation properties of result literals like CompletionItem
+// or SignatureInformation.
+//
+// A `MarkupContent` literal represents a string value which content is interpreted base on its
+// kind flag. Currently the protocol supports `plaintext` and `markdown` as markup kinds.
+//
+// If the kind is `markdown` then the value can contain fenced code blocks like in GitHub issues.
+// See https://help.github.com/articles/creating-and-highlighting-code-blocks/#syntax-highlighting
+//
+// Here is an example how such a string can be constructed using JavaScript / TypeScript:
+//
+// ```
+// ```typescript
+// let markdown: MarkdownContent = {
+//  kind: MarkupKind.Markdown,
+//      value: [
+//      	'# Header',
+//      	'Some text',
+//      	'```typescript',
+//      	'someCode();',
+//      	'```'
+//      ].join('\n')
+// };
+// ```
+// ```
+//
+// NOTE: clients might sanitize the return markdown. A client could decide to
+// remove HTML from the markdown to avoid script execution.
+message MarkupContent {
+  // The type of the Markup.
+  MarkupKind kind = 1 [(google.api.field_behavior) = REQUIRED];
+
+  // The content itself.
+  string value = 2 [(google.api.field_behavior) = REQUIRED];
+}
+
+// WorkDoneProgressBegin to start progress reporting a $/progress notification with the payload must
+// be sent.
+//
+// @since 3.15.0
+message WorkDoneProgressBegin {
+  // WorkDoneProgressBegin kind.
+  //
+  // always 'begin'
+  string kind = 1 [(google.api.field_behavior) = REQUIRED];
+
+  // Mandatory title of the progress operation. Used to briefly inform about
+  // the kind of operation being performed.
+  //
+  // Examples: "Indexing" or "Linking dependencies".
+  string title = 2 [(google.api.field_behavior) = REQUIRED];
+
+  // Optional. Controls if a cancel button should show to allow the user to cancel the
+  // long running operation. Clients that don't support cancellation are allowed
+  // to ignore the setting.
+  bool cancellable = 3;
+
+  // Optional, more detailed associated progress message. Contains
+  // complementary information to the `title`.
+  //
+  // Examples: "3/25 files", "project/src/module2", "node_modules/some_dep".
+  // If unset, the previous progress message (if any) is still valid.
+  google.protobuf.StringValue message = 4;
+
+  // Optional progress percentage to display (value 100 is considered 100%).
+  // If not provided infinite progress is assumed and clients are allowed
+  // to ignore the `percentage` value in subsequent in report notifications.
+  //
+  // The value should be steadily rising. Clients are free to ignore values
+  // that are not following this rule.
+  google.protobuf.Int32Value percentage = 5;
+}
+
+// WorkDoneProgressReport reporting progress is done using the payload.
+message WorkDoneProgressReport {
+  // WorkDoneProgressReport kind.
+  //
+  // always 'report'
+  string kind = 1 [(google.api.field_behavior) = REQUIRED];
+
+  // Optional. Controls enablement state of a cancel button. This property is only valid if a cancel
+  // button got requested in the `WorkDoneProgressStart` payload.
+  //
+  // Clients that don't support cancellation or don't support control the button's
+  // enablement state are allowed to ignore the setting.
+  bool cancellable = 2;
+
+  // Optional, more detailed associated progress message. Contains
+  // complementary information to the `title`.
+  //
+  // Examples: "3/25 files", "project/src/module2", "node_modules/some_dep".
+  // If unset, the previous progress message (if any) is still valid.
+  google.protobuf.StringValue message = 3;
+
+  // Optional progress percentage to display (value 100 is considered 100%).
+  // If not provided infinite progress is assumed and clients are allowed
+  // to ignore the `percentage` value in subsequent in report notifications.
+  //
+  // The value should be steadily rising. Clients are free to ignore values
+  // that are not following this rule.
+  google.protobuf.Int32Value percentage = 4;
+}
+
+// WorkDoneProgressEnd signaling the end of a progress reporting is done using the payload.
+message WorkDoneProgressEnd {
+  // WorkDoneProgressEnd kind.
+  //
+  // always 'end'
+  string kind = 1 [(google.api.field_behavior) = REQUIRED];
+
+  // Optional, a final message indicating to for example indicate the outcome
+  // of the operation.
+  google.protobuf.StringValue message = 2;
+}
+
+// WorkDoneProgressOptions options to signal work done progress support in server capabilities.
+message WorkDoneProgressOptions {
+  // Optional.
+  bool work_done_progress = 1;
+}
+
+// TraceValue represents the level of verbosity with which the server systematically reports its
+// execution trace using $/logTrace notifications. The initial trace value is set by the client at
+// initialization and can be modified later using the $/setTrace notification.
+enum TraceValue {
+  // Conventional default for enums. Do not use this.
+  TRACE_VALUE_UNSPECIFIED = 0;
+
+  // trace is off.
+  OFF = 1;
+
+  // message trace level.
+  MESSAGE = 2;
+
+  // verbose trace level.
+  VERBOSE = 3;
+}

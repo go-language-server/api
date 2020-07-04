@@ -1,0 +1,57 @@
+// Copyright 2020 The Go Language Server Authors
+// SPDX-License-Identifier: BSD-3-Clause
+
+syntax = "proto3";
+
+package lsp.uri;
+
+import "google/api/field_behavior.proto";
+
+option cc_enable_arenas = true;
+option csharp_namespace = "Lsp.Uri";
+option go_package = "go.lsp.dev/api/uri";
+option java_multiple_files = true;
+option java_outer_classname = "UriProto";
+option java_package = "dev.lsp.uri";
+option objc_class_prefix = "LSPU";
+option php_namespace = "Lsp\\Uri";
+option ruby_package = "Lsp::Uri";
+option swift_prefix = "LSPU";
+
+// URI Uniform Resource Identifier (URI) https://tools.ietf.org/html/rfc3986.
+//
+// This class is a simple parser which creates the basic component parts
+// (http://tools.ietf.org/html/rfc3986#section-3) with minimal validation
+// and encoding.
+//
+//        foo://example.com:8042/over/there?name=ferret#nose
+//        \_/   \______________/\_________/ \_________/ \__/
+//         |           |            |            |        |
+//      scheme     authority       path        query   fragment
+//         |   _____________________|__
+//        / \ /                        \
+//        urn:example:animal:ferret:nose
+message URI {
+  string uri = 1 [(google.api.field_behavior) = REQUIRED];
+}
+
+// DocumentURI are transferred as strings. The URI’s format is defined in
+// http://tools.ietf.org/html/rfc3986.
+message DocumentURI {
+  string document_uri = 1 [(google.api.field_behavior) = REQUIRED];
+}
+
+// Scheme is the generic URI syntax scheme.
+enum Scheme {
+  // Conventional default for enums. Do not use this.
+  SCHEME_UNSPECIFIED = 0;
+
+  // File schema of filesystem path.
+  SCHEME_FILE = 1;
+
+  // HTTP schema of http.
+  SCHEME_HTTP = 2;
+
+  // HTTPS schema of https.
+  SCHEME_HTTPS = 3;
+}
