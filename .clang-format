@@ -1,0 +1,4 @@
+Language: Proto
+BasedOnStyle: Google
+ColumnLimit: 100
+SpacesBeforeTrailingComments: 1
