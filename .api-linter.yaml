@@ -1,0 +1,20 @@
+- included_paths:
+    - "lsp/jsonrpc2/*.proto"
+  disabled_rules:
+    - "core::0126::unspecified"         # The first enum value should be "CODE_UNSPECIFIED"
+
+- included_paths:
+    - "lsp/protocol/rpc/*.proto"
+  disabled_rules:
+    - "core::0136::verb-noun"           # Custom methods should be named using a verb followed by a noun.
+    - "core::0136::http-uri-suffix"     # Custom method should have a URI suffix matching the method name, such as "declaration:goto".
+
+- included_paths:
+    - "lsp/**/*.proto"
+  disabled_rules:
+    - "core::0140::abbreviations"       # Use the common abbreviation "..." instead of "..."
+    - "core::0146::any"                 # Avoid using google.protobuf.Any fields in public APIs.
+    - "core::0191::file-layout"         # Messages should precede all top-level enums.
+    - "core::0192::has-comments"        # Missing comment ...
+    - "core::0203::optional"            # Use the `google.api.field_behavior` annotation instead of " Optional.
+    - "core::0215::versioned-packages"  # API components should be in versioned packages.
