@@ -13,7 +13,7 @@ ENV \
 RUN set -eux && \
 	apk --no-cache add \
 		git
-ADD go.mod go.sum tools.go /go/src/go.lsp.dev/proto/tools/
+COPY go.mod go.sum tools.go /go/src/go.lsp.dev/proto/tools/
 WORKDIR /go/src/go.lsp.dev/proto/tools
 RUN --mount=type=cache,target=/root/.cache/go-build --mount=type=cache,target=/go/src/mod/cache \
 	set -eux && \
