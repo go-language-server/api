@@ -3,7 +3,7 @@
 
 syntax = "proto3";
 
-package lsp.protocol.rpc;
+package protocol.rpc;
 
 import "google/api/annotations.proto";
 import "google/api/client.proto";
@@ -13,19 +13,19 @@ import "google/protobuf/empty.proto";
 import "google/protobuf/struct.proto";
 import "google/protobuf/wrappers.proto";
 
-import "lsp/protocol/error.proto";
-import "lsp/protocol/protocol.proto";
-import "lsp/uri/uri.proto";
+import "protocol/error.proto";
+import "protocol/protocol.proto";
+import "uri/uri.proto";
 
 option cc_enable_arenas = true;
-option csharp_namespace = "Lsp.Protocol.Rpc";
-option go_package = "go.lsp.dev/api/protocol/rpc";
+option csharp_namespace = "Protocol.Rpc";
+option go_package = "go.lsp.dev/api/pkg/protocol/rpc";
 option java_multiple_files = true;
 option java_outer_classname = "RpcProto";
-option java_package = "dev.lsp.protocol.rpc";
+option java_package = "dev.protocol.rpc";
 option objc_class_prefix = "LSPPR";
-option php_namespace = "Lsp\\Protocol\\Rpc";
-option ruby_package = "Lsp::Protocol::Rpc";
+option php_namespace = "Protocol\\Rpc";
+option ruby_package = "Protocol::Rpc";
 option swift_prefix = "LSPPR";
 
 // Language Server Protocol API.
@@ -39,7 +39,7 @@ service LanguageServerProtocol {
   // can not be left open / hanging. This is in line with the JSON RPC protocol that requires that
   // every request sends a response back. In addition it allows for returning partial results on
   // cancel. If the request returns an error response on cancellation it is advised to set the error
-  // code to [Codes.RequestCancelled][lsp.protocol.Codes].
+  // code to [Codes.RequestCancelled][protocol.Codes].
   rpc Cancel(CancelRequest) returns (google.protobuf.Empty) {
     option (google.api.http) = {
       post: "/$/cancelRequest/*:cancel"
@@ -114,7 +114,7 @@ service LanguageServerProtocol {
   //
   // If a server receives requests after a shutdown request those requests should error with
   // `InvalidRequest`.
-  rpc Shutdown(google.protobuf.Empty) returns (lsp.protocol.Error) {
+  rpc Shutdown(google.protobuf.Empty) returns (protocol.Error) {
     option (google.api.http) = {
       post: "/shutdown/*:shutdown"
       body: "*"
@@ -196,7 +196,7 @@ service LanguageServerProtocol {
   //     api-linter: core::0133::http-body=disabled
   //     api-linter: core::0133::request-message-name=disabled
   //     api-linter: core::0133::response-message-name=disabled --)
-  rpc CreateWorkDoneProgress(WorkDoneProgressCreateRequest) returns (lsp.protocol.Error) {
+  rpc CreateWorkDoneProgress(WorkDoneProgressCreateRequest) returns (protocol.Error) {
     option (google.api.http) = {
       post: "/window/workDoneProgress/create:createWorkDoneProgress"
       body: "*"
@@ -207,7 +207,7 @@ service LanguageServerProtocol {
   // CancelWorkDoneProgress is the `window/workDoneProgress/cancel` notification is sent from the
   // client to the server to cancel a progress initiated on the server side using the
   // `window/workDoneProgress/create`.
-  rpc CancelWorkDoneProgress(WorkDoneProgressCancelRequest) returns (lsp.protocol.Error) {
+  rpc CancelWorkDoneProgress(WorkDoneProgressCancelRequest) returns (protocol.Error) {
     option (google.api.http) = {
       post: "/window/workDoneProgress/cancel:cancelWorkDoneProgress"
       body: "*"
@@ -882,7 +882,7 @@ message InitializeRequest {
   // `rootUri` wins.
   //
   // nullable
-  lsp.uri.DocumentURI root_uri = 5 [(google.api.field_behavior) = REQUIRED];
+  uri.DocumentURI root_uri = 5 [(google.api.field_behavior) = REQUIRED];
 
   // Optional. User provided initialization options.
   google.protobuf.Any initialization_options = 6;
@@ -891,7 +891,7 @@ message InitializeRequest {
   ClientCapabilities capabilities = 7 [(google.api.field_behavior) = REQUIRED];
 
   // Optional. The initial trace setting. If omitted trace is disabled ('off').
-  lsp.protocol.TraceValue trace = 8;
+  protocol.TraceValue trace = 8;
 
   // Optional. The workspace folders configured in the client when the server starts.
   // This property is only available if the client supports workspace folders.
@@ -923,7 +923,7 @@ message LogTraceRequest {
 // SetTraceRequest represents a `$/setTrace` notification params.
 message SetTraceRequest {
   // The new value that should be assigned to the trace setting.
-  lsp.protocol.TraceValue value = 1 [(google.api.field_behavior) = REQUIRED];
+  protocol.TraceValue value = 1 [(google.api.field_behavior) = REQUIRED];
 }
 
 // ShowMessageResponse represents a ShowMessage response.
@@ -933,7 +933,7 @@ message ShowMessageResponse {
 
     google.protobuf.NullValue empty = 2;
 
-    lsp.protocol.Error error = 3;
+    protocol.Error error = 3;
   }
 }
 
@@ -948,7 +948,7 @@ message WorkspaceFoldersResponse {
 
     google.protobuf.NullValue empty = 2;
 
-    lsp.protocol.Error error = 3;
+    protocol.Error error = 3;
   }
 }
 
@@ -961,7 +961,7 @@ message ConfigurationResponse {
   oneof configuration_response {
     Anys anys = 1;
 
-    lsp.protocol.Error error = 2;
+    protocol.Error error = 2;
   }
 }
 
@@ -974,7 +974,7 @@ message WorkspaceSymbolsResponse {
   oneof workspace_symbols_response {
     SymbolInformations symbol_informations = 1;
 
-    lsp.protocol.Error error = 2;
+    protocol.Error error = 2;
   }
 }
 
@@ -983,7 +983,7 @@ message ExecuteCommandResponse {
   oneof execute_command {
     google.protobuf.Any any = 1;
 
-    lsp.protocol.Error error = 2;
+    protocol.Error error = 2;
   }
 }
 
@@ -997,7 +997,7 @@ message WillSaveTextDocumentResponse {
   oneof will_save_text_document_response {
     TextEdits text_edits = 1;
 
-    lsp.protocol.Error error = 2;
+    protocol.Error error = 2;
   }
 }
 
@@ -1015,7 +1015,7 @@ message CompletionResponse {
 
     google.protobuf.NullValue empty = 3;
 
-    lsp.protocol.Error error = 4;
+    protocol.Error error = 4;
   }
 }
 
@@ -1026,7 +1026,7 @@ message HoverResponse {
 
     google.protobuf.NullValue empty = 2;
 
-    lsp.protocol.Error error = 3;
+    protocol.Error error = 3;
   }
 }
 
@@ -1040,7 +1040,7 @@ message CompletionItemResolveResponse {
   oneof completion_item_resolve_response {
     CompletionItems completion_items = 1;
 
-    lsp.protocol.Error error = 2;
+    protocol.Error error = 2;
   }
 }
 
@@ -1051,7 +1051,7 @@ message SignatureHelpResponse {
 
     google.protobuf.NullValue empty = 2;
 
-    lsp.protocol.Error error = 3;
+    protocol.Error error = 3;
   }
 }
 
@@ -1088,7 +1088,7 @@ message DeclarationResponse {
 
     PartialResult partial_result = 2;
 
-    lsp.protocol.Error error = 3;
+    protocol.Error error = 3;
   }
 }
 
@@ -1115,7 +1115,7 @@ message DefinitionResponse {
 
     PartialResult partial_result = 2;
 
-    lsp.protocol.Error error = 3;
+    protocol.Error error = 3;
   }
 }
 
@@ -1142,7 +1142,7 @@ message TypeDefinitionResponse {
 
     PartialResult partial_result = 2;
 
-    lsp.protocol.Error error = 3;
+    protocol.Error error = 3;
   }
 }
 
@@ -1169,7 +1169,7 @@ message ImplementationResponse {
 
     PartialResult partial_result = 2;
 
-    lsp.protocol.Error error = 3;
+    protocol.Error error = 3;
   }
 }
 
@@ -1190,7 +1190,7 @@ message ReferenceResponse {
 
     PartialResult partial_result = 2;
 
-    lsp.protocol.Error error = 3;
+    protocol.Error error = 3;
   }
 }
 
@@ -1211,7 +1211,7 @@ message DocumentHighlightsResponse {
 
     PartialResult partial_result = 2;
 
-    lsp.protocol.Error error = 3;
+    protocol.Error error = 3;
   }
 }
 
@@ -1236,7 +1236,7 @@ message DocumentSymbolResponse {
 
     PartialResult partial_result = 2;
 
-    lsp.protocol.Error error = 3;
+    protocol.Error error = 3;
   }
 }
 
@@ -1261,7 +1261,7 @@ message CodeActionResponse {
 
     PartialResult partial_result = 2;
 
-    lsp.protocol.Error error = 3;
+    protocol.Error error = 3;
   }
 }
 
@@ -1282,7 +1282,7 @@ message CodeLensResponse {
 
     PartialResult partial_result = 2;
 
-    lsp.protocol.Error error = 3;
+    protocol.Error error = 3;
   }
 }
 
@@ -1296,7 +1296,7 @@ message CodeLensResolveResponse {
   oneof code_lens_resolve_response {
     CodeLens code_lens = 1;
 
-    lsp.protocol.Error error = 3;
+    protocol.Error error = 3;
   }
 }
 
@@ -1317,7 +1317,7 @@ message DocumentLinkResponse {
 
     PartialResult partial_result = 2;
 
-    lsp.protocol.Error error = 3;
+    protocol.Error error = 3;
   }
 }
 
@@ -1331,7 +1331,7 @@ message DocumentLinkResolveResponse {
   oneof document_link_resolve_response {
     DocumentLink document_link = 1;
 
-    lsp.protocol.Error error = 3;
+    protocol.Error error = 3;
   }
 }
 
@@ -1350,7 +1350,7 @@ message DocumentColorResponse {
 
     PartialResult partial_result = 2;
 
-    lsp.protocol.Error error = 3;
+    protocol.Error error = 3;
   }
 }
 
@@ -1369,7 +1369,7 @@ message ColorPresentationResponse {
 
     PartialResult partial_result = 2;
 
-    lsp.protocol.Error error = 3;
+    protocol.Error error = 3;
   }
 }
 
@@ -1380,7 +1380,7 @@ message DocumentFormattingResponse {
 
     google.protobuf.NullValue empty = 2;
 
-    lsp.protocol.Error error = 3;
+    protocol.Error error = 3;
   }
 }
 
@@ -1391,7 +1391,7 @@ message DocumentRangeFormattingResponse {
 
     google.protobuf.NullValue empty = 2;
 
-    lsp.protocol.Error error = 3;
+    protocol.Error error = 3;
   }
 }
 
@@ -1402,7 +1402,7 @@ message DocumentOnTypeFormattingResponse {
 
     google.protobuf.NullValue empty = 2;
 
-    lsp.protocol.Error error = 3;
+    protocol.Error error = 3;
   }
 }
 
@@ -1413,7 +1413,7 @@ message RenameResponse {
 
     google.protobuf.NullValue empty = 2;
 
-    lsp.protocol.Error error = 3;
+    protocol.Error error = 3;
   }
 }
 
@@ -1431,7 +1431,7 @@ message PrepareRenameResponse {
 
     google.protobuf.NullValue empty = 3;
 
-    lsp.protocol.Error error = 4;
+    protocol.Error error = 4;
   }
 }
 
@@ -1452,7 +1452,7 @@ message FoldingRangeResponse {
 
     PartialResult partial_result = 2;
 
-    lsp.protocol.Error error = 3;
+    protocol.Error error = 3;
   }
 }
 
@@ -1473,7 +1473,7 @@ message SelectionRangeResponse {
 
     PartialResult partial_result = 2;
 
-    lsp.protocol.Error error = 3;
+    protocol.Error error = 3;
   }
 }
 
@@ -1488,7 +1488,7 @@ message CallHierarchyPrepareResponse {
   oneof call_hierarchy_prepare_response {
     Result result = 1;
 
-    lsp.protocol.Error error = 3;
+    protocol.Error error = 3;
   }
 }
 
@@ -1509,7 +1509,7 @@ message CallHierarchyIncomingCallsResponse {
 
     PartialResult partial_result = 2;
 
-    lsp.protocol.Error error = 3;
+    protocol.Error error = 3;
   }
 }
 
@@ -1530,7 +1530,7 @@ message CallHierarchyOutgoingCallsResponse {
 
     PartialResult partial_result = 2;
 
-    lsp.protocol.Error error = 3;
+    protocol.Error error = 3;
   }
 }
 
@@ -2078,7 +2078,7 @@ message WorkspaceFoldersServerCapabilities {
 // (-- api-linter: core::0123::resource-annotation=disabled --)
 message WorkspaceFolder {
   // The associated URI for this workspace folder.
-  lsp.uri.DocumentURI uri = 1 [(google.api.field_behavior) = REQUIRED];
+  uri.DocumentURI uri = 1 [(google.api.field_behavior) = REQUIRED];
 
   // The name of the workspace folder. Used to refer to this
   // workspace folder in the user interface.
@@ -2118,7 +2118,7 @@ message DidChangeConfigurationRequest {
 // ConfigurationItem represents a configuration section to ask for and an additional scope URI.
 message ConfigurationItem {
   // The scope to get the configuration section for.
-  lsp.uri.DocumentURI scope_uri = 1;
+  uri.DocumentURI scope_uri = 1;
 
   // The configuration section asked for.
   google.protobuf.StringValue section = 2;
@@ -2201,7 +2201,7 @@ message FileEvent {
   }
 
   // The file's URI.
-  lsp.uri.DocumentURI uri = 1 [(google.api.field_behavior) = REQUIRED];
+  uri.DocumentURI uri = 1 [(google.api.field_behavior) = REQUIRED];
 
   // The change type.
   FileChangeType type = 2 [(google.api.field_behavior) = REQUIRED];
@@ -2514,7 +2514,7 @@ message PublishDiagnosticsClientCapabilities {
 // PublishDiagnosticsRequest is the parameters of a `textDocument/publishDiagnostics` notification.
 message PublishDiagnosticsRequest {
   // The URI for which diagnostic information is reported.
-  lsp.uri.DocumentURI uri = 1 [(google.api.field_behavior) = REQUIRED];
+  uri.DocumentURI uri = 1 [(google.api.field_behavior) = REQUIRED];
 
   // Optional the version number of the document the diagnostics are published for.
   //
@@ -3845,7 +3845,7 @@ message DocumentLink {
   Range range = 1 [(google.api.field_behavior) = REQUIRED];
 
   // The uri this link points to. If missing a resolve request is sent later.
-  lsp.uri.DocumentURI target = 2;
+  uri.DocumentURI target = 2;
 
   // The tooltip text when you hover over this link.
   //
@@ -4374,7 +4374,7 @@ message CallHierarchyItem {
   google.protobuf.StringValue detail = 4;
 
   // The resource identifier of this item.
-  lsp.uri.DocumentURI uri = 5 [(google.api.field_behavior) = REQUIRED];
+  uri.DocumentURI uri = 5 [(google.api.field_behavior) = REQUIRED];
 
   // The range enclosing this symbol not including leading/trailing whitespace but everything else,
   // e.g. comments and code.

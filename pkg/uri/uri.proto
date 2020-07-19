@@ -3,19 +3,19 @@
 
 syntax = "proto3";
 
-package lsp.uri;
+package uri;
 
 import "google/api/field_behavior.proto";
 
 option cc_enable_arenas = true;
-option csharp_namespace = "Lsp.Uri";
-option go_package = "go.lsp.dev/api/uri";
+option csharp_namespace = "Uri";
+option go_package = "go.lsp.dev/api/pkg/uri";
 option java_multiple_files = true;
 option java_outer_classname = "UriProto";
 option java_package = "dev.lsp.uri";
 option objc_class_prefix = "LSPU";
-option php_namespace = "Lsp\\Uri";
-option ruby_package = "Lsp::Uri";
+option php_namespace = "Uri";
+option ruby_package = "Uri";
 option swift_prefix = "LSPU";
 
 // URI Uniform Resource Identifier (URI) https://tools.ietf.org/html/rfc3986.

@@ -3,19 +3,19 @@
 
 syntax = "proto3";
 
-package lsp.protocol;
+package protocol;
 
 import "google/api/field_behavior.proto";
 
 option cc_enable_arenas = true;
-option csharp_namespace = "Lsp.Protocol";
-option go_package = "go.lsp.dev/api/protocol";
+option csharp_namespace = "Protocol";
+option go_package = "go.lsp.dev/api/pkg/protocol";
 option java_multiple_files = true;
 option java_outer_classname = "ErrorProto";
 option java_package = "dev.lsp.protocol";
 option objc_class_prefix = "LSPP";
-option php_namespace = "Lsp\\Protocol";
-option ruby_package = "Lsp::Protocol";
+option php_namespace = "Protocol";
+option ruby_package = "Protocol";
 option swift_prefix = "LSPP";
 
 // Error represents a JSON-RPC error.

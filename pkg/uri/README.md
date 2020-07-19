@@ -4,28 +4,28 @@
 
 ## Table of Contents
 
-- [lsp/uri/uri.proto](#lsp/uri/uri.proto)
+- [uri/uri.proto](#uri/uri.proto)
   
-    - [DocumentURI](#lsp.uri.DocumentURI)
-    - [URI](#lsp.uri.URI)
+    - [DocumentURI](#uri.DocumentURI)
+    - [URI](#uri.URI)
   
-    - [Scheme](#lsp.uri.Scheme)
+    - [Scheme](#uri.Scheme)
   
   
 
 
 
 
-<a name="lsp/uri/uri.proto"/>
+<a name="uri/uri.proto"/>
 <p align="right"><a href="#top">Top</a></p>
 
  <!-- end services -->
 
-## lsp/uri/uri.proto
+## uri/uri.proto
 
 
 
-<a name="lsp.uri.DocumentURI"/>
+<a name="uri.DocumentURI"/>
 
 ### DocumentURI
 DocumentURI are transferred as strings. The URI’s format is defined in
@@ -41,7 +41,7 @@ http://tools.ietf.org/html/rfc3986.
 
 
 
-<a name="lsp.uri.URI"/>
+<a name="uri.URI"/>
 
 ### URI
 URI Uniform Resource Identifier (URI) https://tools.ietf.org/html/rfc3986.
@@ -70,7 +70,7 @@ and encoding.
  <!-- end messages -->
 
 
-<a name="lsp.uri.Scheme"/>
+<a name="uri.Scheme"/>
 
 ### Scheme
 Scheme is the generic URI syntax scheme.

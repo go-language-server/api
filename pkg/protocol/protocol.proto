@@ -3,24 +3,24 @@
 
 syntax = "proto3";
 
-package lsp.protocol;
+package protocol;
 
 import "google/api/field_behavior.proto";
 import "google/protobuf/any.proto";
 import "google/protobuf/struct.proto";
 import "google/protobuf/wrappers.proto";
 
-import "lsp/uri/uri.proto";
+import "uri/uri.proto";
 
 option cc_enable_arenas = true;
-option csharp_namespace = "Lsp.Protocol";
-option go_package = "go.lsp.dev/api/protocol";
+option csharp_namespace = "Protocol";
+option go_package = "go.lsp.dev/api/pkg/protocol";
 option java_multiple_files = true;
 option java_outer_classname = "ProtocolProto";
 option java_package = "dev.lsp.protocol";
 option objc_class_prefix = "LSPP";
-option php_namespace = "Lsp\\Protocol";
-option ruby_package = "Lsp::Protocol";
+option php_namespace = "Protocol";
+option ruby_package = "Protocol";
 option swift_prefix = "LSPP";
 
 // Position in a text document expressed as zero-based line and zero-based character offset.
@@ -57,7 +57,7 @@ message Range {
 // Location represents a location inside a resource, such as a line inside a text file.
 message Location {
   // The text document's uri.
-  lsp.uri.URI uri = 1 [(google.api.field_behavior) = REQUIRED];
+  uri.URI uri = 1 [(google.api.field_behavior) = REQUIRED];
 
   // The location's range.
   Range range = 2 [(google.api.field_behavior) = REQUIRED];
@@ -72,7 +72,7 @@ message LocationLink {
   Range origin_selection_range = 1;
 
   // The target resource identifier of this link.
-  lsp.uri.URI target_uri = 2 [(google.api.field_behavior) = REQUIRED];
+  uri.URI target_uri = 2 [(google.api.field_behavior) = REQUIRED];
 
   // The full target range of this link.
   //
@@ -233,7 +233,7 @@ message CreateFile {
   string kind = 1 [(google.api.field_behavior) = REQUIRED]; // always 'create'
 
   // The resource to create.
-  lsp.uri.URI uri = 2 [(google.api.field_behavior) = REQUIRED];
+  uri.URI uri = 2 [(google.api.field_behavior) = REQUIRED];
 
   // Optional. Additional options
   CreateFileOptions options = 3;
@@ -256,10 +256,10 @@ message RenameFile {
   string kind = 1 [(google.api.field_behavior) = REQUIRED];
 
   // The old (existing) location.
-  lsp.uri.URI old_uri = 2 [(google.api.field_behavior) = REQUIRED];
+  uri.URI old_uri = 2 [(google.api.field_behavior) = REQUIRED];
 
   // The new location.
-  lsp.uri.URI new_uri = 3 [(google.api.field_behavior) = REQUIRED];
+  uri.URI new_uri = 3 [(google.api.field_behavior) = REQUIRED];
 
   // Optional. Rename options.
   RenameFileOptions options = 4;
@@ -282,7 +282,7 @@ message DeleteFile {
   string kind = 1 [(google.api.field_behavior) = REQUIRED];
 
   // The file to delete.
-  lsp.uri.URI uri = 2 [(google.api.field_behavior) = REQUIRED];
+  uri.URI uri = 2 [(google.api.field_behavior) = REQUIRED];
 
   // Optional. Delete options.
   DeleteFileOptions options = 3;
@@ -335,7 +335,7 @@ message WorkspaceEdit {
 
   // Holds changes to existing resources.
   //
-  // The map key is lsp.uri.URI
+  // The map key is uri.URI
   // (-- api-linter: core::0192::only-leading-comments=disabled --)
   map<string, TextEdits> changes = 1;
 
@@ -430,13 +430,13 @@ enum FailureHandlingKind {
 // (-- api-linter: core::0140::abbreviations=disabled --)
 message TextDocumentIdentifier {
   // The text document's URI.
-  lsp.uri.URI uri = 1 [(google.api.field_behavior) = REQUIRED];
+  uri.URI uri = 1 [(google.api.field_behavior) = REQUIRED];
 }
 
 // TextDocumentItem an item to transfer a text document from the client to the server.
 message TextDocumentItem {
   // The text document's URI.
-  lsp.uri.URI uri = 1 [(google.api.field_behavior) = REQUIRED];
+  uri.URI uri = 1 [(google.api.field_behavior) = REQUIRED];
 
   // The text document's language identifier.
   string language_id = 2 [(google.api.field_behavior) = REQUIRED];
@@ -485,7 +485,7 @@ message DocumentFilter {
   // (-- api-linter: core::0143::standardized-codes=disabled --)
   google.protobuf.StringValue language = 1;
 
-  // Optional. A URI [scheme](#lsp.uri.Scheme), like `file` or `untitled`.
+  // Optional. A URI [scheme](#uri.Scheme), like `file` or `untitled`.
   google.protobuf.StringValue scheme = 2;
 
   // Optional. A glob pattern, like `*.{ts,js}`.

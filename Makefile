@@ -2,6 +2,8 @@
 # global
 
 SHELL = /usr/bin/env bash
+GO_OS := $(shell go env GOOS)
+GO_ARCH := $(shell go env GOARCH)
 GO_PATH := $(shell go env GOPATH)
 PACKAGE := $(subst $(GO_PATH)/src/,,$(CURDIR))
 
@@ -11,7 +13,7 @@ PACKAGE := $(subst $(GO_PATH)/src/,,$(CURDIR))
 PROTOC_VERSION ?= 3.12.3
 GOLANG_VERSION ?= 1.14
 ALPINE_VERSION ?= 3.12
-PROTO_FILES := $(shell find lsp -type f -name '*.proto')
+PROTO_FILES := $(shell find pkg -type f -name '*.proto')
 
 DOCKER_IMAGE ?= gcr.io/lsp-dev/protoc:${PROTOC_VERSION}
 DOCKER_VOLUME_API ?= $(abspath $(dir ${CURDIR})/api):$(abspath /go/src/$(dir ${PACKAGE})/api)
@@ -26,21 +28,21 @@ all: protoc format
 
 .PHONY: protoc
 protoc:  ## Run protoc.
-	docker container run --rm -it ${DOCKER_VOLUME_FLAGS} -w /go/src/${PACKAGE} ${DOCKER_IMAGE} --descriptor_set_out=fileset.pb --include_imports --include_source_info -I/go/src/${PACKAGE} -I/go/src/${PACKAGE}/third_party/googleapis --go_out=annotate_code=true:/go/src --go-grpc_out=annotate_code=true:/go/src $(foreach f,${PROTO_FILES},/go/src/${PACKAGE}/$(f))
-	docker container run --rm -it ${DOCKER_VOLUME_FLAGS} -w /go/src/${PACKAGE} --entrypoint=sh ${DOCKER_IMAGE} -c 'for p in $(foreach f,${PROTO_FILES},/go/src/${PACKAGE}/$(f)); do protoc -I/go/src/${PACKAGE} -I/go/src/${PACKAGE}/third_party/googleapis --grpc-gateway_out=/go/src --doc_out=`dirname $$p` --doc_opt=/go/src/${PACKAGE}/hack/template/protoc-gen-doc.tmpl,README.md $$p; done'
+	docker container run --rm -it ${DOCKER_VOLUME_FLAGS} -w /go/src/${PACKAGE} ${DOCKER_IMAGE} --descriptor_set_out=fileset.pb --include_imports --include_source_info -I/go/src/${PACKAGE}/pkg -I/go/src/${PACKAGE}/third_party/googleapis --go_out=annotate_code=true:/go/src --go-grpc_out=annotate_code=true:/go/src $(foreach f,${PROTO_FILES},/go/src/${PACKAGE}/$(f))
+	docker container run --rm -it ${DOCKER_VOLUME_FLAGS} -w /go/src/${PACKAGE} --entrypoint=sh ${DOCKER_IMAGE} -c 'for p in $(foreach f,${PROTO_FILES},/go/src/${PACKAGE}/$(f)); do protoc -I/go/src/${PACKAGE}/pkg -I/go/src/${PACKAGE}/third_party/googleapis --grpc-gateway_out=/go/src --doc_out=`dirname $$p` --doc_opt=/go/src/${PACKAGE}/hack/template/protoc-gen-doc.tmpl,README.md $$p; done'
 
 .PHONY: tools
 tools:  ## Build tools container image.
-	docker buildx build --rm --build-arg PROTOC_VERSION=${PROTOC_VERSION} --build-arg GOLANG_VERSION=${GOLANG_VERSION} --build-arg ALPINE_VERSION=${ALPINE_VERSION} --tag ${DOCKER_IMAGE} --target golang --load ./tools
+	docker buildx build --rm --build-arg PROTOC_VERSION=${PROTOC_VERSION} --build-arg GOLANG_VERSION=${GOLANG_VERSION} --build-arg ALPINE_VERSION=${ALPINE_VERSION} --tag ${DOCKER_IMAGE} --target golang --output=type=docker ./tools
 
 .PHONY: api-linter
 api-linter: DOCKER_VOLUMES=${DOCKER_VOLUME_GOPATH}
 api-linter:  ## Lint proto files with api-linter.
-	docker container run --rm -it -v ${CURDIR}:/go/src/${PACKAGE}:cached -w /go/src/${PACKAGE} --entrypoint=api-linter gcr.io/lsp-dev/protoc:${PROTOC_VERSION} --config=/go/src/${PACKAGE}/.api-linter.yaml --output-format=yaml -I /go/src/${PACKAGE}/third_party/googleapis $(foreach f,${PROTO_FILES},/go/src/${PACKAGE}/$(f))
+	docker container run --rm -it -e GOOS=${GO_OS} -e GOARCH=${GO_ARCH} -v ${CURDIR}:/go/src/${PACKAGE}:cached -w /go/src/${PACKAGE} --entrypoint=api-linter gcr.io/lsp-dev/protoc:${PROTOC_VERSION} --config=/go/src/${PACKAGE}/.api-linter.yaml --output-format=yaml -I /go/src/${PACKAGE}/third_party/googleapis $(foreach f,${PROTO_FILES},/go/src/${PACKAGE}/$(f))
 
 .PHONY: format
 format:  ## Format generated files with gofumports.
-	gofumports -w -local=go.lsp.dev/api ../api
+	gofumports -w -local=go.lsp.dev/api ./pkg
 
 third_party/googleapis:
 	git subtree add -q --prefix=third_party/googleapis --squash https://github.com/googleapis/googleapis.git master

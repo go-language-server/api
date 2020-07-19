@@ -4,27 +4,27 @@
 
 ## Table of Contents
 
-- [lsp/protocol/error.proto](#lsp/protocol/error.proto)
+- [protocol/error.proto](#protocol/error.proto)
   
-    - [Error](#lsp.protocol.Error)
+    - [Error](#protocol.Error)
   
-    - [Code](#lsp.protocol.Code)
+    - [Code](#protocol.Code)
   
   
 
 
 
 
-<a name="lsp/protocol/error.proto"/>
+<a name="protocol/error.proto"/>
 <p align="right"><a href="#top">Top</a></p>
 
  <!-- end services -->
 
-## lsp/protocol/error.proto
+## protocol/error.proto
 
 
 
-<a name="lsp.protocol.Error"/>
+<a name="protocol.Error"/>
 
 ### Error
 Error represents a JSON-RPC error.
@@ -43,7 +43,7 @@ Error represents a JSON-RPC error.
  <!-- end messages -->
 
 
-<a name="lsp.protocol.Code"/>
+<a name="protocol.Code"/>
 
 ### Code
 Code is the error code in case a request fails.
