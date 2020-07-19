@@ -49,4 +49,8 @@ _testmain.go
 coverage.*
 
 # Protocol Buffers
+## protoc: --descriptor_set_out flag
+*.pb
+
+## protoc-gen-go: --go_out=annotate_code=true flag
 *.meta
