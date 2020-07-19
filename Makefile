@@ -17,7 +17,7 @@ DOCKER_IMAGE ?= gcr.io/lsp-dev/protoc:${PROTOC_VERSION}
 DOCKER_VOLUME_API ?= $(abspath $(dir ${CURDIR})/api):$(abspath /go/src/$(dir ${PACKAGE})/api)
 DOCKER_VOLUME_GOPATH ?= ${CURDIR}:/go/src/${PACKAGE}
 DOCKER_VOLUMES ?= ${DOCKER_VOLUME_API} ${DOCKER_VOLUME_GOPATH}
-DOCKER_VOLUME_FLAG ?= $(foreach volume,${DOCKER_VOLUMES},-v $(volume):delegated)
+DOCKER_VOLUME_FLAGS ?= $(foreach volume,${DOCKER_VOLUMES},-v $(volume):cached)
 
 # ----------------------------------------------------------------------------
 ##@ targets
@@ -26,10 +26,8 @@ all: protoc format
 
 .PHONY: protoc
 protoc:  ## Run protoc.
-	-@rm -rf protocol uri jsonrpc2
-	docker container run --rm -it ${DOCKER_VOLUME_FLAG} -w /go/src/${PACKAGE} ${DOCKER_IMAGE} -I/go/src/${PACKAGE} -I/go/src/${PACKAGE}/third_party/googleapis --go_out=annotate_code=true:/go/src --go-grpc_out=annotate_code=true:/go/src $(foreach f,${PROTO_FILES},/go/src/${PACKAGE}/$(f)) 
-	docker container run --rm -it ${DOCKER_VOLUME_FLAG} -w /go/src/${PACKAGE} --entrypoint=sh ${DOCKER_IMAGE} -c 'for p in $(foreach f,${PROTO_FILES},/go/src/${PACKAGE}/$(f)); do protoc -I/go/src/${PACKAGE} -I/go/src/${PACKAGE}/third_party/googleapis --grpc-gateway_out=/go/src --doc_out=`dirname $$p` --doc_opt=/go/src/${PACKAGE}/hack/template/protoc-gen-doc.tmpl,README.md $$p; done'
-	@while :; do chmod 755 ../api/protocol ../api/protocol/rpc ../api/uri ../api/jsonrpc2 > /dev/null 2>&1 && exit 0; done  # mutagen workaround
+	docker container run --rm -it ${DOCKER_VOLUME_FLAGS} -w /go/src/${PACKAGE} ${DOCKER_IMAGE} --descriptor_set_out=fileset.pb --include_imports --include_source_info -I/go/src/${PACKAGE} -I/go/src/${PACKAGE}/third_party/googleapis --go_out=annotate_code=true:/go/src --go-grpc_out=annotate_code=true:/go/src $(foreach f,${PROTO_FILES},/go/src/${PACKAGE}/$(f))
+	docker container run --rm -it ${DOCKER_VOLUME_FLAGS} -w /go/src/${PACKAGE} --entrypoint=sh ${DOCKER_IMAGE} -c 'for p in $(foreach f,${PROTO_FILES},/go/src/${PACKAGE}/$(f)); do protoc -I/go/src/${PACKAGE} -I/go/src/${PACKAGE}/third_party/googleapis --grpc-gateway_out=/go/src --doc_out=`dirname $$p` --doc_opt=/go/src/${PACKAGE}/hack/template/protoc-gen-doc.tmpl,README.md $$p; done'
 
 .PHONY: tools
 tools:  ## Build tools container image.
@@ -38,7 +36,7 @@ tools:  ## Build tools container image.
 .PHONY: api-linter
 api-linter: DOCKER_VOLUMES=${DOCKER_VOLUME_GOPATH}
 api-linter:  ## Lint proto files with api-linter.
-	docker container run --rm -it -v ${CURDIR}:/go/src/${PACKAGE}:z,delegated -w /go/src/${PACKAGE} --entrypoint=api-linter gcr.io/lsp-dev/protoc:${PROTOC_VERSION} --config=/go/src/${PACKAGE}/.api-linter.yaml --output-format=yaml -I /go/src/${PACKAGE}/third_party/googleapis $(foreach f,${PROTO_FILES},/go/src/${PACKAGE}/$(f))
+	docker container run --rm -it -v ${CURDIR}:/go/src/${PACKAGE}:cached -w /go/src/${PACKAGE} --entrypoint=api-linter gcr.io/lsp-dev/protoc:${PROTOC_VERSION} --config=/go/src/${PACKAGE}/.api-linter.yaml --output-format=yaml -I /go/src/${PACKAGE}/third_party/googleapis $(foreach f,${PROTO_FILES},/go/src/${PACKAGE}/$(f))
 
 .PHONY: format
 format:  ## Format generated files with gofumports.
