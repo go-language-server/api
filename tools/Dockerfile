@@ -19,8 +19,8 @@ RUN --mount=type=cache,target=/root/.cache/go-build --mount=type=cache,target=/g
 	set -eux && \
 	GOBIN="${OUTDIR}/usr/local/bin" go install -v -tags='osusergo,netgo,static' -gcflags="all=-trimpath=${GOPATH}" -ldflags="-d -s -w '-extldflags=-static'" -asmflags="all=-trimpath=${GOPATH}" -installsuffix='netgo' $(go list -f '{{ join .Imports " " }}' -tags=tools)
 
-# target: golang
-FROM gcr.io/containerz/protoc/golang:${PROTOC_VERSION}-debug AS golang
+# target: tools
+FROM gcr.io/containerz/protoc/golang:${PROTOC_VERSION}-debug AS tools
 COPY --from=golang-builder --chown=nonroot:nonroot /out/ /
 USER nonroot:nonroot
 LABEL maintainer="The Go Language Server Authors" \
