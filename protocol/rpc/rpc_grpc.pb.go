@@ -11,7 +11,7 @@ import (
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"
 
-	protocol "go.lsp.dev/api/pkg/protocol"
+	protocol "go.lsp.dev/api/protocol"
 )
 
 // This is a compile-time assertion to ensure that this generated file
