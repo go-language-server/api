@@ -9,7 +9,7 @@ import "google/api/field_behavior.proto";
 
 option cc_enable_arenas = true;
 option csharp_namespace = "Protocol";
-option go_package = "go.lsp.dev/api/pkg/protocol";
+option go_package = "go.lsp.dev/api/protocol";
 option java_multiple_files = true;
 option java_outer_classname = "ErrorProto";
 option java_package = "dev.lsp.protocol";

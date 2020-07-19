@@ -19,10 +19,10 @@ import "uri/uri.proto";
 
 option cc_enable_arenas = true;
 option csharp_namespace = "Protocol.Rpc";
-option go_package = "go.lsp.dev/api/pkg/protocol/rpc";
+option go_package = "go.lsp.dev/api/protocol/rpc";
 option java_multiple_files = true;
 option java_outer_classname = "RpcProto";
-option java_package = "dev.protocol.rpc";
+option java_package = "dev.lsp.protocol.rpc";
 option objc_class_prefix = "LSPPR";
 option php_namespace = "Protocol\\Rpc";
 option ruby_package = "Protocol::Rpc";
