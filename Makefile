@@ -49,7 +49,7 @@ third_party/googleapis:
 
 .PHONY: googleapis
 googleapis:  ## Upgrade third_party/googleapis.
-	git subtree pull -q --prefix=third_party/googleapis --squash https://github.com/googleapis/googleapis.git master
+	git subtree pull -q --prefix=third_party/googleapis --squash https://github.com/googleapis/googleapis.git master || git add third_party/googleapis && git merge --continue
 	@find third_party/googleapis -mindepth 1 -maxdepth 1 -not -iwholename 'third_party/googleapis/google' -exec rm -rf {} \; > /dev/null 2>&1
 	@find third_party/googleapis -mindepth 2 -type d -not -iwholename 'third_party/googleapis/google/api' -and -not -iwholename 'third_party/googleapis/google/rpc' -and -not -iwholename 'third_party/googleapis/google/longrunning' -exec rm -rf {} \; > /dev/null 2>&1 || true
 	@find third_party/googleapis -mindepth 1 -type f -not -name '*.proto' -delete > /dev/null 2>&1
