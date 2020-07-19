@@ -13,7 +13,7 @@ import "google/protobuf/empty.proto";
 import "google/protobuf/struct.proto";
 import "google/protobuf/wrappers.proto";
 
-import "lsp/jsonrpc2/jsonrpc2.proto";
+import "lsp/protocol/error.proto";
 import "lsp/protocol/protocol.proto";
 import "lsp/uri/uri.proto";
 
@@ -39,7 +39,7 @@ service LanguageServerProtocol {
   // can not be left open / hanging. This is in line with the JSON RPC protocol that requires that
   // every request sends a response back. In addition it allows for returning partial results on
   // cancel. If the request returns an error response on cancellation it is advised to set the error
-  // code to [Codes.RequestCancelled][lsp.jsonrpc2.Codes].
+  // code to [Codes.RequestCancelled][lsp.protocol.Codes].
   rpc Cancel(CancelRequest) returns (google.protobuf.Empty) {
     option (google.api.http) = {
       post: "/$/cancelRequest/*:cancel"
@@ -114,7 +114,7 @@ service LanguageServerProtocol {
   //
   // If a server receives requests after a shutdown request those requests should error with
   // `InvalidRequest`.
-  rpc Shutdown(google.protobuf.Empty) returns (lsp.jsonrpc2.Error) {
+  rpc Shutdown(google.protobuf.Empty) returns (lsp.protocol.Error) {
     option (google.api.http) = {
       post: "/shutdown/*:shutdown"
       body: "*"
@@ -196,7 +196,7 @@ service LanguageServerProtocol {
   //     api-linter: core::0133::http-body=disabled
   //     api-linter: core::0133::request-message-name=disabled
   //     api-linter: core::0133::response-message-name=disabled --)
-  rpc CreateWorkDoneProgress(WorkDoneProgressCreateRequest) returns (lsp.jsonrpc2.Error) {
+  rpc CreateWorkDoneProgress(WorkDoneProgressCreateRequest) returns (lsp.protocol.Error) {
     option (google.api.http) = {
       post: "/window/workDoneProgress/create:createWorkDoneProgress"
       body: "*"
@@ -207,7 +207,7 @@ service LanguageServerProtocol {
   // CancelWorkDoneProgress is the `window/workDoneProgress/cancel` notification is sent from the
   // client to the server to cancel a progress initiated on the server side using the
   // `window/workDoneProgress/create`.
-  rpc CancelWorkDoneProgress(WorkDoneProgressCancelRequest) returns (lsp.jsonrpc2.Error) {
+  rpc CancelWorkDoneProgress(WorkDoneProgressCancelRequest) returns (lsp.protocol.Error) {
     option (google.api.http) = {
       post: "/window/workDoneProgress/cancel:cancelWorkDoneProgress"
       body: "*"
@@ -933,7 +933,7 @@ message ShowMessageResponse {
 
     google.protobuf.NullValue empty = 2;
 
-    lsp.jsonrpc2.Error error = 3;
+    lsp.protocol.Error error = 3;
   }
 }
 
@@ -948,7 +948,7 @@ message WorkspaceFoldersResponse {
 
     google.protobuf.NullValue empty = 2;
 
-    lsp.jsonrpc2.Error error = 3;
+    lsp.protocol.Error error = 3;
   }
 }
 
@@ -961,7 +961,7 @@ message ConfigurationResponse {
   oneof configuration_response {
     Anys anys = 1;
 
-    lsp.jsonrpc2.Error error = 2;
+    lsp.protocol.Error error = 2;
   }
 }
 
@@ -974,7 +974,7 @@ message WorkspaceSymbolsResponse {
   oneof workspace_symbols_response {
     SymbolInformations symbol_informations = 1;
 
-    lsp.jsonrpc2.Error error = 2;
+    lsp.protocol.Error error = 2;
   }
 }
 
@@ -983,7 +983,7 @@ message ExecuteCommandResponse {
   oneof execute_command {
     google.protobuf.Any any = 1;
 
-    lsp.jsonrpc2.Error error = 2;
+    lsp.protocol.Error error = 2;
   }
 }
 
@@ -997,7 +997,7 @@ message WillSaveTextDocumentResponse {
   oneof will_save_text_document_response {
     TextEdits text_edits = 1;
 
-    lsp.jsonrpc2.Error error = 2;
+    lsp.protocol.Error error = 2;
   }
 }
 
@@ -1015,7 +1015,7 @@ message CompletionResponse {
 
     google.protobuf.NullValue empty = 3;
 
-    lsp.jsonrpc2.Error error = 4;
+    lsp.protocol.Error error = 4;
   }
 }
 
@@ -1026,7 +1026,7 @@ message HoverResponse {
 
     google.protobuf.NullValue empty = 2;
 
-    lsp.jsonrpc2.Error error = 3;
+    lsp.protocol.Error error = 3;
   }
 }
 
@@ -1040,7 +1040,7 @@ message CompletionItemResolveResponse {
   oneof completion_item_resolve_response {
     CompletionItems completion_items = 1;
 
-    lsp.jsonrpc2.Error error = 2;
+    lsp.protocol.Error error = 2;
   }
 }
 
@@ -1051,7 +1051,7 @@ message SignatureHelpResponse {
 
     google.protobuf.NullValue empty = 2;
 
-    lsp.jsonrpc2.Error error = 3;
+    lsp.protocol.Error error = 3;
   }
 }
 
@@ -1088,7 +1088,7 @@ message DeclarationResponse {
 
     PartialResult partial_result = 2;
 
-    lsp.jsonrpc2.Error error = 3;
+    lsp.protocol.Error error = 3;
   }
 }
 
@@ -1115,7 +1115,7 @@ message DefinitionResponse {
 
     PartialResult partial_result = 2;
 
-    lsp.jsonrpc2.Error error = 3;
+    lsp.protocol.Error error = 3;
   }
 }
 
@@ -1142,7 +1142,7 @@ message TypeDefinitionResponse {
 
     PartialResult partial_result = 2;
 
-    lsp.jsonrpc2.Error error = 3;
+    lsp.protocol.Error error = 3;
   }
 }
 
@@ -1169,7 +1169,7 @@ message ImplementationResponse {
 
     PartialResult partial_result = 2;
 
-    lsp.jsonrpc2.Error error = 3;
+    lsp.protocol.Error error = 3;
   }
 }
 
@@ -1190,7 +1190,7 @@ message ReferenceResponse {
 
     PartialResult partial_result = 2;
 
-    lsp.jsonrpc2.Error error = 3;
+    lsp.protocol.Error error = 3;
   }
 }
 
@@ -1211,7 +1211,7 @@ message DocumentHighlightsResponse {
 
     PartialResult partial_result = 2;
 
-    lsp.jsonrpc2.Error error = 3;
+    lsp.protocol.Error error = 3;
   }
 }
 
@@ -1236,7 +1236,7 @@ message DocumentSymbolResponse {
 
     PartialResult partial_result = 2;
 
-    lsp.jsonrpc2.Error error = 3;
+    lsp.protocol.Error error = 3;
   }
 }
 
@@ -1261,7 +1261,7 @@ message CodeActionResponse {
 
     PartialResult partial_result = 2;
 
-    lsp.jsonrpc2.Error error = 3;
+    lsp.protocol.Error error = 3;
   }
 }
 
@@ -1282,7 +1282,7 @@ message CodeLensResponse {
 
     PartialResult partial_result = 2;
 
-    lsp.jsonrpc2.Error error = 3;
+    lsp.protocol.Error error = 3;
   }
 }
 
@@ -1296,7 +1296,7 @@ message CodeLensResolveResponse {
   oneof code_lens_resolve_response {
     CodeLens code_lens = 1;
 
-    lsp.jsonrpc2.Error error = 3;
+    lsp.protocol.Error error = 3;
   }
 }
 
@@ -1317,7 +1317,7 @@ message DocumentLinkResponse {
 
     PartialResult partial_result = 2;
 
-    lsp.jsonrpc2.Error error = 3;
+    lsp.protocol.Error error = 3;
   }
 }
 
@@ -1331,7 +1331,7 @@ message DocumentLinkResolveResponse {
   oneof document_link_resolve_response {
     DocumentLink document_link = 1;
 
-    lsp.jsonrpc2.Error error = 3;
+    lsp.protocol.Error error = 3;
   }
 }
 
@@ -1350,7 +1350,7 @@ message DocumentColorResponse {
 
     PartialResult partial_result = 2;
 
-    lsp.jsonrpc2.Error error = 3;
+    lsp.protocol.Error error = 3;
   }
 }
 
@@ -1369,7 +1369,7 @@ message ColorPresentationResponse {
 
     PartialResult partial_result = 2;
 
-    lsp.jsonrpc2.Error error = 3;
+    lsp.protocol.Error error = 3;
   }
 }
 
@@ -1380,7 +1380,7 @@ message DocumentFormattingResponse {
 
     google.protobuf.NullValue empty = 2;
 
-    lsp.jsonrpc2.Error error = 3;
+    lsp.protocol.Error error = 3;
   }
 }
 
@@ -1391,7 +1391,7 @@ message DocumentRangeFormattingResponse {
 
     google.protobuf.NullValue empty = 2;
 
-    lsp.jsonrpc2.Error error = 3;
+    lsp.protocol.Error error = 3;
   }
 }
 
@@ -1402,7 +1402,7 @@ message DocumentOnTypeFormattingResponse {
 
     google.protobuf.NullValue empty = 2;
 
-    lsp.jsonrpc2.Error error = 3;
+    lsp.protocol.Error error = 3;
   }
 }
 
@@ -1413,7 +1413,7 @@ message RenameResponse {
 
     google.protobuf.NullValue empty = 2;
 
-    lsp.jsonrpc2.Error error = 3;
+    lsp.protocol.Error error = 3;
   }
 }
 
@@ -1431,7 +1431,7 @@ message PrepareRenameResponse {
 
     google.protobuf.NullValue empty = 3;
 
-    lsp.jsonrpc2.Error error = 4;
+    lsp.protocol.Error error = 4;
   }
 }
 
@@ -1452,7 +1452,7 @@ message FoldingRangeResponse {
 
     PartialResult partial_result = 2;
 
-    lsp.jsonrpc2.Error error = 3;
+    lsp.protocol.Error error = 3;
   }
 }
 
@@ -1473,7 +1473,7 @@ message SelectionRangeResponse {
 
     PartialResult partial_result = 2;
 
-    lsp.jsonrpc2.Error error = 3;
+    lsp.protocol.Error error = 3;
   }
 }
 
@@ -1488,7 +1488,7 @@ message CallHierarchyPrepareResponse {
   oneof call_hierarchy_prepare_response {
     Result result = 1;
 
-    lsp.jsonrpc2.Error error = 3;
+    lsp.protocol.Error error = 3;
   }
 }
 
@@ -1509,7 +1509,7 @@ message CallHierarchyIncomingCallsResponse {
 
     PartialResult partial_result = 2;
 
-    lsp.jsonrpc2.Error error = 3;
+    lsp.protocol.Error error = 3;
   }
 }
 
@@ -1530,7 +1530,7 @@ message CallHierarchyOutgoingCallsResponse {
 
     PartialResult partial_result = 2;
 
-    lsp.jsonrpc2.Error error = 3;
+    lsp.protocol.Error error = 3;
   }
 }
 

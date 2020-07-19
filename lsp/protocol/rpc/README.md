@@ -328,19 +328,19 @@ Language Server Protocol API.
 
 | Method Name | Request Type | Response Type | Description |
 | ----------- | ------------ | ------------- | ------------|
-| Cancel | [CancelRequest](#lsp.protocol.rpc.CancelRequest) | [.google.protobuf.Empty](#lsp.protocol.rpc.CancelRequest) | Cancel notification is the base protocol offers support for request cancellation. To cancel a request, a CancelRequest notification message is sent.  A request that got canceled still needs to return from the server and send a response back. It can not be left open / hanging. This is in line with the JSON RPC protocol that requires that every request sends a response back. In addition it allows for returning partial results on cancel. If the request returns an error response on cancellation it is advised to set the error code to [Codes.RequestCancelled][lsp.jsonrpc2.Codes]. |
+| Cancel | [CancelRequest](#lsp.protocol.rpc.CancelRequest) | [.google.protobuf.Empty](#lsp.protocol.rpc.CancelRequest) | Cancel notification is the base protocol offers support for request cancellation. To cancel a request, a CancelRequest notification message is sent.  A request that got canceled still needs to return from the server and send a response back. It can not be left open / hanging. This is in line with the JSON RPC protocol that requires that every request sends a response back. In addition it allows for returning partial results on cancel. If the request returns an error response on cancellation it is advised to set the error code to [Codes.RequestCancelled][lsp.protocol.Codes]. |
 | Progress | [ProgressRequest](#lsp.protocol.rpc.ProgressRequest) | [.google.protobuf.Empty](#lsp.protocol.rpc.ProgressRequest) | Progress notification is the base protocol offers also support to report progress in a generic fashion. This mechanism can be used to report any kind of progress including work done progress (usually used to report progress in the user interface using a progress bar) and partial result progress to support streaming of results.  Progress is reported against a token. The token is different than the request ID which allows to report progress out of band and also for notification.  @since 3.15.0 |
 | Initialize | [InitializeRequest](#lsp.protocol.rpc.InitializeRequest) | [InitializeResponse](#lsp.protocol.rpc.InitializeRequest) | Initialize request is sent as the first request from the client to the server. If the server receives a request or notification before the initialize request it should act as follows:  - For a request the response should be an error with `code: -32002`. The message can be picked by the server. - Notifications should be dropped, except for the exit notification. This will allow the exit of a server without an initialize request.  Until the server has responded to the `initialize` request with an `InitializeResponse`, the client must not send any additional requests or notifications to the server. In addition the server is not allowed to send any requests or notifications to the client until it has responded with an `InitializeResponse`, with the exception that during the initialize request the server is allowed to send the notifications `window/showMessage`, `window/logMessage` and `telemetry/event` as well as the `window/showMessageRequest` request to the client. In case the client sets up a progress token in the initialize params (e.g. property `workDoneToken`) the server is also allowed to use that token (and only that token) using the `$/progress` notification sent from the server to the client.  The initialize request may only be sent once. |
 | Initialized | [InitializedRequest](#lsp.protocol.rpc.InitializedRequest) | [.google.protobuf.Empty](#lsp.protocol.rpc.InitializedRequest) | Initialized notification is sent from the client to the server after the client received the result of the `initialize` request but before the client is sending any other request or notification to the server.  The server can use the `initialized` notification for example to dynamically register capabilities.  The `initialized` notification may only be sent once. |
-| Shutdown | [.google.protobuf.Empty](#google.protobuf.Empty) | [.lsp.jsonrpc2.Error](#google.protobuf.Empty) | Shutdown request is sent from the client to the server.  It asks the server to shut down, but to not exit (otherwise the response might not be delivered correctly to the client). There is a separate exit notification that asks the server to exit.  Clients must not send any notifications other than exit or requests to a server to which they have sent a shutdown request.  If a server receives requests after a shutdown request those requests should error with `InvalidRequest`. |
+| Shutdown | [.google.protobuf.Empty](#google.protobuf.Empty) | [.lsp.protocol.Error](#google.protobuf.Empty) | Shutdown request is sent from the client to the server.  It asks the server to shut down, but to not exit (otherwise the response might not be delivered correctly to the client). There is a separate exit notification that asks the server to exit.  Clients must not send any notifications other than exit or requests to a server to which they have sent a shutdown request.  If a server receives requests after a shutdown request those requests should error with `InvalidRequest`. |
 | Exit | [.google.protobuf.Empty](#google.protobuf.Empty) | [.google.protobuf.Empty](#google.protobuf.Empty) | Exit notification to ask the server to exit its process.  The server should exit with `success` code 0 if the shutdown request has been received before; otherwise with `error` code 1. |
 | LogTrace | [LogTraceRequest](#lsp.protocol.rpc.LogTraceRequest) | [.google.protobuf.Empty](#lsp.protocol.rpc.LogTraceRequest) | LogTrace notification to log the trace of the server’s execution.  The amount and content of these notifications depends on the current `trace` configuration. If `trace` is `'off'`, the server should not send any `logTrace` notification. If `trace` is `'message'`, the server should not add the `'verbose'` field in the logTraceRequest.  `$/logTrace` should be used for systematic trace reporting. For single debugging messages, the server should send window/logMessage notifications. |
 | SetTrace | [SetTraceRequest](#lsp.protocol.rpc.SetTraceRequest) | [.google.protobuf.Empty](#lsp.protocol.rpc.SetTraceRequest) | SetTrace notification that should be used by the client to modify the trace setting of the server.  (-- api-linter: core::0134::synonyms=disabled api-linter: core::0136::http-method=disabled --) |
 | ShowMessage | [ShowMessageRequestParams](#lsp.protocol.rpc.ShowMessageRequestParams) | [.google.protobuf.Empty](#lsp.protocol.rpc.ShowMessageRequestParams) | ShowMessage notification is the show message notification is sent from a server to a client to ask the client to display a particular message in the user interface. |
 | ShowMessageRequest | [ShowMessageRequestRequest](#lsp.protocol.rpc.ShowMessageRequestRequest) | [ShowMessageResponse](#lsp.protocol.rpc.ShowMessageRequestRequest) | ShowMessageRequest request is the show message request is sent from a server to a client to ask the client to display a particular message in the user interface. In addition to the show message notification the request allows to pass actions and to wait for an answer from the client. |
 | LogMessage | [LogMessageRequest](#lsp.protocol.rpc.LogMessageRequest) | [.google.protobuf.Empty](#lsp.protocol.rpc.LogMessageRequest) | LogMessage notification is the log message notification is sent from the server to the client to ask the client to log a particular message. |
-| CreateWorkDoneProgress | [WorkDoneProgressCreateRequest](#lsp.protocol.rpc.WorkDoneProgressCreateRequest) | [.lsp.jsonrpc2.Error](#lsp.protocol.rpc.WorkDoneProgressCreateRequest) | CreateWorkDoneProgress is the `window/workDoneProgress/create` request is sent from the server to the client to ask the client to create a work done progress.  (-- api-linter: core::0133::http-uri-parent=disabled api-linter: core::0133::http-body=disabled api-linter: core::0133::request-message-name=disabled api-linter: core::0133::response-message-name=disabled --) |
-| CancelWorkDoneProgress | [WorkDoneProgressCancelRequest](#lsp.protocol.rpc.WorkDoneProgressCancelRequest) | [.lsp.jsonrpc2.Error](#lsp.protocol.rpc.WorkDoneProgressCancelRequest) | CancelWorkDoneProgress is the `window/workDoneProgress/cancel` notification is sent from the client to the server to cancel a progress initiated on the server side using the `window/workDoneProgress/create`. |
+| CreateWorkDoneProgress | [WorkDoneProgressCreateRequest](#lsp.protocol.rpc.WorkDoneProgressCreateRequest) | [.lsp.protocol.Error](#lsp.protocol.rpc.WorkDoneProgressCreateRequest) | CreateWorkDoneProgress is the `window/workDoneProgress/create` request is sent from the server to the client to ask the client to create a work done progress.  (-- api-linter: core::0133::http-uri-parent=disabled api-linter: core::0133::http-body=disabled api-linter: core::0133::request-message-name=disabled api-linter: core::0133::response-message-name=disabled --) |
+| CancelWorkDoneProgress | [WorkDoneProgressCancelRequest](#lsp.protocol.rpc.WorkDoneProgressCancelRequest) | [.lsp.protocol.Error](#lsp.protocol.rpc.WorkDoneProgressCancelRequest) | CancelWorkDoneProgress is the `window/workDoneProgress/cancel` notification is sent from the client to the server to cancel a progress initiated on the server side using the `window/workDoneProgress/create`. |
 | Telemetry | [.google.protobuf.Any](#google.protobuf.Any) | [.google.protobuf.Empty](#google.protobuf.Any) | Telemetry notification is the telemetry notification is sent from the server to the client to ask the client to log a telemetry event. |
 | WorkspaceFolders | [.google.protobuf.Empty](#google.protobuf.Empty) | [WorkspaceFoldersResponse](#google.protobuf.Empty) | WorkspaceFolders request is the workspace/workspaceFolders request is sent from the server to the client to fetch the current open list of workspace folders.  Returns null in the response if only a single file is open in the tool. Returns an empty array if a workspace is open but no folders are configured.  @since 3.6.0 |
 | DidChangeWorkspaceFolders | [DidChangeWorkspaceFoldersRequest](#lsp.protocol.rpc.DidChangeWorkspaceFoldersRequest) | [.google.protobuf.Empty](#lsp.protocol.rpc.DidChangeWorkspaceFoldersRequest) | DidChangeWorkspaceFolders notification is the `workspace/didChangeWorkspaceFolders` notification is sent from the client to the server to inform the server about workspace folder configuration changes.  The notification is sent by default if both client capability `workspace.workspaceFolders` and the server capability `workspace.workspaceFolders.supported` are true; or if the server has registered itself to receive this notification. To register for the `workspace/didChangeWorkspaceFolders` send a client/registerCapability request from the server to the client. The `registration` parameter must have a registrations item of the following form, where id is a unique id used to unregister the capability (the example uses a UUID):  @since 3.6.0 |
@@ -489,7 +489,7 @@ CallHierarchyIncomingCallsResponse represents a CallHierarchyIncomingCalls respo
 | ----- | ---- | ----- | ----------- |
 | result | [CallHierarchyIncomingCallsResponse.Result](#lsp.protocol.rpc.CallHierarchyIncomingCallsResponse.Result) |  |  |
 | partial_result | [CallHierarchyIncomingCallsResponse.PartialResult](#lsp.protocol.rpc.CallHierarchyIncomingCallsResponse.PartialResult) |  |  |
-| error | [lsp.jsonrpc2.Error](#lsp.jsonrpc2.Error) |  |  |
+| error | [lsp.protocol.Error](#lsp.protocol.Error) |  |  |
 
 
 
@@ -615,7 +615,7 @@ CallHierarchyIncomingCallsResponse represents a CallHierarchyOutgoingCalls respo
 | ----- | ---- | ----- | ----------- |
 | result | [CallHierarchyOutgoingCallsResponse.Result](#lsp.protocol.rpc.CallHierarchyOutgoingCallsResponse.Result) |  |  |
 | partial_result | [CallHierarchyOutgoingCallsResponse.PartialResult](#lsp.protocol.rpc.CallHierarchyOutgoingCallsResponse.PartialResult) |  |  |
-| error | [lsp.jsonrpc2.Error](#lsp.jsonrpc2.Error) |  |  |
+| error | [lsp.protocol.Error](#lsp.protocol.Error) |  |  |
 
 
 
@@ -680,7 +680,7 @@ CallHierarchyPrepareResponse represents a PrepareCallHierarchy response.
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
 | result | [CallHierarchyPrepareResponse.Result](#lsp.protocol.rpc.CallHierarchyPrepareResponse.Result) |  |  |
-| error | [lsp.jsonrpc2.Error](#lsp.jsonrpc2.Error) |  |  |
+| error | [lsp.protocol.Error](#lsp.protocol.Error) |  |  |
 
 
 
@@ -956,7 +956,7 @@ CodeActionResponse represents a CodeAction response.
 | ----- | ---- | ----- | ----------- |
 | result | [CodeActionResponse.Result](#lsp.protocol.rpc.CodeActionResponse.Result) |  |  |
 | partial_result | [CodeActionResponse.PartialResult](#lsp.protocol.rpc.CodeActionResponse.PartialResult) |  |  |
-| error | [lsp.jsonrpc2.Error](#lsp.jsonrpc2.Error) |  |  |
+| error | [lsp.protocol.Error](#lsp.protocol.Error) |  |  |
 
 
 
@@ -1105,7 +1105,7 @@ CodeLensResolveResponse represents a CodeLensResolve response.
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
 | code_lens | [CodeLens](#lsp.protocol.rpc.CodeLens) |  |  |
-| error | [lsp.jsonrpc2.Error](#lsp.jsonrpc2.Error) |  |  |
+| error | [lsp.protocol.Error](#lsp.protocol.Error) |  |  |
 
 
 
@@ -1122,7 +1122,7 @@ CodeLensResponse represents a CodeLens response.
 | ----- | ---- | ----- | ----------- |
 | result | [CodeLensResponse.Result](#lsp.protocol.rpc.CodeLensResponse.Result) |  |  |
 | partial_result | [CodeLensResponse.PartialResult](#lsp.protocol.rpc.CodeLensResponse.PartialResult) |  |  |
-| error | [lsp.jsonrpc2.Error](#lsp.jsonrpc2.Error) |  |  |
+| error | [lsp.protocol.Error](#lsp.protocol.Error) |  |  |
 
 
 
@@ -1240,7 +1240,7 @@ ColorPresentationResponse represents a ColorPresentation response.
 | ----- | ---- | ----- | ----------- |
 | result | [ColorPresentationResponse.Result](#lsp.protocol.rpc.ColorPresentationResponse.Result) |  |  |
 | partial_result | [ColorPresentationResponse.PartialResult](#lsp.protocol.rpc.ColorPresentationResponse.PartialResult) |  |  |
-| error | [lsp.jsonrpc2.Error](#lsp.jsonrpc2.Error) |  |  |
+| error | [lsp.protocol.Error](#lsp.protocol.Error) |  |  |
 
 
 
@@ -1420,7 +1420,7 @@ CompletionItemResolveRequest represents a CompletionItemResolve response.
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
 | completion_items | [CompletionItems](#lsp.protocol.rpc.CompletionItems) |  |  |
-| error | [lsp.jsonrpc2.Error](#lsp.jsonrpc2.Error) |  |  |
+| error | [lsp.protocol.Error](#lsp.protocol.Error) |  |  |
 
 
 
@@ -1522,7 +1522,7 @@ CompletionResponse represents a Completion response.
 | completion_items | [CompletionItems](#lsp.protocol.rpc.CompletionItems) |  |  |
 | completion_list | [CompletionList](#lsp.protocol.rpc.CompletionList) |  |  |
 | empty | [google.protobuf.NullValue](#google.protobuf.NullValue) |  |  |
-| error | [lsp.jsonrpc2.Error](#lsp.jsonrpc2.Error) |  |  |
+| error | [lsp.protocol.Error](#lsp.protocol.Error) |  |  |
 
 
 
@@ -1571,7 +1571,7 @@ ConfigurationResponse represents a Configuration response.
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
 | anys | [ConfigurationResponse.Anys](#lsp.protocol.rpc.ConfigurationResponse.Anys) |  |  |
-| error | [lsp.jsonrpc2.Error](#lsp.jsonrpc2.Error) |  |  |
+| error | [lsp.protocol.Error](#lsp.protocol.Error) |  |  |
 
 
 
@@ -1669,7 +1669,7 @@ DeclarationResponse represents a Declaration response.
 | ----- | ---- | ----- | ----------- |
 | result | [DeclarationResponse.Result](#lsp.protocol.rpc.DeclarationResponse.Result) |  |  |
 | partial_result | [DeclarationResponse.PartialResult](#lsp.protocol.rpc.DeclarationResponse.PartialResult) |  |  |
-| error | [lsp.jsonrpc2.Error](#lsp.jsonrpc2.Error) |  |  |
+| error | [lsp.protocol.Error](#lsp.protocol.Error) |  |  |
 
 
 
@@ -1785,7 +1785,7 @@ DefinitionResponse represents a Definition response.
 | ----- | ---- | ----- | ----------- |
 | result | [DefinitionResponse.Result](#lsp.protocol.rpc.DefinitionResponse.Result) |  |  |
 | partial_result | [DefinitionResponse.PartialResult](#lsp.protocol.rpc.DefinitionResponse.PartialResult) |  |  |
-| error | [lsp.jsonrpc2.Error](#lsp.jsonrpc2.Error) |  |  |
+| error | [lsp.protocol.Error](#lsp.protocol.Error) |  |  |
 
 
 
@@ -2059,7 +2059,7 @@ DocumentColorResponse represents a DocumentColor response.
 | ----- | ---- | ----- | ----------- |
 | result | [DocumentColorResponse.Result](#lsp.protocol.rpc.DocumentColorResponse.Result) |  |  |
 | partial_result | [DocumentColorResponse.PartialResult](#lsp.protocol.rpc.DocumentColorResponse.PartialResult) |  |  |
-| error | [lsp.jsonrpc2.Error](#lsp.jsonrpc2.Error) |  |  |
+| error | [lsp.protocol.Error](#lsp.protocol.Error) |  |  |
 
 
 
@@ -2170,7 +2170,7 @@ DocumentFormattingResponse represents a DocumentFormatting response.
 | ----- | ---- | ----- | ----------- |
 | text_edit | [lsp.protocol.TextEdit](#lsp.protocol.TextEdit) |  |  |
 | empty | [google.protobuf.NullValue](#google.protobuf.NullValue) |  |  |
-| error | [lsp.jsonrpc2.Error](#lsp.jsonrpc2.Error) |  |  |
+| error | [lsp.protocol.Error](#lsp.protocol.Error) |  |  |
 
 
 
@@ -2269,7 +2269,7 @@ DocumentHighlightsResponse represents a DocumentHighlights response.
 | ----- | ---- | ----- | ----------- |
 | result | [DocumentHighlightsResponse.Result](#lsp.protocol.rpc.DocumentHighlightsResponse.Result) |  |  |
 | partial_result | [DocumentHighlightsResponse.PartialResult](#lsp.protocol.rpc.DocumentHighlightsResponse.PartialResult) |  |  |
-| error | [lsp.jsonrpc2.Error](#lsp.jsonrpc2.Error) |  |  |
+| error | [lsp.protocol.Error](#lsp.protocol.Error) |  |  |
 
 
 
@@ -2416,7 +2416,7 @@ DocumentLinkResolveResponse represents a DocumentLinkResolve response.
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
 | document_link | [DocumentLink](#lsp.protocol.rpc.DocumentLink) |  |  |
-| error | [lsp.jsonrpc2.Error](#lsp.jsonrpc2.Error) |  |  |
+| error | [lsp.protocol.Error](#lsp.protocol.Error) |  |  |
 
 
 
@@ -2433,7 +2433,7 @@ DocumentLinkResponse represents a DocumentLink response.
 | ----- | ---- | ----- | ----------- |
 | result | [DocumentLinkResponse.Result](#lsp.protocol.rpc.DocumentLinkResponse.Result) |  |  |
 | partial_result | [DocumentLinkResponse.PartialResult](#lsp.protocol.rpc.DocumentLinkResponse.PartialResult) |  |  |
-| error | [lsp.jsonrpc2.Error](#lsp.jsonrpc2.Error) |  |  |
+| error | [lsp.protocol.Error](#lsp.protocol.Error) |  |  |
 
 
 
@@ -2548,7 +2548,7 @@ DocumentOnTypeFormattingResponse represents a OnTypeFormatting response.
 | ----- | ---- | ----- | ----------- |
 | text_edit | [lsp.protocol.TextEdit](#lsp.protocol.TextEdit) |  |  |
 | empty | [google.protobuf.NullValue](#google.protobuf.NullValue) |  |  |
-| error | [lsp.jsonrpc2.Error](#lsp.jsonrpc2.Error) |  |  |
+| error | [lsp.protocol.Error](#lsp.protocol.Error) |  |  |
 
 
 
@@ -2632,7 +2632,7 @@ DocumentRangeFormattingResponse represents a DocumentRangeFormatting response.
 | ----- | ---- | ----- | ----------- |
 | text_edit | [lsp.protocol.TextEdit](#lsp.protocol.TextEdit) |  |  |
 | empty | [google.protobuf.NullValue](#google.protobuf.NullValue) |  |  |
-| error | [lsp.jsonrpc2.Error](#lsp.jsonrpc2.Error) |  |  |
+| error | [lsp.protocol.Error](#lsp.protocol.Error) |  |  |
 
 
 
@@ -2755,7 +2755,7 @@ DocumentSymbolResponse represents a DocumentSymbol response.
 | ----- | ---- | ----- | ----------- |
 | result | [DocumentSymbolResponse.Result](#lsp.protocol.rpc.DocumentSymbolResponse.Result) |  |  |
 | partial_result | [DocumentSymbolResponse.PartialResult](#lsp.protocol.rpc.DocumentSymbolResponse.PartialResult) |  |  |
-| error | [lsp.jsonrpc2.Error](#lsp.jsonrpc2.Error) |  |  |
+| error | [lsp.protocol.Error](#lsp.protocol.Error) |  |  |
 
 
 
@@ -2868,7 +2868,7 @@ ExecuteCommandResponse represents a ExecuteCommand response.
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
 | any | [google.protobuf.Any](#google.protobuf.Any) |  |  |
-| error | [lsp.jsonrpc2.Error](#lsp.jsonrpc2.Error) |  |  |
+| error | [lsp.protocol.Error](#lsp.protocol.Error) |  |  |
 
 
 
@@ -3003,7 +3003,7 @@ FoldingRangeResponse represents a FoldingRange response.
 | ----- | ---- | ----- | ----------- |
 | result | [FoldingRangeResponse.Result](#lsp.protocol.rpc.FoldingRangeResponse.Result) |  |  |
 | partial_result | [FoldingRangeResponse.PartialResult](#lsp.protocol.rpc.FoldingRangeResponse.PartialResult) |  |  |
-| error | [lsp.jsonrpc2.Error](#lsp.jsonrpc2.Error) |  |  |
+| error | [lsp.protocol.Error](#lsp.protocol.Error) |  |  |
 
 
 
@@ -3200,7 +3200,7 @@ HoverResponse represents a Hover response.
 | ----- | ---- | ----- | ----------- |
 | hover | [Hover](#lsp.protocol.rpc.Hover) |  |  |
 | empty | [google.protobuf.NullValue](#google.protobuf.NullValue) |  |  |
-| error | [lsp.jsonrpc2.Error](#lsp.jsonrpc2.Error) |  |  |
+| error | [lsp.protocol.Error](#lsp.protocol.Error) |  |  |
 
 
 
@@ -3283,7 +3283,7 @@ ImplementationResponse represents a Implementation response.
 | ----- | ---- | ----- | ----------- |
 | result | [ImplementationResponse.Result](#lsp.protocol.rpc.ImplementationResponse.Result) |  |  |
 | partial_result | [ImplementationResponse.PartialResult](#lsp.protocol.rpc.ImplementationResponse.PartialResult) |  |  |
-| error | [lsp.jsonrpc2.Error](#lsp.jsonrpc2.Error) |  |  |
+| error | [lsp.protocol.Error](#lsp.protocol.Error) |  |  |
 
 
 
@@ -3662,7 +3662,7 @@ PrepareRenameResponse represents a PrepareRename response.
 | range | [lsp.protocol.Range](#lsp.protocol.Range) |  |  |
 | result | [PrepareRenameResponse.Result](#lsp.protocol.rpc.PrepareRenameResponse.Result) |  |  |
 | empty | [google.protobuf.NullValue](#google.protobuf.NullValue) |  |  |
-| error | [lsp.jsonrpc2.Error](#lsp.jsonrpc2.Error) |  |  |
+| error | [lsp.protocol.Error](#lsp.protocol.Error) |  |  |
 
 
 
@@ -3858,7 +3858,7 @@ ReferenceResponse represents a Reference response.
 | ----- | ---- | ----- | ----------- |
 | result | [ReferenceResponse.Result](#lsp.protocol.rpc.ReferenceResponse.Result) |  |  |
 | partial_result | [ReferenceResponse.PartialResult](#lsp.protocol.rpc.ReferenceResponse.PartialResult) |  |  |
-| error | [lsp.jsonrpc2.Error](#lsp.jsonrpc2.Error) |  |  |
+| error | [lsp.protocol.Error](#lsp.protocol.Error) |  |  |
 
 
 
@@ -4003,7 +4003,7 @@ RenameResponse represents a Rename response.
 | ----- | ---- | ----- | ----------- |
 | workspace_edit | [lsp.protocol.WorkspaceEdit](#lsp.protocol.WorkspaceEdit) |  |  |
 | empty | [google.protobuf.NullValue](#google.protobuf.NullValue) |  |  |
-| error | [lsp.jsonrpc2.Error](#lsp.jsonrpc2.Error) |  |  |
+| error | [lsp.protocol.Error](#lsp.protocol.Error) |  |  |
 
 
 
@@ -4117,7 +4117,7 @@ SelectionRangeResponse represents a SelectionRangeResponse response.
 | ----- | ---- | ----- | ----------- |
 | result | [SelectionRangeResponse.Result](#lsp.protocol.rpc.SelectionRangeResponse.Result) |  |  |
 | partial_result | [SelectionRangeResponse.PartialResult](#lsp.protocol.rpc.SelectionRangeResponse.PartialResult) |  |  |
-| error | [lsp.jsonrpc2.Error](#lsp.jsonrpc2.Error) |  |  |
+| error | [lsp.protocol.Error](#lsp.protocol.Error) |  |  |
 
 
 
@@ -4513,7 +4513,7 @@ ShowMessageResponse represents a ShowMessage response.
 | ----- | ---- | ----- | ----------- |
 | message_action_item | [MessageActionItem](#lsp.protocol.rpc.MessageActionItem) |  |  |
 | empty | [google.protobuf.NullValue](#google.protobuf.NullValue) |  |  |
-| error | [lsp.jsonrpc2.Error](#lsp.jsonrpc2.Error) |  |  |
+| error | [lsp.protocol.Error](#lsp.protocol.Error) |  |  |
 
 
 
@@ -4670,7 +4670,7 @@ SignatureHelpResponse represents a SignatureHelp response.
 | ----- | ---- | ----- | ----------- |
 | signature_help | [SignatureHelp](#lsp.protocol.rpc.SignatureHelp) |  |  |
 | empty | [google.protobuf.NullValue](#google.protobuf.NullValue) |  |  |
-| error | [lsp.jsonrpc2.Error](#lsp.jsonrpc2.Error) |  |  |
+| error | [lsp.protocol.Error](#lsp.protocol.Error) |  |  |
 
 
 
@@ -4967,7 +4967,7 @@ TypeDefinitionResponse represents a TypeDefinition response.
 | ----- | ---- | ----- | ----------- |
 | result | [TypeDefinitionResponse.Result](#lsp.protocol.rpc.TypeDefinitionResponse.Result) |  |  |
 | partial_result | [TypeDefinitionResponse.PartialResult](#lsp.protocol.rpc.TypeDefinitionResponse.PartialResult) |  |  |
-| error | [lsp.jsonrpc2.Error](#lsp.jsonrpc2.Error) |  |  |
+| error | [lsp.protocol.Error](#lsp.protocol.Error) |  |  |
 
 
 
@@ -5065,7 +5065,7 @@ WillSaveTextDocumentResponse represents a WillSaveTextDocument response.
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
 | text_edits | [TextEdits](#lsp.protocol.rpc.TextEdits) |  |  |
-| error | [lsp.jsonrpc2.Error](#lsp.jsonrpc2.Error) |  |  |
+| error | [lsp.protocol.Error](#lsp.protocol.Error) |  |  |
 
 
 
@@ -5160,7 +5160,7 @@ WorkspaceFoldersResponse represents a WorkspaceFolders response.
 | ----- | ---- | ----- | ----------- |
 | workspace_folders | [WorkspaceFoldersResponse.WorkspaceFolders](#lsp.protocol.rpc.WorkspaceFoldersResponse.WorkspaceFolders) |  |  |
 | empty | [google.protobuf.NullValue](#google.protobuf.NullValue) |  |  |
-| error | [lsp.jsonrpc2.Error](#lsp.jsonrpc2.Error) |  |  |
+| error | [lsp.protocol.Error](#lsp.protocol.Error) |  |  |
 
 
 
@@ -5258,7 +5258,7 @@ WorkspaceSymbolsResponse represents a WorkspaceSymbols response.
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
 | symbol_informations | [WorkspaceSymbolsResponse.SymbolInformations](#lsp.protocol.rpc.WorkspaceSymbolsResponse.SymbolInformations) |  |  |
-| error | [lsp.jsonrpc2.Error](#lsp.jsonrpc2.Error) |  |  |
+| error | [lsp.protocol.Error](#lsp.protocol.Error) |  |  |
 
 
 
