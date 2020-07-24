@@ -62,14 +62,20 @@ format:  ## Format generated files with gofumports.
 third_party/googleapis:
 	git subtree add -q --prefix=third_party/googleapis --squash https://github.com/googleapis/googleapis.git master
 
-.PHONY: googleapis
-googleapis:  ## Upgrade third_party/googleapis.
+.PHONY: third_party/googleapis/pull
+third_party/googleapis/pull:
+	git stash
 	git subtree pull -q --prefix=third_party/googleapis --squash https://github.com/googleapis/googleapis.git master || git add third_party/googleapis && git merge --continue
-	@find third_party/googleapis -mindepth 1 -maxdepth 1 -not -iwholename 'third_party/googleapis/google' -exec rm -rf {} \; > /dev/null 2>&1
-	@find third_party/googleapis -mindepth 2 -type d -not -iwholename 'third_party/googleapis/google/api' -and -not -iwholename 'third_party/googleapis/google/rpc' -and -not -iwholename 'third_party/googleapis/google/longrunning' -exec rm -rf {} \; > /dev/null 2>&1 || true
-	@find third_party/googleapis -mindepth 1 -type f -not -name '*.proto' -delete > /dev/null 2>&1
-	@git add third_party/googleapis
-	@git amend
+
+.PHONY: googleapis
+googleapis: third_party/googleapis third_party/googleapis/pull
+googleapis:  ## Upgrade third_party/googleapis.
+	find third_party/googleapis -mindepth 1 -maxdepth 1 -not -iwholename 'third_party/googleapis/google' -exec rm -rf {} \; > /dev/null 2>&1
+	find third_party/googleapis -mindepth 2 -type d -not -iwholename 'third_party/googleapis/google/api' -and -not -iwholename 'third_party/googleapis/google/rpc' -and -not -iwholename 'third_party/googleapis/google/longrunning' -exec rm -rf {} \; > /dev/null 2>&1 || true
+	find third_party/googleapis -mindepth 1 -type f -not -name '*.proto' -delete > /dev/null 2>&1
+	git add third_party/googleapis
+	git amend
+	git stash pop
 
 
 # ----------------------------------------------------------------------------
