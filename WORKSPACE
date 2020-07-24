@@ -144,8 +144,8 @@ apple_support_dependencies()
 
 http_archive(
     name = "com_google_api_gax_java",
-    strip_prefix = "gax-java-77a4cc373914396dd343891e38cf743166668c96", # 1.57.0 with dependency updates.
-    urls = ["https://github.com/googleapis/gax-java/archive/77a4cc373914396dd343891e38cf743166668c96.zip"],
+    strip_prefix = "gax-java-1.57.2",
+    urls = ["https://github.com/googleapis/gax-java/archive/v1.57.2.zip"],
 )
 
 load("@com_google_api_gax_java//:repository_rules.bzl", "com_google_api_gax_java_properties")
@@ -223,8 +223,8 @@ pip_repositories()
 # Change upstream repository once PR is merged
 http_archive(
     name = "gapic_generator_python",
-    urls = ["https://github.com/googleapis/gapic-generator-python/archive/v0.28.1.zip"],
-    strip_prefix = "gapic-generator-python-0.28.1",
+    urls = ["https://github.com/googleapis/gapic-generator-python/archive/v0.29.1.zip"],
+    strip_prefix = "gapic-generator-python-0.29.1",
 )
 
 load("@gapic_generator_python//:repositories.bzl",
@@ -279,8 +279,8 @@ go_gapic_repositories()
 ### TypeScript generator
 http_archive(
     name = "gapic_generator_typescript",
-    urls = ["https://github.com/googleapis/gapic-generator-typescript/archive/v1.0.5.tar.gz"],
-    strip_prefix = "gapic-generator-typescript-1.0.5",
+    urls = ["https://github.com/googleapis/gapic-generator-typescript/archive/v1.0.6.tar.gz"],
+    strip_prefix = "gapic-generator-typescript-1.0.6",
 )
 
 load("@gapic_generator_typescript//:repositories.bzl", "gapic_generator_typescript_repositories")
@@ -295,11 +295,6 @@ yarn_install(
     package_json = "@gapic_generator_typescript//:package.json",
     yarn_lock = "@gapic_generator_typescript//:yarn.lock",
 )
-load("@npm//:install_bazel_dependencies.bzl", "install_bazel_dependencies")
-install_bazel_dependencies()
-
-load("@npm_bazel_typescript//:index.bzl", "ts_setup_workspace")
-ts_setup_workspace()
 
 ##############################################################################
 # PHP
