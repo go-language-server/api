@@ -54,3 +54,6 @@ coverage.*
 
 ## protoc-gen-go: --go_out=annotate_code=true flag
 *.meta
+
+# tools
+tools/bin/
