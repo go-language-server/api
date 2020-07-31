@@ -7,6 +7,8 @@ GO_ARCH := $(shell go env GOARCH)
 GO_PATH := $(shell go env GOPATH)
 PACKAGE := $(subst $(GO_PATH)/src/,,$(CURDIR))
 
+TOOLS_PATH = ${CURDIR}/tools/bin
+
 # ----------------------------------------------------------------------------
 # variables
 
@@ -28,36 +30,48 @@ DOCKER_VOLUMES ?= ${DOCKER_VOLUME_API} ${DOCKER_VOLUME_GOPATH}
 DOCKER_VOLUME_FLAGS ?= $(foreach volume,${DOCKER_VOLUMES},-v $(volume):cached)
 
 # ----------------------------------------------------------------------------
-##@ targets
+# targets
 
-all: protoc protoc/grpc-gateway protoc/gen-doc format
+all: protoc protoc-grpc-gateway protoc-gen-doc gofumports
+
+
+##@ tools
+
+${TOOLS_PATH}/gofumports: tools
+
+tools:  ## Build tools container image.
+	@pushd ./tools > /dev/null 2>&1; GOBIN=${TOOLS_PATH} go install -v `go list -f '{{ join .Imports " " }}' -tags=tools`
+
+.PHONY: gofumports
+gofumports: ${TOOLS_PATH}/gofumports
+gofumports:  ## Format generated files with gofumports.
+	${TOOLS_PATH}/$@ -w -local=${PACKAGE} ./protocol ./uri
+
+.PHONY: tools/docker
+tools/docker:  ## Build tools container image.
+	docker buildx build --rm --build-arg PROTOC_VERSION=${PROTOC_VERSION} --build-arg GOLANG_VERSION=${GOLANG_VERSION} --build-arg ALPINE_VERSION=${ALPINE_VERSION} --tag ${DOCKER_CONTAINER_IMAGE} --target tools --output=type=docker ./tools/docker
 
 .PHONY: protoc
 protoc:  ## Run protoc.
 	docker container run --rm -it ${DOCKER_VOLUME_FLAGS} -w /go/src/${PACKAGE} ${DOCKER_CONTAINER_IMAGE} --go_out=annotate_code=true:${PROTOC_OUT} --go-grpc_out=annotate_code=true:${PROTOC_OUT} ${PROTOC_INCLUDES} --descriptor_set_out=fileset.pb --include_imports --include_source_info $(foreach f,${PROTO_FILES},$(abspath /go/src/${PACKAGE}/$(f)))
 
-.PHONY: protoc/grpc-gateway
-protoc/grpc-gateway:
+.PHONY: protoc-grpc-gateway
+protoc-grpc-gateway:  ## Run protoc-grpc-gateway.
 	docker container run --rm -it ${DOCKER_VOLUME_FLAGS} -w /go/src/${PACKAGE} ${DOCKER_CONTAINER_IMAGE} --grpc-gateway_out=${PROTOC_OUT} ${PROTOC_INCLUDES} $(foreach f,${PROTO_FILES_PROTOCOL_RPC},$(abspath /go/src/${PACKAGE}/$(f)))
 
-.PHONY: protoc/gen-doc
-protoc/gen-doc:
+.PHONY: protoc-gen-doc
+protoc-gen-doc:  ## Run protoc-gen-doc.
 	docker container run --rm -it ${DOCKER_VOLUME_FLAGS} -w /go/src/${PACKAGE} ${DOCKER_CONTAINER_IMAGE} --doc_out=/go/src/${PACKAGE}/protocol --doc_opt=/go/src/${PACKAGE}/hack/template/protoc-gen-doc.tmpl,README.md ${PROTOC_INCLUDES} $(foreach f,${PROTO_FILES_PROTOCOL},$(abspath /go/src/${PACKAGE}/$(f)))
 	docker container run --rm -it ${DOCKER_VOLUME_FLAGS} -w /go/src/${PACKAGE} ${DOCKER_CONTAINER_IMAGE} --doc_out=/go/src/${PACKAGE}/protocol/rpc --doc_opt=/go/src/${PACKAGE}/hack/template/protoc-gen-doc.tmpl,README.md ${PROTOC_INCLUDES} $(foreach f,${PROTO_FILES_PROTOCOL_RPC},$(abspath /go/src/${PACKAGE}/$(f)))
 	docker container run --rm -it ${DOCKER_VOLUME_FLAGS} -w /go/src/${PACKAGE} ${DOCKER_CONTAINER_IMAGE} --doc_out=/go/src/${PACKAGE}/uri --doc_opt=/go/src/${PACKAGE}/hack/template/protoc-gen-doc.tmpl,README.md ${PROTOC_INCLUDES} $(foreach f,${PROTO_FILES_URI},$(abspath /go/src/${PACKAGE}/$(f)))
-
-.PHONY: tools
-tools:  ## Build tools container image.
-	docker buildx build --rm --build-arg PROTOC_VERSION=${PROTOC_VERSION} --build-arg GOLANG_VERSION=${GOLANG_VERSION} --build-arg ALPINE_VERSION=${ALPINE_VERSION} --tag ${DOCKER_CONTAINER_IMAGE} --target tools --output=type=docker ./tools/docker
 
 .PHONY: api-linter
 api-linter: DOCKER_VOLUMES=${DOCKER_VOLUME_GOPATH}
 api-linter:  ## Lint proto files with api-linter.
 	docker container run --rm -it -v ${CURDIR}:/go/src/${PACKAGE}:cached -w /go/src/${PACKAGE} --entrypoint=api-linter ${DOCKER_CONTAINER_IMAGE} --config=/go/src/${PACKAGE}/.api-linter.yaml --output-format=yaml --set-exit-status ${PROTOC_INCLUDES} $(foreach f,${PROTO_FILES},/go/src/${PACKAGE}/$(f))
 
-.PHONY: format
-format:  ## Format generated files with gofumports.
-	gofumports -w -local=${PACKAGE} ./protocol ./uri
+
+##@ googleapis
 
 third_party/googleapis:
 	git subtree add -q --prefix=third_party/googleapis --squash https://github.com/googleapis/googleapis.git master
@@ -78,7 +92,6 @@ googleapis:  ## Upgrade third_party/googleapis.
 	git stash pop
 
 
-# ----------------------------------------------------------------------------
 ##@ help
 
 .PHONY: help
