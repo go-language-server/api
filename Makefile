@@ -48,7 +48,7 @@ protoc/gen-doc:
 
 .PHONY: tools
 tools:  ## Build tools container image.
-	docker buildx build --rm --build-arg PROTOC_VERSION=${PROTOC_VERSION} --build-arg GOLANG_VERSION=${GOLANG_VERSION} --build-arg ALPINE_VERSION=${ALPINE_VERSION} --tag ${DOCKER_CONTAINER_IMAGE} --target tools --output=type=docker ./tools
+	docker buildx build --rm --build-arg PROTOC_VERSION=${PROTOC_VERSION} --build-arg GOLANG_VERSION=${GOLANG_VERSION} --build-arg ALPINE_VERSION=${ALPINE_VERSION} --tag ${DOCKER_CONTAINER_IMAGE} --target tools --output=type=docker ./tools/docker
 
 .PHONY: api-linter
 api-linter: DOCKER_VOLUMES=${DOCKER_VOLUME_GOPATH}

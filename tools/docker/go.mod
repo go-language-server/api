@@ -1,4 +1,4 @@
-module go.lsp.dev/proto/tools
+module go.lsp.dev/proto/tools/docker
 
 go 1.14
 
