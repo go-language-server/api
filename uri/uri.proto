@@ -36,16 +36,17 @@ message URI {
 }
 
 // Scheme is the generic URI syntax scheme.
+// (-- api-linter: core::0126::upper-snake-values=disabled --)
 enum Scheme {
   // Conventional default for enums. Do not use this.
   SCHEME_UNSPECIFIED = 0;
 
   // File schema of filesystem path.
-  SCHEME_FILE = 1;
+  file = 1;
 
   // HTTP schema of http.
-  SCHEME_HTTP = 2;
+  http = 2;
 
   // HTTPS schema of https.
-  SCHEME_HTTPS = 3;
+  https = 3;
 }
