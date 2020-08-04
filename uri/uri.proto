@@ -35,12 +35,6 @@ message URI {
   string uri = 1 [(google.api.field_behavior) = REQUIRED];
 }
 
-// DocumentURI are transferred as strings. The URI’s format is defined in
-// http://tools.ietf.org/html/rfc3986.
-message DocumentURI {
-  string document_uri = 1 [(google.api.field_behavior) = REQUIRED];
-}
-
 // Scheme is the generic URI syntax scheme.
 enum Scheme {
   // Conventional default for enums. Do not use this.

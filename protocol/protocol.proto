@@ -23,6 +23,12 @@ option php_namespace = "Protocol";
 option ruby_package = "Protocol";
 option swift_prefix = "LSPP";
 
+// DocumentURI are transferred as strings. The URI’s format is defined in
+// http://tools.ietf.org/html/rfc3986.
+message DocumentURI {
+  string document_uri = 1 [(google.api.field_behavior) = REQUIRED];
+}
+
 // Position in a text document expressed as zero-based line and zero-based character offset.
 // A position is between two characters like an ‘insert’ cursor in a editor.
 // Special values like for example -1 to denote the end of a line are not supported.

@@ -15,7 +15,6 @@ import "google/protobuf/wrappers.proto";
 
 import "protocol/error.proto";
 import "protocol/protocol.proto";
-import "uri/uri.proto";
 
 option cc_enable_arenas = true;
 option csharp_namespace = "Protocol.Rpc";
@@ -882,7 +881,7 @@ message InitializeRequest {
   // `rootUri` wins.
   //
   // nullable
-  uri.DocumentURI root_uri = 5 [(google.api.field_behavior) = REQUIRED];
+  protocol.DocumentURI root_uri = 5 [(google.api.field_behavior) = REQUIRED];
 
   // Optional. User provided initialization options.
   google.protobuf.Any initialization_options = 6;
@@ -2078,7 +2077,7 @@ message WorkspaceFoldersServerCapabilities {
 // (-- api-linter: core::0123::resource-annotation=disabled --)
 message WorkspaceFolder {
   // The associated URI for this workspace folder.
-  uri.DocumentURI uri = 1 [(google.api.field_behavior) = REQUIRED];
+  protocol.DocumentURI uri = 1 [(google.api.field_behavior) = REQUIRED];
 
   // The name of the workspace folder. Used to refer to this
   // workspace folder in the user interface.
@@ -2118,7 +2117,7 @@ message DidChangeConfigurationRequest {
 // ConfigurationItem represents a configuration section to ask for and an additional scope URI.
 message ConfigurationItem {
   // The scope to get the configuration section for.
-  uri.DocumentURI scope_uri = 1;
+  protocol.DocumentURI scope_uri = 1;
 
   // The configuration section asked for.
   google.protobuf.StringValue section = 2;
@@ -2201,7 +2200,7 @@ message FileEvent {
   }
 
   // The file's URI.
-  uri.DocumentURI uri = 1 [(google.api.field_behavior) = REQUIRED];
+  protocol.DocumentURI uri = 1 [(google.api.field_behavior) = REQUIRED];
 
   // The change type.
   FileChangeType type = 2 [(google.api.field_behavior) = REQUIRED];
@@ -2514,7 +2513,7 @@ message PublishDiagnosticsClientCapabilities {
 // PublishDiagnosticsRequest is the parameters of a `textDocument/publishDiagnostics` notification.
 message PublishDiagnosticsRequest {
   // The URI for which diagnostic information is reported.
-  uri.DocumentURI uri = 1 [(google.api.field_behavior) = REQUIRED];
+  protocol.DocumentURI uri = 1 [(google.api.field_behavior) = REQUIRED];
 
   // Optional the version number of the document the diagnostics are published for.
   //
@@ -3845,7 +3844,7 @@ message DocumentLink {
   Range range = 1 [(google.api.field_behavior) = REQUIRED];
 
   // The uri this link points to. If missing a resolve request is sent later.
-  uri.DocumentURI target = 2;
+  protocol.DocumentURI target = 2;
 
   // The tooltip text when you hover over this link.
   //
@@ -4374,7 +4373,7 @@ message CallHierarchyItem {
   google.protobuf.StringValue detail = 4;
 
   // The resource identifier of this item.
-  uri.DocumentURI uri = 5 [(google.api.field_behavior) = REQUIRED];
+  protocol.DocumentURI uri = 5 [(google.api.field_behavior) = REQUIRED];
 
   // The range enclosing this symbol not including leading/trailing whitespace but everything else,
   // e.g. comments and code.
