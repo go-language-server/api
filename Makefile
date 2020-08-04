@@ -12,7 +12,7 @@ TOOLS_PATH = ${CURDIR}/tools/bin
 # ----------------------------------------------------------------------------
 # variables
 
-PROTOC_VERSION ?= 3.12.3
+PROTOC_VERSION ?= 3.12.4
 GOLANG_VERSION ?= 1.14
 ALPINE_VERSION ?= 3.12
 
@@ -39,6 +39,7 @@ all: protoc protoc-grpc-gateway protoc-gen-doc gofumports
 
 ${TOOLS_PATH}/gofumports: tools
 
+.PHONY: tools
 tools:  ## Build tools container image.
 	@pushd ./tools > /dev/null 2>&1; GOBIN=${TOOLS_PATH} go install -v `go list -f '{{ join .Imports " " }}' -tags=tools`
 
