@@ -1,0 +1,24 @@
+version: 2.1
+
+jobs:
+  api-linter:
+    docker:
+      - name: protoc
+        image: gcr.io/containerz/go.lsp.dev/protoc:3.12.4
+        user: root
+        entrypoint:
+          - sh
+    working_directory: /go/src/go.lsp.dev/api
+    steps:
+      - checkout
+      - run:
+          name:: Run api-linter
+          command: |
+            api-linter --config=.api-linter.yaml --output-format=yaml --set-exit-status -I/go/src/go.lsp.dev/api -I/go/src/go.lsp.dev/api/third_party $(find ./uri ./protocol ./protocol/rpc -maxdepth 1 -type f -name '*.proto')
+
+workflows:
+  version: 2
+  workflows:
+    jobs:
+      - api-linter:
+          context: org-global
