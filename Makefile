@@ -20,7 +20,7 @@ PROTO_FILES_PROTOCOL := $(shell find protocol -maxdepth 1 -type f -name '*.proto
 PROTO_FILES_PROTOCOL_RPC := $(shell find protocol/rpc -type f -name '*.proto')
 PROTO_FILES_URI := $(shell find uri -type f -name '*.proto')
 PROTO_FILES := ${PROTO_FILES_PROTOCOL} ${PROTO_FILES_PROTOCOL_RPC} ${PROTO_FILES_URI}
-PROTOC_INCLUDES ?= -I/go/src/${PACKAGE} -I/go/src/${PACKAGE}/third_party/googleapis
+PROTOC_INCLUDES ?= -I/go/src/${PACKAGE} -I/go/src/${PACKAGE}/third_party
 PROTOC_OUT ?= /go/src
 
 DOCKER_CONTAINER_IMAGE ?= gcr.io/lsp-dev/protoc:${PROTOC_VERSION}
@@ -70,27 +70,6 @@ protoc-gen-doc:  ## Run protoc-gen-doc.
 api-linter: DOCKER_VOLUMES=${DOCKER_VOLUME_GOPATH}
 api-linter:  ## Lint proto files with api-linter.
 	docker container run --rm -it -v ${CURDIR}:/go/src/${PACKAGE}:cached -w /go/src/${PACKAGE} --entrypoint=api-linter ${DOCKER_CONTAINER_IMAGE} --config=/go/src/${PACKAGE}/.api-linter.yaml --output-format=yaml --set-exit-status ${PROTOC_INCLUDES} $(foreach f,${PROTO_FILES},/go/src/${PACKAGE}/$(f))
-
-
-##@ googleapis
-
-third_party/googleapis:
-	git subtree add -q --prefix=third_party/googleapis --squash https://github.com/googleapis/googleapis.git master
-
-.PHONY: third_party/googleapis/pull
-third_party/googleapis/pull:
-	git stash
-	git subtree pull -q --prefix=third_party/googleapis --squash https://github.com/googleapis/googleapis.git master || git add third_party/googleapis && git merge --continue
-
-.PHONY: googleapis
-googleapis: third_party/googleapis third_party/googleapis/pull
-googleapis:  ## Upgrade third_party/googleapis.
-	find third_party/googleapis -mindepth 1 -maxdepth 1 -not -iwholename 'third_party/googleapis/google' -exec rm -rf {} \; > /dev/null 2>&1
-	find third_party/googleapis -mindepth 2 -type d -not -iwholename 'third_party/googleapis/google/api' -and -not -iwholename 'third_party/googleapis/google/rpc' -and -not -iwholename 'third_party/googleapis/google/longrunning' -exec rm -rf {} \; > /dev/null 2>&1 || true
-	find third_party/googleapis -mindepth 1 -type f -not -name '*.proto' -delete > /dev/null 2>&1
-	git add third_party/googleapis
-	git amend
-	git stash pop
 
 
 ##@ help
