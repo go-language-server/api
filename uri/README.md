@@ -6,7 +6,6 @@
 
 - [uri/uri.proto](#uri/uri.proto)
   
-    - [DocumentURI](#uri.DocumentURI)
     - [URI](#uri.URI)
   
     - [Scheme](#uri.Scheme)
@@ -22,22 +21,6 @@
  <!-- end services -->
 
 ## uri/uri.proto
-
-
-
-<a name="uri.DocumentURI"/>
-
-### DocumentURI
-DocumentURI are transferred as strings. The URI’s format is defined in
-http://tools.ietf.org/html/rfc3986.
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| document_uri | [string](#string) |  |  |
-
-
-
 
 
 

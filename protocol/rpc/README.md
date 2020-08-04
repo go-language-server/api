@@ -542,7 +542,7 @@ CallHierarchyItem represents a item of call hierarchy.
 | kind | [SymbolKind](#protocol.rpc.SymbolKind) |  | The kind of this item. |
 | tags | [SymbolTag](#protocol.rpc.SymbolTag) | repeated | Tags for this item. |
 | detail | [google.protobuf.StringValue](#google.protobuf.StringValue) |  | More detail for this item, e.g. the signature of a function. |
-| uri | [uri.DocumentURI](#uri.DocumentURI) |  | The resource identifier of this item. |
+| uri | [protocol.DocumentURI](#protocol.DocumentURI) |  | The resource identifier of this item. |
 | range | [protocol.Range](#protocol.Range) |  | The range enclosing this symbol not including leading/trailing whitespace but everything else, e.g. comments and code. |
 | selection_range | [protocol.Range](#protocol.Range) |  | The range that should be selected and revealed when this symbol is being picked, e.g. the name of a function. Must be contained by the [`range`][CallHierarchyItem.range]. |
 
@@ -1537,7 +1537,7 @@ ConfigurationItem represents a configuration section to ask for and an additiona
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| scope_uri | [uri.DocumentURI](#uri.DocumentURI) |  | The scope to get the configuration section for. |
+| scope_uri | [protocol.DocumentURI](#protocol.DocumentURI) |  | The scope to get the configuration section for. |
 | section | [google.protobuf.StringValue](#google.protobuf.StringValue) |  | The configuration section asked for. |
 
 
@@ -2317,7 +2317,7 @@ external resource, like another text document or a web site.
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
 | range | [protocol.Range](#protocol.Range) |  | The range this link applies to. |
-| target | [uri.DocumentURI](#uri.DocumentURI) |  | The uri this link points to. If missing a resolve request is sent later. |
+| target | [protocol.DocumentURI](#protocol.DocumentURI) |  | The uri this link points to. If missing a resolve request is sent later. |
 | tooltip | [google.protobuf.StringValue](#google.protobuf.StringValue) |  | The tooltip text when you hover over this link.  If a tooltip is provided, is will be displayed in a string that includes instructions on how to trigger the link, such as `{0} (ctrl + click)`. The specific instructions vary depending on OS, user settings, and localization.  @since 3.15.0 |
 | data | [google.protobuf.Any](#google.protobuf.Any) |  | A data entry field that is preserved on a document link between a DocumentLinkRequest and a DocumentLinkResolveRequest. |
 
@@ -2883,7 +2883,7 @@ FileEvent an event describing a file change.
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| uri | [uri.DocumentURI](#uri.DocumentURI) |  | The file's URI. |
+| uri | [protocol.DocumentURI](#protocol.DocumentURI) |  | The file's URI. |
 | type | [FileEvent.FileChangeType](#protocol.rpc.FileEvent.FileChangeType) |  | The change type. |
 
 
@@ -3386,7 +3386,7 @@ The initialize request may only be sent once.
 | process_id | [int32](#int32) |  | Required. The process Id of the parent process that started the server. Is null if the process has not been started by another process. If the parent process is not alive then the server should exit (see exit notification) its process. |
 | client_info | [InitializeRequest.ClientInfo](#protocol.rpc.InitializeRequest.ClientInfo) |  | Optional. Information about the client.  @since 3.15.0 |
 | root_path | [google.protobuf.StringValue](#google.protobuf.StringValue) |  | Optional. The rootPath of the workspace. Is null if no folder is open.  Use rootUri instead of. |
-| root_uri | [uri.DocumentURI](#uri.DocumentURI) |  | The rootUri of the workspace. Is null if no folder is open. If both `rootPath` and `rootUri` are set `rootUri` wins.  nullable |
+| root_uri | [protocol.DocumentURI](#protocol.DocumentURI) |  | The rootUri of the workspace. Is null if no folder is open. If both `rootPath` and `rootUri` are set `rootUri` wins.  nullable |
 | initialization_options | [google.protobuf.Any](#google.protobuf.Any) |  | Optional. User provided initialization options. |
 | capabilities | [ClientCapabilities](#protocol.rpc.ClientCapabilities) |  | Required. The capabilities provided by the client (editor or tool) |
 | trace | [protocol.TraceValue](#protocol.TraceValue) |  | Optional. The initial trace setting. If omitted trace is disabled ('off'). |
@@ -3759,7 +3759,7 @@ PublishDiagnosticsRequest is the parameters of a `textDocument/publishDiagnostic
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| uri | [uri.DocumentURI](#uri.DocumentURI) |  | The URI for which diagnostic information is reported. |
+| uri | [protocol.DocumentURI](#protocol.DocumentURI) |  | The URI for which diagnostic information is reported. |
 | version | [int32](#int32) |  | Optional the version number of the document the diagnostics are published for.  @since 3.15.0 |
 | diagnostics | [protocol.Diagnostic](#protocol.Diagnostic) | repeated | An array of diagnostic information items. |
 
@@ -5126,7 +5126,7 @@ WorkspaceFolder represents a workspace root folder.
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| uri | [uri.DocumentURI](#uri.DocumentURI) |  | The associated URI for this workspace folder. |
+| uri | [protocol.DocumentURI](#protocol.DocumentURI) |  | The associated URI for this workspace folder. |
 | name | [string](#string) |  | The name of the workspace folder. Used to refer to this workspace folder in the user interface. |
 
 
