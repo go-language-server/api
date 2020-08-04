@@ -57,13 +57,14 @@ and encoding.
 
 ### Scheme
 Scheme is the generic URI syntax scheme.
+(-- api-linter: core::0126::upper-snake-values=disabled --)
 
 | Name | Number | Description |
 | ---- | ------ | ----------- |
 | SCHEME_UNSPECIFIED | 0 | Conventional default for enums. Do not use this. |
-| SCHEME_FILE | 1 | File schema of filesystem path. |
-| SCHEME_HTTP | 2 | HTTP schema of http. |
-| SCHEME_HTTPS | 3 | HTTPS schema of https. |
+| file | 1 | File schema of filesystem path. |
+| http | 2 | HTTP schema of http. |
+| https | 3 | HTTPS schema of https. |
 
 
  <!-- end enums -->
