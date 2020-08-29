@@ -23,7 +23,7 @@ PROTO_FILES := ${PROTO_FILES_PROTOCOL} ${PROTO_FILES_PROTOCOL_RPC} ${PROTO_FILES
 PROTOC_INCLUDES ?= -I/go/src/${PACKAGE} -I/go/src/${PACKAGE}/third_party
 PROTOC_OUT ?= /go/src
 
-DOCKER_CONTAINER_IMAGE ?= gcr.io/lsp-dev/protoc:${PROTOC_VERSION}
+DOCKER_CONTAINER_IMAGE ?= gcr.io/containerz/go.lsp.dev/protoc:${PROTOC_VERSION}
 DOCKER_VOLUME_API ?= $(abspath $(dir ${CURDIR})):$(abspath /go/src/$(dir ${PACKAGE}))
 DOCKER_VOLUME_GOPATH ?= ${CURDIR}:/go/src/${PACKAGE}
 DOCKER_VOLUMES ?= ${DOCKER_VOLUME_API} ${DOCKER_VOLUME_GOPATH}
