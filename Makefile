@@ -12,8 +12,8 @@ TOOLS_PATH = ${CURDIR}/tools/bin
 # ----------------------------------------------------------------------------
 # variables
 
-PROTOC_VERSION ?= 3.12.4
-GOLANG_VERSION ?= 1.14
+PROTOC_VERSION ?= 3.13.0
+GOLANG_VERSION ?= 1.15
 ALPINE_VERSION ?= 3.12
 
 PROTO_FILES_PROTOCOL := $(shell find protocol -maxdepth 1 -type f -name '*.proto')
