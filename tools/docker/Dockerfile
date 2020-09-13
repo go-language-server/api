@@ -1,6 +1,6 @@
 # syntax = docker.io/docker/dockerfile:experimental
 
-ARG PROTOC_VERSION
+ARG PROTOC_DIGEST
 ARG GOLANG_VERSION
 ARG ALPINE_VERSION
 
@@ -28,7 +28,7 @@ RUN \
 	$(go list -f '{{ join .Imports " " }}' -tags=tools)
 
 # target: tools
-FROM gcr.io/containerz/protoc/golang:${GOLANG_VERSION}-${PROTOC_VERSION}-debug AS tools
+FROM gcr.io/containerz/protoc/golang@${PROTOC_DIGEST} AS tools
 COPY --from=golang-builder --chown=nonroot:nonroot /out/ /
 USER nonroot:nonroot
 LABEL maintainer="The Go Language Server Authors" \

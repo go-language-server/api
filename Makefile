@@ -12,6 +12,7 @@ TOOLS_PATH = ${CURDIR}/tools/bin
 # ----------------------------------------------------------------------------
 # variables
 
+PROTOC_DIGEST ?= sha256:72410a17b2c8f2714dc8599663d69823c13b1bcda0e8627dde138b339022181a  # 3.13.0-1.15-debug
 PROTOC_VERSION ?= 3.13.0
 GOLANG_VERSION ?= 1.15
 ALPINE_VERSION ?= 3.12
@@ -22,8 +23,9 @@ PROTO_FILES_URI := $(shell find uri -type f -name '*.proto')
 PROTO_FILES := ${PROTO_FILES_PROTOCOL} ${PROTO_FILES_PROTOCOL_RPC} ${PROTO_FILES_URI}
 PROTOC_INCLUDES ?= -I/go/src/${PACKAGE} -I/go/src/${PACKAGE}/third_party
 PROTOC_OUT ?= /go/src
+PROTOC_OUT_SRCS ?= ./protocol ./uri
 
-DOCKER_CONTAINER_IMAGE ?= gcr.io/containerz/go.lsp.dev/protoc:${PROTOC_VERSION}
+DOCKER_CONTAINER_IMAGE ?= gcr.io/containerz/go.lsp.dev/protoc:${PROTOC_VERSION}-${GOLANG_VERSION}
 DOCKER_VOLUME_API ?= $(abspath $(dir ${CURDIR})):$(abspath /go/src/$(dir ${PACKAGE}))
 DOCKER_VOLUME_GOPATH ?= ${CURDIR}:/go/src/${PACKAGE}
 DOCKER_VOLUMES ?= ${DOCKER_VOLUME_API} ${DOCKER_VOLUME_GOPATH}
@@ -46,11 +48,11 @@ tools:  ## Build tools container image.
 .PHONY: gofumports
 gofumports: ${TOOLS_PATH}/gofumports
 gofumports:  ## Format generated files with gofumports.
-	${TOOLS_PATH}/$@ -w -local=${PACKAGE} ./protocol ./uri
+	${TOOLS_PATH}/$@ -w -local=${PACKAGE} ${PROTOC_OUT_SRCS}
 
 .PHONY: tools/docker
 tools/docker:  ## Build tools container image.
-	docker buildx build --rm --build-arg PROTOC_VERSION=${PROTOC_VERSION} --build-arg GOLANG_VERSION=${GOLANG_VERSION} --build-arg ALPINE_VERSION=${ALPINE_VERSION} --tag ${DOCKER_CONTAINER_IMAGE} --target tools --output=type=docker ./tools/docker
+	docker buildx build --rm --build-arg PROTOC_DIGEST=${PROTOC_DIGEST} --build-arg GOLANG_VERSION=${GOLANG_VERSION} --build-arg ALPINE_VERSION=${ALPINE_VERSION} --tag ${DOCKER_CONTAINER_IMAGE} --target tools --output=type=docker ./tools/docker
 
 .PHONY: protoc
 protoc:  ## Run protoc.
