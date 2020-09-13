@@ -16,7 +16,7 @@ import (
 
 // This is a compile-time assertion to ensure that this generated file
 // is compatible with the grpc package it is being compiled against.
-const _ = grpc.SupportPackageIsVersion6
+const _ = grpc.SupportPackageIsVersion7
 
 // LanguageServerProtocolClient is the client API for LanguageServerProtocol service.
 //
@@ -440,6 +440,10 @@ func NewLanguageServerProtocolClient(cc grpc.ClientConnInterface) LanguageServer
 	return &languageServerProtocolClient{cc}
 }
 
+var languageServerProtocolCancelStreamDesc = &grpc.StreamDesc{
+	StreamName: "Cancel",
+}
+
 func (c *languageServerProtocolClient) Cancel(ctx context.Context, in *CancelRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
 	out := new(empty.Empty)
 	err := c.cc.Invoke(ctx, "/protocol.rpc.LanguageServerProtocol/Cancel", in, out, opts...)
@@ -447,6 +451,10 @@ func (c *languageServerProtocolClient) Cancel(ctx context.Context, in *CancelReq
 		return nil, err
 	}
 	return out, nil
+}
+
+var languageServerProtocolProgressStreamDesc = &grpc.StreamDesc{
+	StreamName: "Progress",
 }
 
 func (c *languageServerProtocolClient) Progress(ctx context.Context, in *ProgressRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
@@ -458,6 +466,10 @@ func (c *languageServerProtocolClient) Progress(ctx context.Context, in *Progres
 	return out, nil
 }
 
+var languageServerProtocolInitializeStreamDesc = &grpc.StreamDesc{
+	StreamName: "Initialize",
+}
+
 func (c *languageServerProtocolClient) Initialize(ctx context.Context, in *InitializeRequest, opts ...grpc.CallOption) (*InitializeResponse, error) {
 	out := new(InitializeResponse)
 	err := c.cc.Invoke(ctx, "/protocol.rpc.LanguageServerProtocol/Initialize", in, out, opts...)
@@ -465,6 +477,10 @@ func (c *languageServerProtocolClient) Initialize(ctx context.Context, in *Initi
 		return nil, err
 	}
 	return out, nil
+}
+
+var languageServerProtocolInitializedStreamDesc = &grpc.StreamDesc{
+	StreamName: "Initialized",
 }
 
 func (c *languageServerProtocolClient) Initialized(ctx context.Context, in *InitializedRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
@@ -476,6 +492,10 @@ func (c *languageServerProtocolClient) Initialized(ctx context.Context, in *Init
 	return out, nil
 }
 
+var languageServerProtocolShutdownStreamDesc = &grpc.StreamDesc{
+	StreamName: "Shutdown",
+}
+
 func (c *languageServerProtocolClient) Shutdown(ctx context.Context, in *empty.Empty, opts ...grpc.CallOption) (*protocol.Error, error) {
 	out := new(protocol.Error)
 	err := c.cc.Invoke(ctx, "/protocol.rpc.LanguageServerProtocol/Shutdown", in, out, opts...)
@@ -483,6 +503,10 @@ func (c *languageServerProtocolClient) Shutdown(ctx context.Context, in *empty.E
 		return nil, err
 	}
 	return out, nil
+}
+
+var languageServerProtocolExitStreamDesc = &grpc.StreamDesc{
+	StreamName: "Exit",
 }
 
 func (c *languageServerProtocolClient) Exit(ctx context.Context, in *empty.Empty, opts ...grpc.CallOption) (*empty.Empty, error) {
@@ -494,6 +518,10 @@ func (c *languageServerProtocolClient) Exit(ctx context.Context, in *empty.Empty
 	return out, nil
 }
 
+var languageServerProtocolLogTraceStreamDesc = &grpc.StreamDesc{
+	StreamName: "LogTrace",
+}
+
 func (c *languageServerProtocolClient) LogTrace(ctx context.Context, in *LogTraceRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
 	out := new(empty.Empty)
 	err := c.cc.Invoke(ctx, "/protocol.rpc.LanguageServerProtocol/LogTrace", in, out, opts...)
@@ -501,6 +529,10 @@ func (c *languageServerProtocolClient) LogTrace(ctx context.Context, in *LogTrac
 		return nil, err
 	}
 	return out, nil
+}
+
+var languageServerProtocolSetTraceStreamDesc = &grpc.StreamDesc{
+	StreamName: "SetTrace",
 }
 
 func (c *languageServerProtocolClient) SetTrace(ctx context.Context, in *SetTraceRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
@@ -512,6 +544,10 @@ func (c *languageServerProtocolClient) SetTrace(ctx context.Context, in *SetTrac
 	return out, nil
 }
 
+var languageServerProtocolShowMessageStreamDesc = &grpc.StreamDesc{
+	StreamName: "ShowMessage",
+}
+
 func (c *languageServerProtocolClient) ShowMessage(ctx context.Context, in *ShowMessageRequestParams, opts ...grpc.CallOption) (*empty.Empty, error) {
 	out := new(empty.Empty)
 	err := c.cc.Invoke(ctx, "/protocol.rpc.LanguageServerProtocol/ShowMessage", in, out, opts...)
@@ -519,6 +555,10 @@ func (c *languageServerProtocolClient) ShowMessage(ctx context.Context, in *Show
 		return nil, err
 	}
 	return out, nil
+}
+
+var languageServerProtocolShowMessageRequestStreamDesc = &grpc.StreamDesc{
+	StreamName: "ShowMessageRequest",
 }
 
 func (c *languageServerProtocolClient) ShowMessageRequest(ctx context.Context, in *ShowMessageRequestRequest, opts ...grpc.CallOption) (*ShowMessageResponse, error) {
@@ -530,6 +570,10 @@ func (c *languageServerProtocolClient) ShowMessageRequest(ctx context.Context, i
 	return out, nil
 }
 
+var languageServerProtocolLogMessageStreamDesc = &grpc.StreamDesc{
+	StreamName: "LogMessage",
+}
+
 func (c *languageServerProtocolClient) LogMessage(ctx context.Context, in *LogMessageRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
 	out := new(empty.Empty)
 	err := c.cc.Invoke(ctx, "/protocol.rpc.LanguageServerProtocol/LogMessage", in, out, opts...)
@@ -537,6 +581,10 @@ func (c *languageServerProtocolClient) LogMessage(ctx context.Context, in *LogMe
 		return nil, err
 	}
 	return out, nil
+}
+
+var languageServerProtocolCreateWorkDoneProgressStreamDesc = &grpc.StreamDesc{
+	StreamName: "CreateWorkDoneProgress",
 }
 
 func (c *languageServerProtocolClient) CreateWorkDoneProgress(ctx context.Context, in *WorkDoneProgressCreateRequest, opts ...grpc.CallOption) (*protocol.Error, error) {
@@ -548,6 +596,10 @@ func (c *languageServerProtocolClient) CreateWorkDoneProgress(ctx context.Contex
 	return out, nil
 }
 
+var languageServerProtocolCancelWorkDoneProgressStreamDesc = &grpc.StreamDesc{
+	StreamName: "CancelWorkDoneProgress",
+}
+
 func (c *languageServerProtocolClient) CancelWorkDoneProgress(ctx context.Context, in *WorkDoneProgressCancelRequest, opts ...grpc.CallOption) (*protocol.Error, error) {
 	out := new(protocol.Error)
 	err := c.cc.Invoke(ctx, "/protocol.rpc.LanguageServerProtocol/CancelWorkDoneProgress", in, out, opts...)
@@ -555,6 +607,10 @@ func (c *languageServerProtocolClient) CancelWorkDoneProgress(ctx context.Contex
 		return nil, err
 	}
 	return out, nil
+}
+
+var languageServerProtocolTelemetryStreamDesc = &grpc.StreamDesc{
+	StreamName: "Telemetry",
 }
 
 func (c *languageServerProtocolClient) Telemetry(ctx context.Context, in *any.Any, opts ...grpc.CallOption) (*empty.Empty, error) {
@@ -566,6 +622,10 @@ func (c *languageServerProtocolClient) Telemetry(ctx context.Context, in *any.An
 	return out, nil
 }
 
+var languageServerProtocolWorkspaceFoldersStreamDesc = &grpc.StreamDesc{
+	StreamName: "WorkspaceFolders",
+}
+
 func (c *languageServerProtocolClient) WorkspaceFolders(ctx context.Context, in *empty.Empty, opts ...grpc.CallOption) (*WorkspaceFoldersResponse, error) {
 	out := new(WorkspaceFoldersResponse)
 	err := c.cc.Invoke(ctx, "/protocol.rpc.LanguageServerProtocol/WorkspaceFolders", in, out, opts...)
@@ -573,6 +633,10 @@ func (c *languageServerProtocolClient) WorkspaceFolders(ctx context.Context, in 
 		return nil, err
 	}
 	return out, nil
+}
+
+var languageServerProtocolDidChangeWorkspaceFoldersStreamDesc = &grpc.StreamDesc{
+	StreamName: "DidChangeWorkspaceFolders",
 }
 
 func (c *languageServerProtocolClient) DidChangeWorkspaceFolders(ctx context.Context, in *DidChangeWorkspaceFoldersRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
@@ -584,6 +648,10 @@ func (c *languageServerProtocolClient) DidChangeWorkspaceFolders(ctx context.Con
 	return out, nil
 }
 
+var languageServerProtocolDidChangeConfigurationStreamDesc = &grpc.StreamDesc{
+	StreamName: "DidChangeConfiguration",
+}
+
 func (c *languageServerProtocolClient) DidChangeConfiguration(ctx context.Context, in *DidChangeConfigurationRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
 	out := new(empty.Empty)
 	err := c.cc.Invoke(ctx, "/protocol.rpc.LanguageServerProtocol/DidChangeConfiguration", in, out, opts...)
@@ -591,6 +659,10 @@ func (c *languageServerProtocolClient) DidChangeConfiguration(ctx context.Contex
 		return nil, err
 	}
 	return out, nil
+}
+
+var languageServerProtocolConfigurationStreamDesc = &grpc.StreamDesc{
+	StreamName: "Configuration",
 }
 
 func (c *languageServerProtocolClient) Configuration(ctx context.Context, in *ConfigurationRequest, opts ...grpc.CallOption) (*ConfigurationResponse, error) {
@@ -602,6 +674,10 @@ func (c *languageServerProtocolClient) Configuration(ctx context.Context, in *Co
 	return out, nil
 }
 
+var languageServerProtocolDidChangeWatchedFilesStreamDesc = &grpc.StreamDesc{
+	StreamName: "DidChangeWatchedFiles",
+}
+
 func (c *languageServerProtocolClient) DidChangeWatchedFiles(ctx context.Context, in *DidChangeWatchedFilesRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
 	out := new(empty.Empty)
 	err := c.cc.Invoke(ctx, "/protocol.rpc.LanguageServerProtocol/DidChangeWatchedFiles", in, out, opts...)
@@ -609,6 +685,10 @@ func (c *languageServerProtocolClient) DidChangeWatchedFiles(ctx context.Context
 		return nil, err
 	}
 	return out, nil
+}
+
+var languageServerProtocolWorkspaceSymbolsStreamDesc = &grpc.StreamDesc{
+	StreamName: "WorkspaceSymbols",
 }
 
 func (c *languageServerProtocolClient) WorkspaceSymbols(ctx context.Context, in *ConfigurationRequest, opts ...grpc.CallOption) (*WorkspaceSymbolsResponse, error) {
@@ -620,6 +700,10 @@ func (c *languageServerProtocolClient) WorkspaceSymbols(ctx context.Context, in 
 	return out, nil
 }
 
+var languageServerProtocolExecuteCommandStreamDesc = &grpc.StreamDesc{
+	StreamName: "ExecuteCommand",
+}
+
 func (c *languageServerProtocolClient) ExecuteCommand(ctx context.Context, in *ExecuteCommandParams, opts ...grpc.CallOption) (*ExecuteCommandResponse, error) {
 	out := new(ExecuteCommandResponse)
 	err := c.cc.Invoke(ctx, "/protocol.rpc.LanguageServerProtocol/ExecuteCommand", in, out, opts...)
@@ -627,6 +711,10 @@ func (c *languageServerProtocolClient) ExecuteCommand(ctx context.Context, in *E
 		return nil, err
 	}
 	return out, nil
+}
+
+var languageServerProtocolApplyEditStreamDesc = &grpc.StreamDesc{
+	StreamName: "ApplyEdit",
 }
 
 func (c *languageServerProtocolClient) ApplyEdit(ctx context.Context, in *ApplyWorkspaceEditRequest, opts ...grpc.CallOption) (*ApplyWorkspaceEditResponse, error) {
@@ -638,6 +726,10 @@ func (c *languageServerProtocolClient) ApplyEdit(ctx context.Context, in *ApplyW
 	return out, nil
 }
 
+var languageServerProtocolDidOpenTextDocumentStreamDesc = &grpc.StreamDesc{
+	StreamName: "DidOpenTextDocument",
+}
+
 func (c *languageServerProtocolClient) DidOpenTextDocument(ctx context.Context, in *DidOpenTextDocumentRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
 	out := new(empty.Empty)
 	err := c.cc.Invoke(ctx, "/protocol.rpc.LanguageServerProtocol/DidOpenTextDocument", in, out, opts...)
@@ -645,6 +737,10 @@ func (c *languageServerProtocolClient) DidOpenTextDocument(ctx context.Context, 
 		return nil, err
 	}
 	return out, nil
+}
+
+var languageServerProtocolDidChangeTextDocumentStreamDesc = &grpc.StreamDesc{
+	StreamName: "DidChangeTextDocument",
 }
 
 func (c *languageServerProtocolClient) DidChangeTextDocument(ctx context.Context, in *DidChangeTextDocumentRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
@@ -656,6 +752,10 @@ func (c *languageServerProtocolClient) DidChangeTextDocument(ctx context.Context
 	return out, nil
 }
 
+var languageServerProtocolWillSaveTextDocumentStreamDesc = &grpc.StreamDesc{
+	StreamName: "WillSaveTextDocument",
+}
+
 func (c *languageServerProtocolClient) WillSaveTextDocument(ctx context.Context, in *WillSaveTextDocumentRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
 	out := new(empty.Empty)
 	err := c.cc.Invoke(ctx, "/protocol.rpc.LanguageServerProtocol/WillSaveTextDocument", in, out, opts...)
@@ -663,6 +763,10 @@ func (c *languageServerProtocolClient) WillSaveTextDocument(ctx context.Context,
 		return nil, err
 	}
 	return out, nil
+}
+
+var languageServerProtocolWillSaveWaitUntilTextDocumentStreamDesc = &grpc.StreamDesc{
+	StreamName: "WillSaveWaitUntilTextDocument",
 }
 
 func (c *languageServerProtocolClient) WillSaveWaitUntilTextDocument(ctx context.Context, in *WillSaveTextDocumentRequest, opts ...grpc.CallOption) (*WillSaveTextDocumentResponse, error) {
@@ -674,6 +778,10 @@ func (c *languageServerProtocolClient) WillSaveWaitUntilTextDocument(ctx context
 	return out, nil
 }
 
+var languageServerProtocolDidSaveTextDocumentStreamDesc = &grpc.StreamDesc{
+	StreamName: "DidSaveTextDocument",
+}
+
 func (c *languageServerProtocolClient) DidSaveTextDocument(ctx context.Context, in *DidSaveTextDocumentRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
 	out := new(empty.Empty)
 	err := c.cc.Invoke(ctx, "/protocol.rpc.LanguageServerProtocol/DidSaveTextDocument", in, out, opts...)
@@ -681,6 +789,10 @@ func (c *languageServerProtocolClient) DidSaveTextDocument(ctx context.Context, 
 		return nil, err
 	}
 	return out, nil
+}
+
+var languageServerProtocolDidCloseTextDocumentStreamDesc = &grpc.StreamDesc{
+	StreamName: "DidCloseTextDocument",
 }
 
 func (c *languageServerProtocolClient) DidCloseTextDocument(ctx context.Context, in *DidCloseTextDocumentRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
@@ -692,6 +804,10 @@ func (c *languageServerProtocolClient) DidCloseTextDocument(ctx context.Context,
 	return out, nil
 }
 
+var languageServerProtocolPublishDiagnosticsStreamDesc = &grpc.StreamDesc{
+	StreamName: "PublishDiagnostics",
+}
+
 func (c *languageServerProtocolClient) PublishDiagnostics(ctx context.Context, in *PublishDiagnosticsRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
 	out := new(empty.Empty)
 	err := c.cc.Invoke(ctx, "/protocol.rpc.LanguageServerProtocol/PublishDiagnostics", in, out, opts...)
@@ -699,6 +815,10 @@ func (c *languageServerProtocolClient) PublishDiagnostics(ctx context.Context, i
 		return nil, err
 	}
 	return out, nil
+}
+
+var languageServerProtocolCompletionStreamDesc = &grpc.StreamDesc{
+	StreamName: "Completion",
 }
 
 func (c *languageServerProtocolClient) Completion(ctx context.Context, in *CompletionRequest, opts ...grpc.CallOption) (*CompletionResponse, error) {
@@ -710,6 +830,10 @@ func (c *languageServerProtocolClient) Completion(ctx context.Context, in *Compl
 	return out, nil
 }
 
+var languageServerProtocolCompletionItemResolveStreamDesc = &grpc.StreamDesc{
+	StreamName: "CompletionItemResolve",
+}
+
 func (c *languageServerProtocolClient) CompletionItemResolve(ctx context.Context, in *CompletionItemResolveRequest, opts ...grpc.CallOption) (*CompletionItemResolveResponse, error) {
 	out := new(CompletionItemResolveResponse)
 	err := c.cc.Invoke(ctx, "/protocol.rpc.LanguageServerProtocol/CompletionItemResolve", in, out, opts...)
@@ -717,6 +841,10 @@ func (c *languageServerProtocolClient) CompletionItemResolve(ctx context.Context
 		return nil, err
 	}
 	return out, nil
+}
+
+var languageServerProtocolHoverStreamDesc = &grpc.StreamDesc{
+	StreamName: "Hover",
 }
 
 func (c *languageServerProtocolClient) Hover(ctx context.Context, in *HoverRequest, opts ...grpc.CallOption) (*HoverResponse, error) {
@@ -728,6 +856,10 @@ func (c *languageServerProtocolClient) Hover(ctx context.Context, in *HoverReque
 	return out, nil
 }
 
+var languageServerProtocolSignatureHelpStreamDesc = &grpc.StreamDesc{
+	StreamName: "SignatureHelp",
+}
+
 func (c *languageServerProtocolClient) SignatureHelp(ctx context.Context, in *SignatureHelpRequest, opts ...grpc.CallOption) (*SignatureHelpResponse, error) {
 	out := new(SignatureHelpResponse)
 	err := c.cc.Invoke(ctx, "/protocol.rpc.LanguageServerProtocol/SignatureHelp", in, out, opts...)
@@ -735,6 +867,10 @@ func (c *languageServerProtocolClient) SignatureHelp(ctx context.Context, in *Si
 		return nil, err
 	}
 	return out, nil
+}
+
+var languageServerProtocolGotoDeclarationStreamDesc = &grpc.StreamDesc{
+	StreamName: "GotoDeclaration",
 }
 
 func (c *languageServerProtocolClient) GotoDeclaration(ctx context.Context, in *DeclarationRequest, opts ...grpc.CallOption) (*DeclarationResponse, error) {
@@ -746,6 +882,10 @@ func (c *languageServerProtocolClient) GotoDeclaration(ctx context.Context, in *
 	return out, nil
 }
 
+var languageServerProtocolGotoDefinitionStreamDesc = &grpc.StreamDesc{
+	StreamName: "GotoDefinition",
+}
+
 func (c *languageServerProtocolClient) GotoDefinition(ctx context.Context, in *DefinitionRequest, opts ...grpc.CallOption) (*DefinitionResponse, error) {
 	out := new(DefinitionResponse)
 	err := c.cc.Invoke(ctx, "/protocol.rpc.LanguageServerProtocol/GotoDefinition", in, out, opts...)
@@ -753,6 +893,10 @@ func (c *languageServerProtocolClient) GotoDefinition(ctx context.Context, in *D
 		return nil, err
 	}
 	return out, nil
+}
+
+var languageServerProtocolGotoTypeDefinitionStreamDesc = &grpc.StreamDesc{
+	StreamName: "GotoTypeDefinition",
 }
 
 func (c *languageServerProtocolClient) GotoTypeDefinition(ctx context.Context, in *TypeDefinitionRequest, opts ...grpc.CallOption) (*TypeDefinitionResponse, error) {
@@ -764,6 +908,10 @@ func (c *languageServerProtocolClient) GotoTypeDefinition(ctx context.Context, i
 	return out, nil
 }
 
+var languageServerProtocolGotoImplementationStreamDesc = &grpc.StreamDesc{
+	StreamName: "GotoImplementation",
+}
+
 func (c *languageServerProtocolClient) GotoImplementation(ctx context.Context, in *ImplementationRequest, opts ...grpc.CallOption) (*ImplementationResponse, error) {
 	out := new(ImplementationResponse)
 	err := c.cc.Invoke(ctx, "/protocol.rpc.LanguageServerProtocol/GotoImplementation", in, out, opts...)
@@ -771,6 +919,10 @@ func (c *languageServerProtocolClient) GotoImplementation(ctx context.Context, i
 		return nil, err
 	}
 	return out, nil
+}
+
+var languageServerProtocolFindReferencesStreamDesc = &grpc.StreamDesc{
+	StreamName: "FindReferences",
 }
 
 func (c *languageServerProtocolClient) FindReferences(ctx context.Context, in *ReferenceRequest, opts ...grpc.CallOption) (*ReferenceResponse, error) {
@@ -782,6 +934,10 @@ func (c *languageServerProtocolClient) FindReferences(ctx context.Context, in *R
 	return out, nil
 }
 
+var languageServerProtocolDocumentHighlightsStreamDesc = &grpc.StreamDesc{
+	StreamName: "DocumentHighlights",
+}
+
 func (c *languageServerProtocolClient) DocumentHighlights(ctx context.Context, in *DocumentHighlightRequest, opts ...grpc.CallOption) (*DocumentHighlightsResponse, error) {
 	out := new(DocumentHighlightsResponse)
 	err := c.cc.Invoke(ctx, "/protocol.rpc.LanguageServerProtocol/DocumentHighlights", in, out, opts...)
@@ -789,6 +945,10 @@ func (c *languageServerProtocolClient) DocumentHighlights(ctx context.Context, i
 		return nil, err
 	}
 	return out, nil
+}
+
+var languageServerProtocolDocumentSymbolsStreamDesc = &grpc.StreamDesc{
+	StreamName: "DocumentSymbols",
 }
 
 func (c *languageServerProtocolClient) DocumentSymbols(ctx context.Context, in *DocumentSymbolRequest, opts ...grpc.CallOption) (*DocumentSymbolResponse, error) {
@@ -800,6 +960,10 @@ func (c *languageServerProtocolClient) DocumentSymbols(ctx context.Context, in *
 	return out, nil
 }
 
+var languageServerProtocolCodeActionStreamDesc = &grpc.StreamDesc{
+	StreamName: "CodeAction",
+}
+
 func (c *languageServerProtocolClient) CodeAction(ctx context.Context, in *CodeActionRequest, opts ...grpc.CallOption) (*CodeActionResponse, error) {
 	out := new(CodeActionResponse)
 	err := c.cc.Invoke(ctx, "/protocol.rpc.LanguageServerProtocol/CodeAction", in, out, opts...)
@@ -807,6 +971,10 @@ func (c *languageServerProtocolClient) CodeAction(ctx context.Context, in *CodeA
 		return nil, err
 	}
 	return out, nil
+}
+
+var languageServerProtocolCodeLensStreamDesc = &grpc.StreamDesc{
+	StreamName: "CodeLens",
 }
 
 func (c *languageServerProtocolClient) CodeLens(ctx context.Context, in *CodeLensRequest, opts ...grpc.CallOption) (*CodeLensResponse, error) {
@@ -818,6 +986,10 @@ func (c *languageServerProtocolClient) CodeLens(ctx context.Context, in *CodeLen
 	return out, nil
 }
 
+var languageServerProtocolCodeLensResolveStreamDesc = &grpc.StreamDesc{
+	StreamName: "CodeLensResolve",
+}
+
 func (c *languageServerProtocolClient) CodeLensResolve(ctx context.Context, in *CodeLensResolveRequest, opts ...grpc.CallOption) (*CodeLensResolveResponse, error) {
 	out := new(CodeLensResolveResponse)
 	err := c.cc.Invoke(ctx, "/protocol.rpc.LanguageServerProtocol/CodeLensResolve", in, out, opts...)
@@ -825,6 +997,10 @@ func (c *languageServerProtocolClient) CodeLensResolve(ctx context.Context, in *
 		return nil, err
 	}
 	return out, nil
+}
+
+var languageServerProtocolDocumentLinkStreamDesc = &grpc.StreamDesc{
+	StreamName: "DocumentLink",
 }
 
 func (c *languageServerProtocolClient) DocumentLink(ctx context.Context, in *DocumentLinkRequest, opts ...grpc.CallOption) (*DocumentLinkResponse, error) {
@@ -836,6 +1012,10 @@ func (c *languageServerProtocolClient) DocumentLink(ctx context.Context, in *Doc
 	return out, nil
 }
 
+var languageServerProtocolDocumentLinkResolveStreamDesc = &grpc.StreamDesc{
+	StreamName: "DocumentLinkResolve",
+}
+
 func (c *languageServerProtocolClient) DocumentLinkResolve(ctx context.Context, in *DocumentLinkResolveRequest, opts ...grpc.CallOption) (*DocumentLinkResolveResponse, error) {
 	out := new(DocumentLinkResolveResponse)
 	err := c.cc.Invoke(ctx, "/protocol.rpc.LanguageServerProtocol/DocumentLinkResolve", in, out, opts...)
@@ -843,6 +1023,10 @@ func (c *languageServerProtocolClient) DocumentLinkResolve(ctx context.Context, 
 		return nil, err
 	}
 	return out, nil
+}
+
+var languageServerProtocolDocumentColorStreamDesc = &grpc.StreamDesc{
+	StreamName: "DocumentColor",
 }
 
 func (c *languageServerProtocolClient) DocumentColor(ctx context.Context, in *DocumentColorRequest, opts ...grpc.CallOption) (*DocumentColorResponse, error) {
@@ -854,6 +1038,10 @@ func (c *languageServerProtocolClient) DocumentColor(ctx context.Context, in *Do
 	return out, nil
 }
 
+var languageServerProtocolColorPresentationStreamDesc = &grpc.StreamDesc{
+	StreamName: "ColorPresentation",
+}
+
 func (c *languageServerProtocolClient) ColorPresentation(ctx context.Context, in *ColorPresentationRequest, opts ...grpc.CallOption) (*ColorPresentationResponse, error) {
 	out := new(ColorPresentationResponse)
 	err := c.cc.Invoke(ctx, "/protocol.rpc.LanguageServerProtocol/ColorPresentation", in, out, opts...)
@@ -861,6 +1049,10 @@ func (c *languageServerProtocolClient) ColorPresentation(ctx context.Context, in
 		return nil, err
 	}
 	return out, nil
+}
+
+var languageServerProtocolDocumentFormattingStreamDesc = &grpc.StreamDesc{
+	StreamName: "DocumentFormatting",
 }
 
 func (c *languageServerProtocolClient) DocumentFormatting(ctx context.Context, in *DocumentFormattingRequest, opts ...grpc.CallOption) (*DocumentFormattingResponse, error) {
@@ -872,6 +1064,10 @@ func (c *languageServerProtocolClient) DocumentFormatting(ctx context.Context, i
 	return out, nil
 }
 
+var languageServerProtocolDocumentRangeFormattingStreamDesc = &grpc.StreamDesc{
+	StreamName: "DocumentRangeFormatting",
+}
+
 func (c *languageServerProtocolClient) DocumentRangeFormatting(ctx context.Context, in *DocumentRangeFormattingRequest, opts ...grpc.CallOption) (*DocumentRangeFormattingResponse, error) {
 	out := new(DocumentRangeFormattingResponse)
 	err := c.cc.Invoke(ctx, "/protocol.rpc.LanguageServerProtocol/DocumentRangeFormatting", in, out, opts...)
@@ -879,6 +1075,10 @@ func (c *languageServerProtocolClient) DocumentRangeFormatting(ctx context.Conte
 		return nil, err
 	}
 	return out, nil
+}
+
+var languageServerProtocolOnTypeFormattingStreamDesc = &grpc.StreamDesc{
+	StreamName: "OnTypeFormatting",
 }
 
 func (c *languageServerProtocolClient) OnTypeFormatting(ctx context.Context, in *DocumentOnTypeFormattingRequest, opts ...grpc.CallOption) (*DocumentOnTypeFormattingResponse, error) {
@@ -890,6 +1090,10 @@ func (c *languageServerProtocolClient) OnTypeFormatting(ctx context.Context, in 
 	return out, nil
 }
 
+var languageServerProtocolRenameStreamDesc = &grpc.StreamDesc{
+	StreamName: "Rename",
+}
+
 func (c *languageServerProtocolClient) Rename(ctx context.Context, in *RenameRequest, opts ...grpc.CallOption) (*RenameResponse, error) {
 	out := new(RenameResponse)
 	err := c.cc.Invoke(ctx, "/protocol.rpc.LanguageServerProtocol/Rename", in, out, opts...)
@@ -897,6 +1101,10 @@ func (c *languageServerProtocolClient) Rename(ctx context.Context, in *RenameReq
 		return nil, err
 	}
 	return out, nil
+}
+
+var languageServerProtocolPrepareRenameStreamDesc = &grpc.StreamDesc{
+	StreamName: "PrepareRename",
 }
 
 func (c *languageServerProtocolClient) PrepareRename(ctx context.Context, in *PrepareRenameRequest, opts ...grpc.CallOption) (*PrepareRenameResponse, error) {
@@ -908,6 +1116,10 @@ func (c *languageServerProtocolClient) PrepareRename(ctx context.Context, in *Pr
 	return out, nil
 }
 
+var languageServerProtocolFoldingRangeStreamDesc = &grpc.StreamDesc{
+	StreamName: "FoldingRange",
+}
+
 func (c *languageServerProtocolClient) FoldingRange(ctx context.Context, in *FoldingRangeRequest, opts ...grpc.CallOption) (*FoldingRangeResponse, error) {
 	out := new(FoldingRangeResponse)
 	err := c.cc.Invoke(ctx, "/protocol.rpc.LanguageServerProtocol/FoldingRange", in, out, opts...)
@@ -915,6 +1127,10 @@ func (c *languageServerProtocolClient) FoldingRange(ctx context.Context, in *Fol
 		return nil, err
 	}
 	return out, nil
+}
+
+var languageServerProtocolSelectionRangeStreamDesc = &grpc.StreamDesc{
+	StreamName: "SelectionRange",
 }
 
 func (c *languageServerProtocolClient) SelectionRange(ctx context.Context, in *SelectionRangeRequest, opts ...grpc.CallOption) (*SelectionRangeResponse, error) {
@@ -926,6 +1142,10 @@ func (c *languageServerProtocolClient) SelectionRange(ctx context.Context, in *S
 	return out, nil
 }
 
+var languageServerProtocolPrepareCallHierarchyStreamDesc = &grpc.StreamDesc{
+	StreamName: "PrepareCallHierarchy",
+}
+
 func (c *languageServerProtocolClient) PrepareCallHierarchy(ctx context.Context, in *CallHierarchyPrepareRequest, opts ...grpc.CallOption) (*CallHierarchyPrepareResponse, error) {
 	out := new(CallHierarchyPrepareResponse)
 	err := c.cc.Invoke(ctx, "/protocol.rpc.LanguageServerProtocol/PrepareCallHierarchy", in, out, opts...)
@@ -933,6 +1153,10 @@ func (c *languageServerProtocolClient) PrepareCallHierarchy(ctx context.Context,
 		return nil, err
 	}
 	return out, nil
+}
+
+var languageServerProtocolCallHierarchyIncomingCallsStreamDesc = &grpc.StreamDesc{
+	StreamName: "CallHierarchyIncomingCalls",
 }
 
 func (c *languageServerProtocolClient) CallHierarchyIncomingCalls(ctx context.Context, in *CallHierarchyIncomingCallsRequest, opts ...grpc.CallOption) (*CallHierarchyIncomingCallsResponse, error) {
@@ -944,6 +1168,10 @@ func (c *languageServerProtocolClient) CallHierarchyIncomingCalls(ctx context.Co
 	return out, nil
 }
 
+var languageServerProtocolCallHierarchyOutgoingCallsStreamDesc = &grpc.StreamDesc{
+	StreamName: "CallHierarchyOutgoingCalls",
+}
+
 func (c *languageServerProtocolClient) CallHierarchyOutgoingCalls(ctx context.Context, in *CallHierarchyOutgoingCallsRequest, opts ...grpc.CallOption) (*CallHierarchyOutgoingCallsResponse, error) {
 	out := new(CallHierarchyOutgoingCallsResponse)
 	err := c.cc.Invoke(ctx, "/protocol.rpc.LanguageServerProtocol/CallHierarchyOutgoingCalls", in, out, opts...)
@@ -953,10 +1181,2160 @@ func (c *languageServerProtocolClient) CallHierarchyOutgoingCalls(ctx context.Co
 	return out, nil
 }
 
-// LanguageServerProtocolServer is the server API for LanguageServerProtocol service.
-// All implementations must embed UnimplementedLanguageServerProtocolServer
-// for forward compatibility
-type LanguageServerProtocolServer interface {
+// LanguageServerProtocolService is the service API for LanguageServerProtocol service.
+// Fields should be assigned to their respective handler implementations only before
+// RegisterLanguageServerProtocolService is called.  Any unassigned fields will result in the
+// handler for that method returning an Unimplemented error.
+type LanguageServerProtocolService struct {
+	// Cancel notification is the base protocol offers support for request cancellation. To cancel a
+	// request, a CancelRequest notification message is sent.
+	//
+	// A request that got canceled still needs to return from the server and send a response back. It
+	// can not be left open / hanging. This is in line with the JSON RPC protocol that requires that
+	// every request sends a response back. In addition it allows for returning partial results on
+	// cancel. If the request returns an error response on cancellation it is advised to set the error
+	// code to [Codes.RequestCancelled][protocol.Codes].
+	Cancel func(context.Context, *CancelRequest) (*empty.Empty, error)
+	// Progress notification is the base protocol offers also support to report progress in a generic
+	// fashion. This mechanism can be used to report any kind of progress including work done progress
+	// (usually used to report progress in the user interface using a progress bar) and partial result
+	// progress to support streaming of results.
+	//
+	// Progress is reported against a token. The token is different than the request ID which allows
+	// to report progress out of band and also for notification.
+	//
+	// @since 3.15.0
+	Progress func(context.Context, *ProgressRequest) (*empty.Empty, error)
+	// Initialize request is sent as the first request from the client to the server. If the server
+	// receives a request or notification before the initialize request it should act as follows:
+	//
+	// - For a request the response should be an error with `code: -32002`. The message can be picked
+	// by the server.
+	// - Notifications should be dropped, except for the exit notification. This will allow the exit
+	// of a server without an initialize request.
+	//
+	// Until the server has responded to the `initialize` request with an `InitializeResponse`, the
+	// client must not send any additional requests or notifications to the server. In addition the
+	// server is not allowed to send any requests or notifications to the client until it has
+	// responded with an `InitializeResponse`, with the exception that during the initialize request
+	// the server is allowed to send the notifications `window/showMessage`, `window/logMessage` and
+	// `telemetry/event` as well as the `window/showMessageRequest` request to the client. In case the
+	// client sets up a progress token in the initialize params (e.g. property `workDoneToken`) the
+	// server is also allowed to use that token (and only that token) using the `$/progress`
+	// notification sent from the server to the client.
+	//
+	// The initialize request may only be sent once.
+	Initialize func(context.Context, *InitializeRequest) (*InitializeResponse, error)
+	// Initialized notification is sent from the client to the server after the client received the
+	// result of the `initialize` request but before the client is sending any other request or
+	// notification to the server.
+	//
+	// The server can use the `initialized` notification for example to dynamically register
+	// capabilities.
+	//
+	// The `initialized` notification may only be sent once.
+	Initialized func(context.Context, *InitializedRequest) (*empty.Empty, error)
+	// Shutdown request is sent from the client to the server.
+	//
+	// It asks the server to shut down, but to not exit (otherwise the response might not be delivered
+	// correctly to the client). There is a separate exit notification that asks the server to exit.
+	//
+	// Clients must not send any notifications other than exit or requests to a server to which they
+	// have sent a shutdown request.
+	//
+	// If a server receives requests after a shutdown request those requests should error with
+	// `InvalidRequest`.
+	Shutdown func(context.Context, *empty.Empty) (*protocol.Error, error)
+	// Exit notification to ask the server to exit its process.
+	//
+	// The server should exit with `success` code 0 if the shutdown request has been received before;
+	// otherwise with `error` code 1.
+	Exit func(context.Context, *empty.Empty) (*empty.Empty, error)
+	// LogTrace notification to log the trace of the server’s execution.
+	//
+	// The amount and content of these notifications depends on the current `trace` configuration.
+	// If `trace` is `'off'`, the server should not send any `logTrace` notification. If `trace` is
+	// `'message'`, the server should not add the `'verbose'` field in the logTraceRequest.
+	//
+	// `$/logTrace` should be used for systematic trace reporting. For single debugging messages, the
+	// server should send window/logMessage notifications.
+	LogTrace func(context.Context, *LogTraceRequest) (*empty.Empty, error)
+	// SetTrace notification that should be used by the client to modify the trace setting of the
+	// server.
+	//
+	// (-- api-linter: core::0134::synonyms=disabled
+	//     api-linter: core::0136::http-method=disabled --)
+	SetTrace func(context.Context, *SetTraceRequest) (*empty.Empty, error)
+	// ShowMessage notification is the show message notification is sent from a server to a client to
+	// ask the client to display a particular message in the user interface.
+	ShowMessage func(context.Context, *ShowMessageRequestParams) (*empty.Empty, error)
+	// ShowMessageRequest request is the show message request is sent from a server to a client to ask
+	// the client to display a particular message in the user interface. In addition to the show
+	// message notification the request allows to pass actions and to wait for an answer from the
+	// client.
+	ShowMessageRequest func(context.Context, *ShowMessageRequestRequest) (*ShowMessageResponse, error)
+	// LogMessage notification is the log message notification is sent from the server to the client
+	// to ask the client to log a particular message.
+	LogMessage func(context.Context, *LogMessageRequest) (*empty.Empty, error)
+	// CreateWorkDoneProgress is the `window/workDoneProgress/create` request is sent from the server
+	// to the client to ask the client to create a work done progress.
+	//
+	// (-- api-linter: core::0133::http-uri-parent=disabled
+	//     api-linter: core::0133::http-body=disabled
+	//     api-linter: core::0133::request-message-name=disabled
+	//     api-linter: core::0133::response-message-name=disabled --)
+	CreateWorkDoneProgress func(context.Context, *WorkDoneProgressCreateRequest) (*protocol.Error, error)
+	// CancelWorkDoneProgress is the `window/workDoneProgress/cancel` notification is sent from the
+	// client to the server to cancel a progress initiated on the server side using the
+	// `window/workDoneProgress/create`.
+	CancelWorkDoneProgress func(context.Context, *WorkDoneProgressCancelRequest) (*protocol.Error, error)
+	// Telemetry notification is the telemetry notification is sent from the server to the client to
+	// ask the client to log a telemetry event.
+	Telemetry func(context.Context, *any.Any) (*empty.Empty, error)
+	// WorkspaceFolders request is the workspace/workspaceFolders request is sent from the server to
+	// the client to fetch the current open list of workspace folders.
+	//
+	// Returns null in the response if only a single file is open in the tool. Returns an empty array
+	// if a workspace is open but no folders are configured.
+	//
+	// @since 3.6.0
+	WorkspaceFolders func(context.Context, *empty.Empty) (*WorkspaceFoldersResponse, error)
+	// DidChangeWorkspaceFolders notification is the `workspace/didChangeWorkspaceFolders`
+	// notification is sent from the client to the server to inform the server about workspace folder
+	// configuration changes.
+	//
+	// The notification is sent by default if both client capability `workspace.workspaceFolders` and
+	// the server capability `workspace.workspaceFolders.supported` are true; or if the server has
+	// registered itself to receive this notification. To register for the
+	// `workspace/didChangeWorkspaceFolders` send a client/registerCapability request from the server
+	// to the client. The `registration` parameter must have a registrations item of the following
+	// form, where id is a unique id used to unregister the capability (the example uses a UUID):
+	//
+	// @since 3.6.0
+	DidChangeWorkspaceFolders func(context.Context, *DidChangeWorkspaceFoldersRequest) (*empty.Empty, error)
+	// DidChangeConfiguration a notification sent from the client to the server to signal the change
+	// of configuration settings.
+	DidChangeConfiguration func(context.Context, *DidChangeConfigurationRequest) (*empty.Empty, error)
+	// Configuration request is the `workspace/configuration` request is sent from the server to the
+	// client to fetch configuration settings from the client.
+	//
+	// The request can fetch several configuration settings in one roundtrip. The order of the
+	// returned configuration settings correspond to the order of the passed `ConfigurationItems`
+	// (e.g. the first item in the response is the result for the first configuration item in the
+	// params).
+	//
+	// @since 3.6.0
+	Configuration func(context.Context, *ConfigurationRequest) (*ConfigurationResponse, error)
+	// DidChangeWatchedFiles notification is the watched files notification is sent from the client to
+	// the server when the client detects changes to files watched by the language client.
+	//
+	// It is recommended that servers register for these file events using the registration mechanism.
+	// In former implementations clients pushed file events without the server actively asking for it.
+	DidChangeWatchedFiles func(context.Context, *DidChangeWatchedFilesRequest) (*empty.Empty, error)
+	// WorkspaceSymbols request is the workspace symbol request is sent from the client to the server
+	// to list project-wide symbols matching the query string.
+	//
+	// (-- api-linter: core::0136::http-uri-suffix=disabled --)
+	WorkspaceSymbols func(context.Context, *ConfigurationRequest) (*WorkspaceSymbolsResponse, error)
+	// ExecuteCommand is the `workspace/executeCommand` request is sent from the client to the server
+	// to trigger command execution on the server.
+	//
+	// In most cases the server creates a `WorkspaceEdit` structure and applies the changes to the
+	// workspace using the request `workspace/applyEdit` which is sent from the server to the client.
+	ExecuteCommand func(context.Context, *ExecuteCommandParams) (*ExecuteCommandResponse, error)
+	// ApplyEdit request is sent from the server to the client to modify resource on the client side.
+	ApplyEdit func(context.Context, *ApplyWorkspaceEditRequest) (*ApplyWorkspaceEditResponse, error)
+	// DidOpenTextDocument notification is the `DidOpenTextDocumentRequest` contain the language id
+	// the document is associated with.
+	//
+	// If the language Id of a document changes, the client needs to send a `textDocument/didClose` to
+	// the server followed by a `textDocument/didOpen` with the new language id if the server handles
+	// the new language id as well.
+	DidOpenTextDocument func(context.Context, *DidOpenTextDocumentRequest) (*empty.Empty, error)
+	// DidChangeTextDocument notification is the document change notification is sent from the client
+	// to the server to signal changes to a text document.
+	//
+	// Before a client can change a text document it must claim ownership of its content using the
+	// textDocument/didOpen notification.
+	//
+	// In 2.0 the shape of the params has changed to include proper version numbers and language ids.
+	DidChangeTextDocument func(context.Context, *DidChangeTextDocumentRequest) (*empty.Empty, error)
+	// WillSaveTextDocument notification is the document will save notification is sent from the
+	// client to the server before the document is actually saved.
+	WillSaveTextDocument func(context.Context, *WillSaveTextDocumentRequest) (*empty.Empty, error)
+	// WillSaveWaitUntilTextDocument request is the document will save request is sent from the client
+	// to the server before the document is actually saved.
+	//
+	// The request can return an array of TextEdits which will be applied to the text document before
+	// it is saved.
+	//
+	// Please note that clients might drop results if computing the text edits took too long or if a
+	// server constantly fails on this request. This is done to keep the save fast and reliable.
+	WillSaveWaitUntilTextDocument func(context.Context, *WillSaveTextDocumentRequest) (*WillSaveTextDocumentResponse, error)
+	// DidSaveTextDocument notification is the document save notification is sent from the client to
+	// the server when the document was saved in the client.
+	DidSaveTextDocument func(context.Context, *DidSaveTextDocumentRequest) (*empty.Empty, error)
+	// DidCloseTextDocument notification is the document close notification is sent from the client to
+	// the server when the document got closed in the client.
+	//
+	// The document’s master now exists where the document’s Uri points to (e.g. if the document’s Uri
+	// is a file Uri the master now exists on disk). As with the open notification the close
+	// notification is about managing the document’s content.
+	//
+	// Receiving a close notification doesn’t mean that the document was open in an editor before. A
+	// close notification requires a previous open notification to be sent. Note that a server’s
+	// ability to fulfill requests is independent of whether a text document is open or closed.
+	DidCloseTextDocument func(context.Context, *DidCloseTextDocumentRequest) (*empty.Empty, error)
+	// PublishDiagnostics notification is the diagnostics notification are sent from the server to the
+	// client to signal results of validation runs.
+	PublishDiagnostics func(context.Context, *PublishDiagnosticsRequest) (*empty.Empty, error)
+	// Completion request is the Completion request is sent from the client to the server to compute
+	// completion items at a given cursor position.
+	//
+	// Completion items are presented in the IntelliSense user interface. If computing full completion
+	// items is expensive, servers can additionally provide a handler for the completion item resolve
+	// request (‘completionItem/resolve’).
+	//
+	// This request is sent when a completion item is selected in the user interface. A typical use
+	// case is for example: the `textDocument/completion` request doesn’t fill in the documentation
+	// property for returned completion items since it is expensive to compute. When the item is
+	// selected in the user interface then a `completionItem/resolve` request is sent with the
+	// selected completion item as a parameter.
+	//
+	// The returned completion item should have the documentation property filled in. The request can
+	// only delay the computation of the `detail` and `documentation` properties. Other properties
+	// like `sortText`, `filterText`, `insertText`, `textEdit` and `additionalTextEdits` must be
+	// provided in the `textDocument/completion` response and must not be changed during resolve.
+	Completion func(context.Context, *CompletionRequest) (*CompletionResponse, error)
+	// CompletionItemResolve request is the request is sent from the client to the server to resolve
+	// additional information for a given completion item.
+	CompletionItemResolve func(context.Context, *CompletionItemResolveRequest) (*CompletionItemResolveResponse, error)
+	// Hover Request is the hover request is sent from the client to the server to request hover
+	// information at a given text document position.
+	Hover func(context.Context, *HoverRequest) (*HoverResponse, error)
+	// SignatureHelp request is the signature help request is sent from the client to the server to
+	// request signature information at a given cursor position.
+	SignatureHelp func(context.Context, *SignatureHelpRequest) (*SignatureHelpResponse, error)
+	// GotoDeclaration request is the go to declaration request is sent from the client to the server
+	// to resolve the declaration location of a symbol at a given text document position.
+	//
+	// The result type [LocationLinks][LocationLinks] got introduced with version 3.14.0 and depends
+	// on the corresponding client capability `textDocument.declaration.linkSupport`.
+	//
+	// @since 3.14.0
+	GotoDeclaration func(context.Context, *DeclarationRequest) (*DeclarationResponse, error)
+	// GotoDefinition request is the go to definition request is sent from the client to the server to
+	// resolve the definition location of a symbol at a given text document position.
+	//
+	// The result type [LocationLinks][LocationLinks] got introduced with version 3.14.0 and depends
+	// on the corresponding client capability `textDocument.definition.linkSupport`.
+	GotoDefinition func(context.Context, *DefinitionRequest) (*DefinitionResponse, error)
+	// GotoTypeDefinition request is the go to type definition request is sent from the client to the
+	// server to resolve the type definition location of a symbol at a given text document position.
+	//
+	// The result type [LocationLinks][LocationLinks] got introduced with version 3.14.0 and depends
+	// on the corresponding client capability `textDocument.typeDefinition.linkSupport`.
+	//
+	// @since 3.6.0
+	GotoTypeDefinition func(context.Context, *TypeDefinitionRequest) (*TypeDefinitionResponse, error)
+	// GotoImplementation request is the go to implementation request is sent from the client to the
+	// server to resolve the implementation location of a symbol at a given text document position.
+	//
+	// The result type [LocationLinks][LocationLinks] got introduced with version 3.14.0 and depends
+	// on the corresponding client capability `textDocument.implementation.linkSupport`.
+	//
+	// @since 3.6.0
+	GotoImplementation func(context.Context, *ImplementationRequest) (*ImplementationResponse, error)
+	// FindReferences request is the references request is sent from the client to the server to
+	// resolve project-wide references for the symbol denoted by the given text document position.
+	FindReferences func(context.Context, *ReferenceRequest) (*ReferenceResponse, error)
+	// DocumentHighlights request is the document highlight request is sent from the client to the
+	// server to resolve a document highlights for a given text document position.
+	//
+	// For programming languages this usually highlights all references to the symbol scoped to this
+	// file. However we kept `textDocument/documentHighlight` and `textDocument/references` separate
+	// requests since the first one is allowed to be more fuzzy.
+	//
+	// Symbol matches usually have a DocumentHighlightKind of `Read` or `Write` whereas fuzzy or
+	// textual matches use `Text` as the kind.
+	DocumentHighlights func(context.Context, *DocumentHighlightRequest) (*DocumentHighlightsResponse, error)
+	// DocumentSymbols request is the document symbol request is sent from the client to the server.
+	//
+	// The returned result is either
+	//
+	// - SymbolInformation[] which is a flat list of all symbols found in a given text document. Then
+	// neither the symbol’s location range nor the symbol’s container name should be used to infer a
+	// hierarchy.
+	//
+	// - DocumentSymbol[] which is a hierarchy of symbols found in a given text document.
+	DocumentSymbols func(context.Context, *DocumentSymbolRequest) (*DocumentSymbolResponse, error)
+	// CodeAction request is the code action request is sent from the client to the server to compute
+	// commands for a given text document and range.
+	//
+	// These commands are typically code fixes to either fix problems or to beautify/refactor code.
+	//
+	// The result of a `textDocument/codeAction` request is an array of `Command` literals which are
+	// typically presented in the user interface. To ensure that a server is useful in many clients
+	// the commands specified in a code actions should be handled by the server and not by the client
+	// (see `workspace/executeCommand` and `ServerCapabilities.executeCommandProvider`). If the client
+	// supports providing edits with a code action then the mode should be used.
+	//
+	// When the command is selected the server should be contacted again (via the
+	// `workspace/executeCommand`) request to execute the command.
+	//
+	// Since version 3.8.0: support for CodeAction literals to enable the following scenarios:
+	//
+	// - the ability to directly return a workspace edit from the code action request. This avoids
+	// having another server roundtrip to execute an actual code action. However server providers
+	// should be aware that if the code action is expensive to compute or the edits are huge it might
+	// still be beneficial if the result is simply a command and the actual edit is only computed when
+	// needed.
+	//
+	// - the ability to group code actions using a kind. Clients are allowed to ignore that
+	// information. However it allows them to better group code action for example into corresponding
+	// menus (e.g. all refactor code actions into a refactor menu).
+	//
+	// Clients need to announce their support for code action literals (e.g. literals of type
+	// `CodeAction`) and code action kinds via the corresponding client capability
+	// `codeAction.codeActionLiteralSupport`.
+	CodeAction func(context.Context, *CodeActionRequest) (*CodeActionResponse, error)
+	// CodeLens request is the code lens request is sent from the client to the server to compute code
+	// lenses for a given text document.
+	CodeLens func(context.Context, *CodeLensRequest) (*CodeLensResponse, error)
+	// CodeLensResolve request is the code lens resolve request is sent from the client to the server
+	// to resolve the command for a given code lens item.
+	CodeLensResolve func(context.Context, *CodeLensResolveRequest) (*CodeLensResolveResponse, error)
+	// DocumentLink request is the document links request is sent from the client to the server to
+	// request the location of links in a document.
+	DocumentLink func(context.Context, *DocumentLinkRequest) (*DocumentLinkResponse, error)
+	// DocumentLinkResolve request is the document link resolve request is sent from the client to the
+	// server to resolve the target of a given document link.
+	DocumentLinkResolve func(context.Context, *DocumentLinkResolveRequest) (*DocumentLinkResolveResponse, error)
+	// DocumentColor request is the document color request is sent from the client to the server to
+	// list all color references found in a given text document. Along with the range, a color value
+	// in RGB is returned.
+	//
+	// Clients can use the result to decorate color references in an editor. For example:
+	//
+	// - Color boxes showing the actual color next to the reference
+	//
+	// - Show a color picker when a color reference is edited
+	//
+	// @since 3.6.0
+	DocumentColor func(context.Context, *DocumentColorRequest) (*DocumentColorResponse, error)
+	// ColorPresentation request is the color presentation request is sent from the client to the
+	// server to obtain a list of presentations for a color value at a given location. Clients can use
+	// the result to
+	//
+	// - modify a color reference.
+	// - show in a color picker and let users pick one of the presentations
+	//
+	// This request has no special capabilities and registration options since it is send as a resolve
+	// request for the `textDocument/documentColor` request.
+	//
+	// @since 3.6.0
+	ColorPresentation func(context.Context, *ColorPresentationRequest) (*ColorPresentationResponse, error)
+	// DocumentFormatting request is the document formatting request is sent from the client to the
+	// server to format a whole document.
+	DocumentFormatting func(context.Context, *DocumentFormattingRequest) (*DocumentFormattingResponse, error)
+	// DocumentRangeFormatting Request is the document range formatting request is sent from the
+	// client to the server to format a given range in a document.
+	DocumentRangeFormatting func(context.Context, *DocumentRangeFormattingRequest) (*DocumentRangeFormattingResponse, error)
+	// OnTypeFormatting request is the document on type formatting request is sent from the client to
+	// the server to format parts of the document during typing.
+	OnTypeFormatting func(context.Context, *DocumentOnTypeFormattingRequest) (*DocumentOnTypeFormattingResponse, error)
+	// Rename request is the rename request is sent from the client to the server to ask the server to
+	// compute a workspace change so that the client can perform a workspace-wide rename of a symbol.
+	Rename func(context.Context, *RenameRequest) (*RenameResponse, error)
+	// PrepareRename request is the prepare rename request is sent from the client to the server to
+	// setup and test the validity of a rename operation at a given location.
+	//
+	// @since 3.12.0
+	PrepareRename func(context.Context, *PrepareRenameRequest) (*PrepareRenameResponse, error)
+	// FoldingRange request is the folding range request is sent from the client to the server to
+	// return all folding ranges found in a given text document.
+	//
+	// @since 3.10.0
+	FoldingRange func(context.Context, *FoldingRangeRequest) (*FoldingRangeResponse, error)
+	// SelectionRange request is the selection range request is sent from the client to the server to
+	// return suggested selection ranges at an array of given positions.
+	//
+	// A selection range is a range around the cursor position which the user might be interested in
+	// selecting. A selection range in the return array is for the position in the provided parameters
+	// at the same index. Therefore positions[i] must be contained in result[i].range.
+	//
+	// Typically, but not necessary, selection ranges correspond to the nodes of the syntax tree.
+	//
+	// @since 3.15.0
+	SelectionRange func(context.Context, *SelectionRangeRequest) (*SelectionRangeResponse, error)
+	// PrepareCallHierarchy request is the call hierarchy request is sent from the client to the
+	// server to return a call hierarchy for the language element of given text document positions.
+	//
+	// The call hierarchy requests are executed in two steps:
+	//
+	// - first a call hierarchy item is resolved for the given text document position
+	//
+	// - for a call hierarchy item the incoming or outgoing call hierarchy items are resolved.
+	//
+	// @since 3.16.0
+	PrepareCallHierarchy func(context.Context, *CallHierarchyPrepareRequest) (*CallHierarchyPrepareResponse, error)
+	// CallHierarchyIncomingCalls request is sent from the client to the server to resolve incoming
+	// calls for a given call hierarchy item.
+	//
+	// The request doesn’t define its own client and server capabilities. It is only issued if a
+	// server registers for the `textDocument/prepareCallHierarchy` request.
+	//
+	// @since 3.16.0
+	CallHierarchyIncomingCalls func(context.Context, *CallHierarchyIncomingCallsRequest) (*CallHierarchyIncomingCallsResponse, error)
+	// CallHierarchyOutgoingCalls is the request is sent from the client to the server to resolve
+	// outgoing calls for a given call hierarchy item.
+	//
+	// The request doesn’t define its own client and server capabilities. It is only issued if a
+	// server registers for the textDocument/prepareCallHierarchy request.
+	//
+	// @since 3.16.0
+	CallHierarchyOutgoingCalls func(context.Context, *CallHierarchyOutgoingCallsRequest) (*CallHierarchyOutgoingCallsResponse, error)
+}
+
+func (s *LanguageServerProtocolService) cancel(_ interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	if s.Cancel == nil {
+		return nil, status.Errorf(codes.Unimplemented, "method Cancel not implemented")
+	}
+	in := new(CancelRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return s.Cancel(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     s,
+		FullMethod: "/protocol.rpc.LanguageServerProtocol/Cancel",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return s.Cancel(ctx, req.(*CancelRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func (s *LanguageServerProtocolService) progress(_ interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	if s.Progress == nil {
+		return nil, status.Errorf(codes.Unimplemented, "method Progress not implemented")
+	}
+	in := new(ProgressRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return s.Progress(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     s,
+		FullMethod: "/protocol.rpc.LanguageServerProtocol/Progress",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return s.Progress(ctx, req.(*ProgressRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func (s *LanguageServerProtocolService) initialize(_ interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	if s.Initialize == nil {
+		return nil, status.Errorf(codes.Unimplemented, "method Initialize not implemented")
+	}
+	in := new(InitializeRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return s.Initialize(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     s,
+		FullMethod: "/protocol.rpc.LanguageServerProtocol/Initialize",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return s.Initialize(ctx, req.(*InitializeRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func (s *LanguageServerProtocolService) initialized(_ interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	if s.Initialized == nil {
+		return nil, status.Errorf(codes.Unimplemented, "method Initialized not implemented")
+	}
+	in := new(InitializedRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return s.Initialized(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     s,
+		FullMethod: "/protocol.rpc.LanguageServerProtocol/Initialized",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return s.Initialized(ctx, req.(*InitializedRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func (s *LanguageServerProtocolService) shutdown(_ interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	if s.Shutdown == nil {
+		return nil, status.Errorf(codes.Unimplemented, "method Shutdown not implemented")
+	}
+	in := new(empty.Empty)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return s.Shutdown(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     s,
+		FullMethod: "/protocol.rpc.LanguageServerProtocol/Shutdown",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return s.Shutdown(ctx, req.(*empty.Empty))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func (s *LanguageServerProtocolService) exit(_ interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	if s.Exit == nil {
+		return nil, status.Errorf(codes.Unimplemented, "method Exit not implemented")
+	}
+	in := new(empty.Empty)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return s.Exit(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     s,
+		FullMethod: "/protocol.rpc.LanguageServerProtocol/Exit",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return s.Exit(ctx, req.(*empty.Empty))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func (s *LanguageServerProtocolService) logTrace(_ interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	if s.LogTrace == nil {
+		return nil, status.Errorf(codes.Unimplemented, "method LogTrace not implemented")
+	}
+	in := new(LogTraceRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return s.LogTrace(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     s,
+		FullMethod: "/protocol.rpc.LanguageServerProtocol/LogTrace",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return s.LogTrace(ctx, req.(*LogTraceRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func (s *LanguageServerProtocolService) setTrace(_ interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	if s.SetTrace == nil {
+		return nil, status.Errorf(codes.Unimplemented, "method SetTrace not implemented")
+	}
+	in := new(SetTraceRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return s.SetTrace(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     s,
+		FullMethod: "/protocol.rpc.LanguageServerProtocol/SetTrace",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return s.SetTrace(ctx, req.(*SetTraceRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func (s *LanguageServerProtocolService) showMessage(_ interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	if s.ShowMessage == nil {
+		return nil, status.Errorf(codes.Unimplemented, "method ShowMessage not implemented")
+	}
+	in := new(ShowMessageRequestParams)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return s.ShowMessage(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     s,
+		FullMethod: "/protocol.rpc.LanguageServerProtocol/ShowMessage",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return s.ShowMessage(ctx, req.(*ShowMessageRequestParams))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func (s *LanguageServerProtocolService) showMessageRequest(_ interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	if s.ShowMessageRequest == nil {
+		return nil, status.Errorf(codes.Unimplemented, "method ShowMessageRequest not implemented")
+	}
+	in := new(ShowMessageRequestRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return s.ShowMessageRequest(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     s,
+		FullMethod: "/protocol.rpc.LanguageServerProtocol/ShowMessageRequest",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return s.ShowMessageRequest(ctx, req.(*ShowMessageRequestRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func (s *LanguageServerProtocolService) logMessage(_ interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	if s.LogMessage == nil {
+		return nil, status.Errorf(codes.Unimplemented, "method LogMessage not implemented")
+	}
+	in := new(LogMessageRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return s.LogMessage(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     s,
+		FullMethod: "/protocol.rpc.LanguageServerProtocol/LogMessage",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return s.LogMessage(ctx, req.(*LogMessageRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func (s *LanguageServerProtocolService) createWorkDoneProgress(_ interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	if s.CreateWorkDoneProgress == nil {
+		return nil, status.Errorf(codes.Unimplemented, "method CreateWorkDoneProgress not implemented")
+	}
+	in := new(WorkDoneProgressCreateRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return s.CreateWorkDoneProgress(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     s,
+		FullMethod: "/protocol.rpc.LanguageServerProtocol/CreateWorkDoneProgress",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return s.CreateWorkDoneProgress(ctx, req.(*WorkDoneProgressCreateRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func (s *LanguageServerProtocolService) cancelWorkDoneProgress(_ interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	if s.CancelWorkDoneProgress == nil {
+		return nil, status.Errorf(codes.Unimplemented, "method CancelWorkDoneProgress not implemented")
+	}
+	in := new(WorkDoneProgressCancelRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return s.CancelWorkDoneProgress(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     s,
+		FullMethod: "/protocol.rpc.LanguageServerProtocol/CancelWorkDoneProgress",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return s.CancelWorkDoneProgress(ctx, req.(*WorkDoneProgressCancelRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func (s *LanguageServerProtocolService) telemetry(_ interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	if s.Telemetry == nil {
+		return nil, status.Errorf(codes.Unimplemented, "method Telemetry not implemented")
+	}
+	in := new(any.Any)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return s.Telemetry(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     s,
+		FullMethod: "/protocol.rpc.LanguageServerProtocol/Telemetry",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return s.Telemetry(ctx, req.(*any.Any))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func (s *LanguageServerProtocolService) workspaceFolders(_ interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	if s.WorkspaceFolders == nil {
+		return nil, status.Errorf(codes.Unimplemented, "method WorkspaceFolders not implemented")
+	}
+	in := new(empty.Empty)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return s.WorkspaceFolders(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     s,
+		FullMethod: "/protocol.rpc.LanguageServerProtocol/WorkspaceFolders",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return s.WorkspaceFolders(ctx, req.(*empty.Empty))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func (s *LanguageServerProtocolService) didChangeWorkspaceFolders(_ interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	if s.DidChangeWorkspaceFolders == nil {
+		return nil, status.Errorf(codes.Unimplemented, "method DidChangeWorkspaceFolders not implemented")
+	}
+	in := new(DidChangeWorkspaceFoldersRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return s.DidChangeWorkspaceFolders(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     s,
+		FullMethod: "/protocol.rpc.LanguageServerProtocol/DidChangeWorkspaceFolders",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return s.DidChangeWorkspaceFolders(ctx, req.(*DidChangeWorkspaceFoldersRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func (s *LanguageServerProtocolService) didChangeConfiguration(_ interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	if s.DidChangeConfiguration == nil {
+		return nil, status.Errorf(codes.Unimplemented, "method DidChangeConfiguration not implemented")
+	}
+	in := new(DidChangeConfigurationRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return s.DidChangeConfiguration(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     s,
+		FullMethod: "/protocol.rpc.LanguageServerProtocol/DidChangeConfiguration",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return s.DidChangeConfiguration(ctx, req.(*DidChangeConfigurationRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func (s *LanguageServerProtocolService) configuration(_ interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	if s.Configuration == nil {
+		return nil, status.Errorf(codes.Unimplemented, "method Configuration not implemented")
+	}
+	in := new(ConfigurationRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return s.Configuration(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     s,
+		FullMethod: "/protocol.rpc.LanguageServerProtocol/Configuration",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return s.Configuration(ctx, req.(*ConfigurationRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func (s *LanguageServerProtocolService) didChangeWatchedFiles(_ interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	if s.DidChangeWatchedFiles == nil {
+		return nil, status.Errorf(codes.Unimplemented, "method DidChangeWatchedFiles not implemented")
+	}
+	in := new(DidChangeWatchedFilesRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return s.DidChangeWatchedFiles(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     s,
+		FullMethod: "/protocol.rpc.LanguageServerProtocol/DidChangeWatchedFiles",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return s.DidChangeWatchedFiles(ctx, req.(*DidChangeWatchedFilesRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func (s *LanguageServerProtocolService) workspaceSymbols(_ interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	if s.WorkspaceSymbols == nil {
+		return nil, status.Errorf(codes.Unimplemented, "method WorkspaceSymbols not implemented")
+	}
+	in := new(ConfigurationRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return s.WorkspaceSymbols(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     s,
+		FullMethod: "/protocol.rpc.LanguageServerProtocol/WorkspaceSymbols",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return s.WorkspaceSymbols(ctx, req.(*ConfigurationRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func (s *LanguageServerProtocolService) executeCommand(_ interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	if s.ExecuteCommand == nil {
+		return nil, status.Errorf(codes.Unimplemented, "method ExecuteCommand not implemented")
+	}
+	in := new(ExecuteCommandParams)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return s.ExecuteCommand(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     s,
+		FullMethod: "/protocol.rpc.LanguageServerProtocol/ExecuteCommand",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return s.ExecuteCommand(ctx, req.(*ExecuteCommandParams))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func (s *LanguageServerProtocolService) applyEdit(_ interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	if s.ApplyEdit == nil {
+		return nil, status.Errorf(codes.Unimplemented, "method ApplyEdit not implemented")
+	}
+	in := new(ApplyWorkspaceEditRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return s.ApplyEdit(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     s,
+		FullMethod: "/protocol.rpc.LanguageServerProtocol/ApplyEdit",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return s.ApplyEdit(ctx, req.(*ApplyWorkspaceEditRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func (s *LanguageServerProtocolService) didOpenTextDocument(_ interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	if s.DidOpenTextDocument == nil {
+		return nil, status.Errorf(codes.Unimplemented, "method DidOpenTextDocument not implemented")
+	}
+	in := new(DidOpenTextDocumentRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return s.DidOpenTextDocument(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     s,
+		FullMethod: "/protocol.rpc.LanguageServerProtocol/DidOpenTextDocument",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return s.DidOpenTextDocument(ctx, req.(*DidOpenTextDocumentRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func (s *LanguageServerProtocolService) didChangeTextDocument(_ interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	if s.DidChangeTextDocument == nil {
+		return nil, status.Errorf(codes.Unimplemented, "method DidChangeTextDocument not implemented")
+	}
+	in := new(DidChangeTextDocumentRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return s.DidChangeTextDocument(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     s,
+		FullMethod: "/protocol.rpc.LanguageServerProtocol/DidChangeTextDocument",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return s.DidChangeTextDocument(ctx, req.(*DidChangeTextDocumentRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func (s *LanguageServerProtocolService) willSaveTextDocument(_ interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	if s.WillSaveTextDocument == nil {
+		return nil, status.Errorf(codes.Unimplemented, "method WillSaveTextDocument not implemented")
+	}
+	in := new(WillSaveTextDocumentRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return s.WillSaveTextDocument(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     s,
+		FullMethod: "/protocol.rpc.LanguageServerProtocol/WillSaveTextDocument",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return s.WillSaveTextDocument(ctx, req.(*WillSaveTextDocumentRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func (s *LanguageServerProtocolService) willSaveWaitUntilTextDocument(_ interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	if s.WillSaveWaitUntilTextDocument == nil {
+		return nil, status.Errorf(codes.Unimplemented, "method WillSaveWaitUntilTextDocument not implemented")
+	}
+	in := new(WillSaveTextDocumentRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return s.WillSaveWaitUntilTextDocument(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     s,
+		FullMethod: "/protocol.rpc.LanguageServerProtocol/WillSaveWaitUntilTextDocument",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return s.WillSaveWaitUntilTextDocument(ctx, req.(*WillSaveTextDocumentRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func (s *LanguageServerProtocolService) didSaveTextDocument(_ interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	if s.DidSaveTextDocument == nil {
+		return nil, status.Errorf(codes.Unimplemented, "method DidSaveTextDocument not implemented")
+	}
+	in := new(DidSaveTextDocumentRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return s.DidSaveTextDocument(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     s,
+		FullMethod: "/protocol.rpc.LanguageServerProtocol/DidSaveTextDocument",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return s.DidSaveTextDocument(ctx, req.(*DidSaveTextDocumentRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func (s *LanguageServerProtocolService) didCloseTextDocument(_ interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	if s.DidCloseTextDocument == nil {
+		return nil, status.Errorf(codes.Unimplemented, "method DidCloseTextDocument not implemented")
+	}
+	in := new(DidCloseTextDocumentRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return s.DidCloseTextDocument(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     s,
+		FullMethod: "/protocol.rpc.LanguageServerProtocol/DidCloseTextDocument",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return s.DidCloseTextDocument(ctx, req.(*DidCloseTextDocumentRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func (s *LanguageServerProtocolService) publishDiagnostics(_ interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	if s.PublishDiagnostics == nil {
+		return nil, status.Errorf(codes.Unimplemented, "method PublishDiagnostics not implemented")
+	}
+	in := new(PublishDiagnosticsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return s.PublishDiagnostics(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     s,
+		FullMethod: "/protocol.rpc.LanguageServerProtocol/PublishDiagnostics",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return s.PublishDiagnostics(ctx, req.(*PublishDiagnosticsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func (s *LanguageServerProtocolService) completion(_ interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	if s.Completion == nil {
+		return nil, status.Errorf(codes.Unimplemented, "method Completion not implemented")
+	}
+	in := new(CompletionRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return s.Completion(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     s,
+		FullMethod: "/protocol.rpc.LanguageServerProtocol/Completion",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return s.Completion(ctx, req.(*CompletionRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func (s *LanguageServerProtocolService) completionItemResolve(_ interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	if s.CompletionItemResolve == nil {
+		return nil, status.Errorf(codes.Unimplemented, "method CompletionItemResolve not implemented")
+	}
+	in := new(CompletionItemResolveRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return s.CompletionItemResolve(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     s,
+		FullMethod: "/protocol.rpc.LanguageServerProtocol/CompletionItemResolve",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return s.CompletionItemResolve(ctx, req.(*CompletionItemResolveRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func (s *LanguageServerProtocolService) hover(_ interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	if s.Hover == nil {
+		return nil, status.Errorf(codes.Unimplemented, "method Hover not implemented")
+	}
+	in := new(HoverRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return s.Hover(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     s,
+		FullMethod: "/protocol.rpc.LanguageServerProtocol/Hover",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return s.Hover(ctx, req.(*HoverRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func (s *LanguageServerProtocolService) signatureHelp(_ interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	if s.SignatureHelp == nil {
+		return nil, status.Errorf(codes.Unimplemented, "method SignatureHelp not implemented")
+	}
+	in := new(SignatureHelpRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return s.SignatureHelp(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     s,
+		FullMethod: "/protocol.rpc.LanguageServerProtocol/SignatureHelp",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return s.SignatureHelp(ctx, req.(*SignatureHelpRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func (s *LanguageServerProtocolService) gotoDeclaration(_ interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	if s.GotoDeclaration == nil {
+		return nil, status.Errorf(codes.Unimplemented, "method GotoDeclaration not implemented")
+	}
+	in := new(DeclarationRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return s.GotoDeclaration(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     s,
+		FullMethod: "/protocol.rpc.LanguageServerProtocol/GotoDeclaration",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return s.GotoDeclaration(ctx, req.(*DeclarationRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func (s *LanguageServerProtocolService) gotoDefinition(_ interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	if s.GotoDefinition == nil {
+		return nil, status.Errorf(codes.Unimplemented, "method GotoDefinition not implemented")
+	}
+	in := new(DefinitionRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return s.GotoDefinition(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     s,
+		FullMethod: "/protocol.rpc.LanguageServerProtocol/GotoDefinition",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return s.GotoDefinition(ctx, req.(*DefinitionRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func (s *LanguageServerProtocolService) gotoTypeDefinition(_ interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	if s.GotoTypeDefinition == nil {
+		return nil, status.Errorf(codes.Unimplemented, "method GotoTypeDefinition not implemented")
+	}
+	in := new(TypeDefinitionRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return s.GotoTypeDefinition(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     s,
+		FullMethod: "/protocol.rpc.LanguageServerProtocol/GotoTypeDefinition",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return s.GotoTypeDefinition(ctx, req.(*TypeDefinitionRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func (s *LanguageServerProtocolService) gotoImplementation(_ interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	if s.GotoImplementation == nil {
+		return nil, status.Errorf(codes.Unimplemented, "method GotoImplementation not implemented")
+	}
+	in := new(ImplementationRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return s.GotoImplementation(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     s,
+		FullMethod: "/protocol.rpc.LanguageServerProtocol/GotoImplementation",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return s.GotoImplementation(ctx, req.(*ImplementationRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func (s *LanguageServerProtocolService) findReferences(_ interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	if s.FindReferences == nil {
+		return nil, status.Errorf(codes.Unimplemented, "method FindReferences not implemented")
+	}
+	in := new(ReferenceRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return s.FindReferences(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     s,
+		FullMethod: "/protocol.rpc.LanguageServerProtocol/FindReferences",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return s.FindReferences(ctx, req.(*ReferenceRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func (s *LanguageServerProtocolService) documentHighlights(_ interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	if s.DocumentHighlights == nil {
+		return nil, status.Errorf(codes.Unimplemented, "method DocumentHighlights not implemented")
+	}
+	in := new(DocumentHighlightRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return s.DocumentHighlights(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     s,
+		FullMethod: "/protocol.rpc.LanguageServerProtocol/DocumentHighlights",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return s.DocumentHighlights(ctx, req.(*DocumentHighlightRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func (s *LanguageServerProtocolService) documentSymbols(_ interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	if s.DocumentSymbols == nil {
+		return nil, status.Errorf(codes.Unimplemented, "method DocumentSymbols not implemented")
+	}
+	in := new(DocumentSymbolRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return s.DocumentSymbols(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     s,
+		FullMethod: "/protocol.rpc.LanguageServerProtocol/DocumentSymbols",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return s.DocumentSymbols(ctx, req.(*DocumentSymbolRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func (s *LanguageServerProtocolService) codeAction(_ interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	if s.CodeAction == nil {
+		return nil, status.Errorf(codes.Unimplemented, "method CodeAction not implemented")
+	}
+	in := new(CodeActionRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return s.CodeAction(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     s,
+		FullMethod: "/protocol.rpc.LanguageServerProtocol/CodeAction",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return s.CodeAction(ctx, req.(*CodeActionRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func (s *LanguageServerProtocolService) codeLens(_ interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	if s.CodeLens == nil {
+		return nil, status.Errorf(codes.Unimplemented, "method CodeLens not implemented")
+	}
+	in := new(CodeLensRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return s.CodeLens(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     s,
+		FullMethod: "/protocol.rpc.LanguageServerProtocol/CodeLens",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return s.CodeLens(ctx, req.(*CodeLensRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func (s *LanguageServerProtocolService) codeLensResolve(_ interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	if s.CodeLensResolve == nil {
+		return nil, status.Errorf(codes.Unimplemented, "method CodeLensResolve not implemented")
+	}
+	in := new(CodeLensResolveRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return s.CodeLensResolve(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     s,
+		FullMethod: "/protocol.rpc.LanguageServerProtocol/CodeLensResolve",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return s.CodeLensResolve(ctx, req.(*CodeLensResolveRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func (s *LanguageServerProtocolService) documentLink(_ interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	if s.DocumentLink == nil {
+		return nil, status.Errorf(codes.Unimplemented, "method DocumentLink not implemented")
+	}
+	in := new(DocumentLinkRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return s.DocumentLink(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     s,
+		FullMethod: "/protocol.rpc.LanguageServerProtocol/DocumentLink",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return s.DocumentLink(ctx, req.(*DocumentLinkRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func (s *LanguageServerProtocolService) documentLinkResolve(_ interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	if s.DocumentLinkResolve == nil {
+		return nil, status.Errorf(codes.Unimplemented, "method DocumentLinkResolve not implemented")
+	}
+	in := new(DocumentLinkResolveRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return s.DocumentLinkResolve(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     s,
+		FullMethod: "/protocol.rpc.LanguageServerProtocol/DocumentLinkResolve",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return s.DocumentLinkResolve(ctx, req.(*DocumentLinkResolveRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func (s *LanguageServerProtocolService) documentColor(_ interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	if s.DocumentColor == nil {
+		return nil, status.Errorf(codes.Unimplemented, "method DocumentColor not implemented")
+	}
+	in := new(DocumentColorRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return s.DocumentColor(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     s,
+		FullMethod: "/protocol.rpc.LanguageServerProtocol/DocumentColor",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return s.DocumentColor(ctx, req.(*DocumentColorRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func (s *LanguageServerProtocolService) colorPresentation(_ interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	if s.ColorPresentation == nil {
+		return nil, status.Errorf(codes.Unimplemented, "method ColorPresentation not implemented")
+	}
+	in := new(ColorPresentationRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return s.ColorPresentation(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     s,
+		FullMethod: "/protocol.rpc.LanguageServerProtocol/ColorPresentation",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return s.ColorPresentation(ctx, req.(*ColorPresentationRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func (s *LanguageServerProtocolService) documentFormatting(_ interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	if s.DocumentFormatting == nil {
+		return nil, status.Errorf(codes.Unimplemented, "method DocumentFormatting not implemented")
+	}
+	in := new(DocumentFormattingRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return s.DocumentFormatting(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     s,
+		FullMethod: "/protocol.rpc.LanguageServerProtocol/DocumentFormatting",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return s.DocumentFormatting(ctx, req.(*DocumentFormattingRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func (s *LanguageServerProtocolService) documentRangeFormatting(_ interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	if s.DocumentRangeFormatting == nil {
+		return nil, status.Errorf(codes.Unimplemented, "method DocumentRangeFormatting not implemented")
+	}
+	in := new(DocumentRangeFormattingRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return s.DocumentRangeFormatting(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     s,
+		FullMethod: "/protocol.rpc.LanguageServerProtocol/DocumentRangeFormatting",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return s.DocumentRangeFormatting(ctx, req.(*DocumentRangeFormattingRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func (s *LanguageServerProtocolService) onTypeFormatting(_ interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	if s.OnTypeFormatting == nil {
+		return nil, status.Errorf(codes.Unimplemented, "method OnTypeFormatting not implemented")
+	}
+	in := new(DocumentOnTypeFormattingRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return s.OnTypeFormatting(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     s,
+		FullMethod: "/protocol.rpc.LanguageServerProtocol/OnTypeFormatting",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return s.OnTypeFormatting(ctx, req.(*DocumentOnTypeFormattingRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func (s *LanguageServerProtocolService) rename(_ interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	if s.Rename == nil {
+		return nil, status.Errorf(codes.Unimplemented, "method Rename not implemented")
+	}
+	in := new(RenameRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return s.Rename(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     s,
+		FullMethod: "/protocol.rpc.LanguageServerProtocol/Rename",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return s.Rename(ctx, req.(*RenameRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func (s *LanguageServerProtocolService) prepareRename(_ interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	if s.PrepareRename == nil {
+		return nil, status.Errorf(codes.Unimplemented, "method PrepareRename not implemented")
+	}
+	in := new(PrepareRenameRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return s.PrepareRename(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     s,
+		FullMethod: "/protocol.rpc.LanguageServerProtocol/PrepareRename",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return s.PrepareRename(ctx, req.(*PrepareRenameRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func (s *LanguageServerProtocolService) foldingRange(_ interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	if s.FoldingRange == nil {
+		return nil, status.Errorf(codes.Unimplemented, "method FoldingRange not implemented")
+	}
+	in := new(FoldingRangeRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return s.FoldingRange(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     s,
+		FullMethod: "/protocol.rpc.LanguageServerProtocol/FoldingRange",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return s.FoldingRange(ctx, req.(*FoldingRangeRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func (s *LanguageServerProtocolService) selectionRange(_ interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	if s.SelectionRange == nil {
+		return nil, status.Errorf(codes.Unimplemented, "method SelectionRange not implemented")
+	}
+	in := new(SelectionRangeRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return s.SelectionRange(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     s,
+		FullMethod: "/protocol.rpc.LanguageServerProtocol/SelectionRange",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return s.SelectionRange(ctx, req.(*SelectionRangeRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func (s *LanguageServerProtocolService) prepareCallHierarchy(_ interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	if s.PrepareCallHierarchy == nil {
+		return nil, status.Errorf(codes.Unimplemented, "method PrepareCallHierarchy not implemented")
+	}
+	in := new(CallHierarchyPrepareRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return s.PrepareCallHierarchy(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     s,
+		FullMethod: "/protocol.rpc.LanguageServerProtocol/PrepareCallHierarchy",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return s.PrepareCallHierarchy(ctx, req.(*CallHierarchyPrepareRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func (s *LanguageServerProtocolService) callHierarchyIncomingCalls(_ interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	if s.CallHierarchyIncomingCalls == nil {
+		return nil, status.Errorf(codes.Unimplemented, "method CallHierarchyIncomingCalls not implemented")
+	}
+	in := new(CallHierarchyIncomingCallsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return s.CallHierarchyIncomingCalls(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     s,
+		FullMethod: "/protocol.rpc.LanguageServerProtocol/CallHierarchyIncomingCalls",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return s.CallHierarchyIncomingCalls(ctx, req.(*CallHierarchyIncomingCallsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func (s *LanguageServerProtocolService) callHierarchyOutgoingCalls(_ interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	if s.CallHierarchyOutgoingCalls == nil {
+		return nil, status.Errorf(codes.Unimplemented, "method CallHierarchyOutgoingCalls not implemented")
+	}
+	in := new(CallHierarchyOutgoingCallsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return s.CallHierarchyOutgoingCalls(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     s,
+		FullMethod: "/protocol.rpc.LanguageServerProtocol/CallHierarchyOutgoingCalls",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return s.CallHierarchyOutgoingCalls(ctx, req.(*CallHierarchyOutgoingCallsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+// RegisterLanguageServerProtocolService registers a service implementation with a gRPC server.
+func RegisterLanguageServerProtocolService(s grpc.ServiceRegistrar, srv *LanguageServerProtocolService) {
+	sd := grpc.ServiceDesc{
+		ServiceName: "protocol.rpc.LanguageServerProtocol",
+		Methods: []grpc.MethodDesc{
+			{
+				MethodName: "Cancel",
+				Handler:    srv.cancel,
+			},
+			{
+				MethodName: "Progress",
+				Handler:    srv.progress,
+			},
+			{
+				MethodName: "Initialize",
+				Handler:    srv.initialize,
+			},
+			{
+				MethodName: "Initialized",
+				Handler:    srv.initialized,
+			},
+			{
+				MethodName: "Shutdown",
+				Handler:    srv.shutdown,
+			},
+			{
+				MethodName: "Exit",
+				Handler:    srv.exit,
+			},
+			{
+				MethodName: "LogTrace",
+				Handler:    srv.logTrace,
+			},
+			{
+				MethodName: "SetTrace",
+				Handler:    srv.setTrace,
+			},
+			{
+				MethodName: "ShowMessage",
+				Handler:    srv.showMessage,
+			},
+			{
+				MethodName: "ShowMessageRequest",
+				Handler:    srv.showMessageRequest,
+			},
+			{
+				MethodName: "LogMessage",
+				Handler:    srv.logMessage,
+			},
+			{
+				MethodName: "CreateWorkDoneProgress",
+				Handler:    srv.createWorkDoneProgress,
+			},
+			{
+				MethodName: "CancelWorkDoneProgress",
+				Handler:    srv.cancelWorkDoneProgress,
+			},
+			{
+				MethodName: "Telemetry",
+				Handler:    srv.telemetry,
+			},
+			{
+				MethodName: "WorkspaceFolders",
+				Handler:    srv.workspaceFolders,
+			},
+			{
+				MethodName: "DidChangeWorkspaceFolders",
+				Handler:    srv.didChangeWorkspaceFolders,
+			},
+			{
+				MethodName: "DidChangeConfiguration",
+				Handler:    srv.didChangeConfiguration,
+			},
+			{
+				MethodName: "Configuration",
+				Handler:    srv.configuration,
+			},
+			{
+				MethodName: "DidChangeWatchedFiles",
+				Handler:    srv.didChangeWatchedFiles,
+			},
+			{
+				MethodName: "WorkspaceSymbols",
+				Handler:    srv.workspaceSymbols,
+			},
+			{
+				MethodName: "ExecuteCommand",
+				Handler:    srv.executeCommand,
+			},
+			{
+				MethodName: "ApplyEdit",
+				Handler:    srv.applyEdit,
+			},
+			{
+				MethodName: "DidOpenTextDocument",
+				Handler:    srv.didOpenTextDocument,
+			},
+			{
+				MethodName: "DidChangeTextDocument",
+				Handler:    srv.didChangeTextDocument,
+			},
+			{
+				MethodName: "WillSaveTextDocument",
+				Handler:    srv.willSaveTextDocument,
+			},
+			{
+				MethodName: "WillSaveWaitUntilTextDocument",
+				Handler:    srv.willSaveWaitUntilTextDocument,
+			},
+			{
+				MethodName: "DidSaveTextDocument",
+				Handler:    srv.didSaveTextDocument,
+			},
+			{
+				MethodName: "DidCloseTextDocument",
+				Handler:    srv.didCloseTextDocument,
+			},
+			{
+				MethodName: "PublishDiagnostics",
+				Handler:    srv.publishDiagnostics,
+			},
+			{
+				MethodName: "Completion",
+				Handler:    srv.completion,
+			},
+			{
+				MethodName: "CompletionItemResolve",
+				Handler:    srv.completionItemResolve,
+			},
+			{
+				MethodName: "Hover",
+				Handler:    srv.hover,
+			},
+			{
+				MethodName: "SignatureHelp",
+				Handler:    srv.signatureHelp,
+			},
+			{
+				MethodName: "GotoDeclaration",
+				Handler:    srv.gotoDeclaration,
+			},
+			{
+				MethodName: "GotoDefinition",
+				Handler:    srv.gotoDefinition,
+			},
+			{
+				MethodName: "GotoTypeDefinition",
+				Handler:    srv.gotoTypeDefinition,
+			},
+			{
+				MethodName: "GotoImplementation",
+				Handler:    srv.gotoImplementation,
+			},
+			{
+				MethodName: "FindReferences",
+				Handler:    srv.findReferences,
+			},
+			{
+				MethodName: "DocumentHighlights",
+				Handler:    srv.documentHighlights,
+			},
+			{
+				MethodName: "DocumentSymbols",
+				Handler:    srv.documentSymbols,
+			},
+			{
+				MethodName: "CodeAction",
+				Handler:    srv.codeAction,
+			},
+			{
+				MethodName: "CodeLens",
+				Handler:    srv.codeLens,
+			},
+			{
+				MethodName: "CodeLensResolve",
+				Handler:    srv.codeLensResolve,
+			},
+			{
+				MethodName: "DocumentLink",
+				Handler:    srv.documentLink,
+			},
+			{
+				MethodName: "DocumentLinkResolve",
+				Handler:    srv.documentLinkResolve,
+			},
+			{
+				MethodName: "DocumentColor",
+				Handler:    srv.documentColor,
+			},
+			{
+				MethodName: "ColorPresentation",
+				Handler:    srv.colorPresentation,
+			},
+			{
+				MethodName: "DocumentFormatting",
+				Handler:    srv.documentFormatting,
+			},
+			{
+				MethodName: "DocumentRangeFormatting",
+				Handler:    srv.documentRangeFormatting,
+			},
+			{
+				MethodName: "OnTypeFormatting",
+				Handler:    srv.onTypeFormatting,
+			},
+			{
+				MethodName: "Rename",
+				Handler:    srv.rename,
+			},
+			{
+				MethodName: "PrepareRename",
+				Handler:    srv.prepareRename,
+			},
+			{
+				MethodName: "FoldingRange",
+				Handler:    srv.foldingRange,
+			},
+			{
+				MethodName: "SelectionRange",
+				Handler:    srv.selectionRange,
+			},
+			{
+				MethodName: "PrepareCallHierarchy",
+				Handler:    srv.prepareCallHierarchy,
+			},
+			{
+				MethodName: "CallHierarchyIncomingCalls",
+				Handler:    srv.callHierarchyIncomingCalls,
+			},
+			{
+				MethodName: "CallHierarchyOutgoingCalls",
+				Handler:    srv.callHierarchyOutgoingCalls,
+			},
+		},
+		Streams:  []grpc.StreamDesc{},
+		Metadata: "protocol/rpc/rpc.proto",
+	}
+
+	s.RegisterService(&sd, nil)
+}
+
+// NewLanguageServerProtocolService creates a new LanguageServerProtocolService containing the
+// implemented methods of the LanguageServerProtocol service in s.  Any unimplemented
+// methods will result in the gRPC server returning an UNIMPLEMENTED status to the client.
+// This includes situations where the method handler is misspelled or has the wrong
+// signature.  For this reason, this function should be used with great care and
+// is not recommended to be used by most users.
+func NewLanguageServerProtocolService(s interface{}) *LanguageServerProtocolService {
+	ns := &LanguageServerProtocolService{}
+	if h, ok := s.(interface {
+		Cancel(context.Context, *CancelRequest) (*empty.Empty, error)
+	}); ok {
+		ns.Cancel = h.Cancel
+	}
+	if h, ok := s.(interface {
+		Progress(context.Context, *ProgressRequest) (*empty.Empty, error)
+	}); ok {
+		ns.Progress = h.Progress
+	}
+	if h, ok := s.(interface {
+		Initialize(context.Context, *InitializeRequest) (*InitializeResponse, error)
+	}); ok {
+		ns.Initialize = h.Initialize
+	}
+	if h, ok := s.(interface {
+		Initialized(context.Context, *InitializedRequest) (*empty.Empty, error)
+	}); ok {
+		ns.Initialized = h.Initialized
+	}
+	if h, ok := s.(interface {
+		Shutdown(context.Context, *empty.Empty) (*protocol.Error, error)
+	}); ok {
+		ns.Shutdown = h.Shutdown
+	}
+	if h, ok := s.(interface {
+		Exit(context.Context, *empty.Empty) (*empty.Empty, error)
+	}); ok {
+		ns.Exit = h.Exit
+	}
+	if h, ok := s.(interface {
+		LogTrace(context.Context, *LogTraceRequest) (*empty.Empty, error)
+	}); ok {
+		ns.LogTrace = h.LogTrace
+	}
+	if h, ok := s.(interface {
+		SetTrace(context.Context, *SetTraceRequest) (*empty.Empty, error)
+	}); ok {
+		ns.SetTrace = h.SetTrace
+	}
+	if h, ok := s.(interface {
+		ShowMessage(context.Context, *ShowMessageRequestParams) (*empty.Empty, error)
+	}); ok {
+		ns.ShowMessage = h.ShowMessage
+	}
+	if h, ok := s.(interface {
+		ShowMessageRequest(context.Context, *ShowMessageRequestRequest) (*ShowMessageResponse, error)
+	}); ok {
+		ns.ShowMessageRequest = h.ShowMessageRequest
+	}
+	if h, ok := s.(interface {
+		LogMessage(context.Context, *LogMessageRequest) (*empty.Empty, error)
+	}); ok {
+		ns.LogMessage = h.LogMessage
+	}
+	if h, ok := s.(interface {
+		CreateWorkDoneProgress(context.Context, *WorkDoneProgressCreateRequest) (*protocol.Error, error)
+	}); ok {
+		ns.CreateWorkDoneProgress = h.CreateWorkDoneProgress
+	}
+	if h, ok := s.(interface {
+		CancelWorkDoneProgress(context.Context, *WorkDoneProgressCancelRequest) (*protocol.Error, error)
+	}); ok {
+		ns.CancelWorkDoneProgress = h.CancelWorkDoneProgress
+	}
+	if h, ok := s.(interface {
+		Telemetry(context.Context, *any.Any) (*empty.Empty, error)
+	}); ok {
+		ns.Telemetry = h.Telemetry
+	}
+	if h, ok := s.(interface {
+		WorkspaceFolders(context.Context, *empty.Empty) (*WorkspaceFoldersResponse, error)
+	}); ok {
+		ns.WorkspaceFolders = h.WorkspaceFolders
+	}
+	if h, ok := s.(interface {
+		DidChangeWorkspaceFolders(context.Context, *DidChangeWorkspaceFoldersRequest) (*empty.Empty, error)
+	}); ok {
+		ns.DidChangeWorkspaceFolders = h.DidChangeWorkspaceFolders
+	}
+	if h, ok := s.(interface {
+		DidChangeConfiguration(context.Context, *DidChangeConfigurationRequest) (*empty.Empty, error)
+	}); ok {
+		ns.DidChangeConfiguration = h.DidChangeConfiguration
+	}
+	if h, ok := s.(interface {
+		Configuration(context.Context, *ConfigurationRequest) (*ConfigurationResponse, error)
+	}); ok {
+		ns.Configuration = h.Configuration
+	}
+	if h, ok := s.(interface {
+		DidChangeWatchedFiles(context.Context, *DidChangeWatchedFilesRequest) (*empty.Empty, error)
+	}); ok {
+		ns.DidChangeWatchedFiles = h.DidChangeWatchedFiles
+	}
+	if h, ok := s.(interface {
+		WorkspaceSymbols(context.Context, *ConfigurationRequest) (*WorkspaceSymbolsResponse, error)
+	}); ok {
+		ns.WorkspaceSymbols = h.WorkspaceSymbols
+	}
+	if h, ok := s.(interface {
+		ExecuteCommand(context.Context, *ExecuteCommandParams) (*ExecuteCommandResponse, error)
+	}); ok {
+		ns.ExecuteCommand = h.ExecuteCommand
+	}
+	if h, ok := s.(interface {
+		ApplyEdit(context.Context, *ApplyWorkspaceEditRequest) (*ApplyWorkspaceEditResponse, error)
+	}); ok {
+		ns.ApplyEdit = h.ApplyEdit
+	}
+	if h, ok := s.(interface {
+		DidOpenTextDocument(context.Context, *DidOpenTextDocumentRequest) (*empty.Empty, error)
+	}); ok {
+		ns.DidOpenTextDocument = h.DidOpenTextDocument
+	}
+	if h, ok := s.(interface {
+		DidChangeTextDocument(context.Context, *DidChangeTextDocumentRequest) (*empty.Empty, error)
+	}); ok {
+		ns.DidChangeTextDocument = h.DidChangeTextDocument
+	}
+	if h, ok := s.(interface {
+		WillSaveTextDocument(context.Context, *WillSaveTextDocumentRequest) (*empty.Empty, error)
+	}); ok {
+		ns.WillSaveTextDocument = h.WillSaveTextDocument
+	}
+	if h, ok := s.(interface {
+		WillSaveWaitUntilTextDocument(context.Context, *WillSaveTextDocumentRequest) (*WillSaveTextDocumentResponse, error)
+	}); ok {
+		ns.WillSaveWaitUntilTextDocument = h.WillSaveWaitUntilTextDocument
+	}
+	if h, ok := s.(interface {
+		DidSaveTextDocument(context.Context, *DidSaveTextDocumentRequest) (*empty.Empty, error)
+	}); ok {
+		ns.DidSaveTextDocument = h.DidSaveTextDocument
+	}
+	if h, ok := s.(interface {
+		DidCloseTextDocument(context.Context, *DidCloseTextDocumentRequest) (*empty.Empty, error)
+	}); ok {
+		ns.DidCloseTextDocument = h.DidCloseTextDocument
+	}
+	if h, ok := s.(interface {
+		PublishDiagnostics(context.Context, *PublishDiagnosticsRequest) (*empty.Empty, error)
+	}); ok {
+		ns.PublishDiagnostics = h.PublishDiagnostics
+	}
+	if h, ok := s.(interface {
+		Completion(context.Context, *CompletionRequest) (*CompletionResponse, error)
+	}); ok {
+		ns.Completion = h.Completion
+	}
+	if h, ok := s.(interface {
+		CompletionItemResolve(context.Context, *CompletionItemResolveRequest) (*CompletionItemResolveResponse, error)
+	}); ok {
+		ns.CompletionItemResolve = h.CompletionItemResolve
+	}
+	if h, ok := s.(interface {
+		Hover(context.Context, *HoverRequest) (*HoverResponse, error)
+	}); ok {
+		ns.Hover = h.Hover
+	}
+	if h, ok := s.(interface {
+		SignatureHelp(context.Context, *SignatureHelpRequest) (*SignatureHelpResponse, error)
+	}); ok {
+		ns.SignatureHelp = h.SignatureHelp
+	}
+	if h, ok := s.(interface {
+		GotoDeclaration(context.Context, *DeclarationRequest) (*DeclarationResponse, error)
+	}); ok {
+		ns.GotoDeclaration = h.GotoDeclaration
+	}
+	if h, ok := s.(interface {
+		GotoDefinition(context.Context, *DefinitionRequest) (*DefinitionResponse, error)
+	}); ok {
+		ns.GotoDefinition = h.GotoDefinition
+	}
+	if h, ok := s.(interface {
+		GotoTypeDefinition(context.Context, *TypeDefinitionRequest) (*TypeDefinitionResponse, error)
+	}); ok {
+		ns.GotoTypeDefinition = h.GotoTypeDefinition
+	}
+	if h, ok := s.(interface {
+		GotoImplementation(context.Context, *ImplementationRequest) (*ImplementationResponse, error)
+	}); ok {
+		ns.GotoImplementation = h.GotoImplementation
+	}
+	if h, ok := s.(interface {
+		FindReferences(context.Context, *ReferenceRequest) (*ReferenceResponse, error)
+	}); ok {
+		ns.FindReferences = h.FindReferences
+	}
+	if h, ok := s.(interface {
+		DocumentHighlights(context.Context, *DocumentHighlightRequest) (*DocumentHighlightsResponse, error)
+	}); ok {
+		ns.DocumentHighlights = h.DocumentHighlights
+	}
+	if h, ok := s.(interface {
+		DocumentSymbols(context.Context, *DocumentSymbolRequest) (*DocumentSymbolResponse, error)
+	}); ok {
+		ns.DocumentSymbols = h.DocumentSymbols
+	}
+	if h, ok := s.(interface {
+		CodeAction(context.Context, *CodeActionRequest) (*CodeActionResponse, error)
+	}); ok {
+		ns.CodeAction = h.CodeAction
+	}
+	if h, ok := s.(interface {
+		CodeLens(context.Context, *CodeLensRequest) (*CodeLensResponse, error)
+	}); ok {
+		ns.CodeLens = h.CodeLens
+	}
+	if h, ok := s.(interface {
+		CodeLensResolve(context.Context, *CodeLensResolveRequest) (*CodeLensResolveResponse, error)
+	}); ok {
+		ns.CodeLensResolve = h.CodeLensResolve
+	}
+	if h, ok := s.(interface {
+		DocumentLink(context.Context, *DocumentLinkRequest) (*DocumentLinkResponse, error)
+	}); ok {
+		ns.DocumentLink = h.DocumentLink
+	}
+	if h, ok := s.(interface {
+		DocumentLinkResolve(context.Context, *DocumentLinkResolveRequest) (*DocumentLinkResolveResponse, error)
+	}); ok {
+		ns.DocumentLinkResolve = h.DocumentLinkResolve
+	}
+	if h, ok := s.(interface {
+		DocumentColor(context.Context, *DocumentColorRequest) (*DocumentColorResponse, error)
+	}); ok {
+		ns.DocumentColor = h.DocumentColor
+	}
+	if h, ok := s.(interface {
+		ColorPresentation(context.Context, *ColorPresentationRequest) (*ColorPresentationResponse, error)
+	}); ok {
+		ns.ColorPresentation = h.ColorPresentation
+	}
+	if h, ok := s.(interface {
+		DocumentFormatting(context.Context, *DocumentFormattingRequest) (*DocumentFormattingResponse, error)
+	}); ok {
+		ns.DocumentFormatting = h.DocumentFormatting
+	}
+	if h, ok := s.(interface {
+		DocumentRangeFormatting(context.Context, *DocumentRangeFormattingRequest) (*DocumentRangeFormattingResponse, error)
+	}); ok {
+		ns.DocumentRangeFormatting = h.DocumentRangeFormatting
+	}
+	if h, ok := s.(interface {
+		OnTypeFormatting(context.Context, *DocumentOnTypeFormattingRequest) (*DocumentOnTypeFormattingResponse, error)
+	}); ok {
+		ns.OnTypeFormatting = h.OnTypeFormatting
+	}
+	if h, ok := s.(interface {
+		Rename(context.Context, *RenameRequest) (*RenameResponse, error)
+	}); ok {
+		ns.Rename = h.Rename
+	}
+	if h, ok := s.(interface {
+		PrepareRename(context.Context, *PrepareRenameRequest) (*PrepareRenameResponse, error)
+	}); ok {
+		ns.PrepareRename = h.PrepareRename
+	}
+	if h, ok := s.(interface {
+		FoldingRange(context.Context, *FoldingRangeRequest) (*FoldingRangeResponse, error)
+	}); ok {
+		ns.FoldingRange = h.FoldingRange
+	}
+	if h, ok := s.(interface {
+		SelectionRange(context.Context, *SelectionRangeRequest) (*SelectionRangeResponse, error)
+	}); ok {
+		ns.SelectionRange = h.SelectionRange
+	}
+	if h, ok := s.(interface {
+		PrepareCallHierarchy(context.Context, *CallHierarchyPrepareRequest) (*CallHierarchyPrepareResponse, error)
+	}); ok {
+		ns.PrepareCallHierarchy = h.PrepareCallHierarchy
+	}
+	if h, ok := s.(interface {
+		CallHierarchyIncomingCalls(context.Context, *CallHierarchyIncomingCallsRequest) (*CallHierarchyIncomingCallsResponse, error)
+	}); ok {
+		ns.CallHierarchyIncomingCalls = h.CallHierarchyIncomingCalls
+	}
+	if h, ok := s.(interface {
+		CallHierarchyOutgoingCalls(context.Context, *CallHierarchyOutgoingCallsRequest) (*CallHierarchyOutgoingCallsResponse, error)
+	}); ok {
+		ns.CallHierarchyOutgoingCalls = h.CallHierarchyOutgoingCalls
+	}
+	return ns
+}
+
+// UnstableLanguageServerProtocolService is the service API for LanguageServerProtocol service.
+// New methods may be added to this interface if they are added to the service
+// definition, which is not a backward-compatible change.  For this reason,
+// use of this type is not recommended.
+type UnstableLanguageServerProtocolService interface {
 	// Cancel notification is the base protocol offers support for request cancellation. To cancel a
 	// request, a CancelRequest notification message is sent.
 	//
@@ -1365,1507 +3743,4 @@ type LanguageServerProtocolServer interface {
 	//
 	// @since 3.16.0
 	CallHierarchyOutgoingCalls(context.Context, *CallHierarchyOutgoingCallsRequest) (*CallHierarchyOutgoingCallsResponse, error)
-	mustEmbedUnimplementedLanguageServerProtocolServer()
-}
-
-// UnimplementedLanguageServerProtocolServer must be embedded to have forward compatible implementations.
-type UnimplementedLanguageServerProtocolServer struct {
-}
-
-func (*UnimplementedLanguageServerProtocolServer) Cancel(context.Context, *CancelRequest) (*empty.Empty, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method Cancel not implemented")
-}
-
-func (*UnimplementedLanguageServerProtocolServer) Progress(context.Context, *ProgressRequest) (*empty.Empty, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method Progress not implemented")
-}
-
-func (*UnimplementedLanguageServerProtocolServer) Initialize(context.Context, *InitializeRequest) (*InitializeResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method Initialize not implemented")
-}
-
-func (*UnimplementedLanguageServerProtocolServer) Initialized(context.Context, *InitializedRequest) (*empty.Empty, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method Initialized not implemented")
-}
-
-func (*UnimplementedLanguageServerProtocolServer) Shutdown(context.Context, *empty.Empty) (*protocol.Error, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method Shutdown not implemented")
-}
-
-func (*UnimplementedLanguageServerProtocolServer) Exit(context.Context, *empty.Empty) (*empty.Empty, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method Exit not implemented")
-}
-
-func (*UnimplementedLanguageServerProtocolServer) LogTrace(context.Context, *LogTraceRequest) (*empty.Empty, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method LogTrace not implemented")
-}
-
-func (*UnimplementedLanguageServerProtocolServer) SetTrace(context.Context, *SetTraceRequest) (*empty.Empty, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method SetTrace not implemented")
-}
-
-func (*UnimplementedLanguageServerProtocolServer) ShowMessage(context.Context, *ShowMessageRequestParams) (*empty.Empty, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method ShowMessage not implemented")
-}
-
-func (*UnimplementedLanguageServerProtocolServer) ShowMessageRequest(context.Context, *ShowMessageRequestRequest) (*ShowMessageResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method ShowMessageRequest not implemented")
-}
-
-func (*UnimplementedLanguageServerProtocolServer) LogMessage(context.Context, *LogMessageRequest) (*empty.Empty, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method LogMessage not implemented")
-}
-
-func (*UnimplementedLanguageServerProtocolServer) CreateWorkDoneProgress(context.Context, *WorkDoneProgressCreateRequest) (*protocol.Error, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method CreateWorkDoneProgress not implemented")
-}
-
-func (*UnimplementedLanguageServerProtocolServer) CancelWorkDoneProgress(context.Context, *WorkDoneProgressCancelRequest) (*protocol.Error, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method CancelWorkDoneProgress not implemented")
-}
-
-func (*UnimplementedLanguageServerProtocolServer) Telemetry(context.Context, *any.Any) (*empty.Empty, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method Telemetry not implemented")
-}
-
-func (*UnimplementedLanguageServerProtocolServer) WorkspaceFolders(context.Context, *empty.Empty) (*WorkspaceFoldersResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method WorkspaceFolders not implemented")
-}
-
-func (*UnimplementedLanguageServerProtocolServer) DidChangeWorkspaceFolders(context.Context, *DidChangeWorkspaceFoldersRequest) (*empty.Empty, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method DidChangeWorkspaceFolders not implemented")
-}
-
-func (*UnimplementedLanguageServerProtocolServer) DidChangeConfiguration(context.Context, *DidChangeConfigurationRequest) (*empty.Empty, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method DidChangeConfiguration not implemented")
-}
-
-func (*UnimplementedLanguageServerProtocolServer) Configuration(context.Context, *ConfigurationRequest) (*ConfigurationResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method Configuration not implemented")
-}
-
-func (*UnimplementedLanguageServerProtocolServer) DidChangeWatchedFiles(context.Context, *DidChangeWatchedFilesRequest) (*empty.Empty, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method DidChangeWatchedFiles not implemented")
-}
-
-func (*UnimplementedLanguageServerProtocolServer) WorkspaceSymbols(context.Context, *ConfigurationRequest) (*WorkspaceSymbolsResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method WorkspaceSymbols not implemented")
-}
-
-func (*UnimplementedLanguageServerProtocolServer) ExecuteCommand(context.Context, *ExecuteCommandParams) (*ExecuteCommandResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method ExecuteCommand not implemented")
-}
-
-func (*UnimplementedLanguageServerProtocolServer) ApplyEdit(context.Context, *ApplyWorkspaceEditRequest) (*ApplyWorkspaceEditResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method ApplyEdit not implemented")
-}
-
-func (*UnimplementedLanguageServerProtocolServer) DidOpenTextDocument(context.Context, *DidOpenTextDocumentRequest) (*empty.Empty, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method DidOpenTextDocument not implemented")
-}
-
-func (*UnimplementedLanguageServerProtocolServer) DidChangeTextDocument(context.Context, *DidChangeTextDocumentRequest) (*empty.Empty, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method DidChangeTextDocument not implemented")
-}
-
-func (*UnimplementedLanguageServerProtocolServer) WillSaveTextDocument(context.Context, *WillSaveTextDocumentRequest) (*empty.Empty, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method WillSaveTextDocument not implemented")
-}
-
-func (*UnimplementedLanguageServerProtocolServer) WillSaveWaitUntilTextDocument(context.Context, *WillSaveTextDocumentRequest) (*WillSaveTextDocumentResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method WillSaveWaitUntilTextDocument not implemented")
-}
-
-func (*UnimplementedLanguageServerProtocolServer) DidSaveTextDocument(context.Context, *DidSaveTextDocumentRequest) (*empty.Empty, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method DidSaveTextDocument not implemented")
-}
-
-func (*UnimplementedLanguageServerProtocolServer) DidCloseTextDocument(context.Context, *DidCloseTextDocumentRequest) (*empty.Empty, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method DidCloseTextDocument not implemented")
-}
-
-func (*UnimplementedLanguageServerProtocolServer) PublishDiagnostics(context.Context, *PublishDiagnosticsRequest) (*empty.Empty, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method PublishDiagnostics not implemented")
-}
-
-func (*UnimplementedLanguageServerProtocolServer) Completion(context.Context, *CompletionRequest) (*CompletionResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method Completion not implemented")
-}
-
-func (*UnimplementedLanguageServerProtocolServer) CompletionItemResolve(context.Context, *CompletionItemResolveRequest) (*CompletionItemResolveResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method CompletionItemResolve not implemented")
-}
-
-func (*UnimplementedLanguageServerProtocolServer) Hover(context.Context, *HoverRequest) (*HoverResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method Hover not implemented")
-}
-
-func (*UnimplementedLanguageServerProtocolServer) SignatureHelp(context.Context, *SignatureHelpRequest) (*SignatureHelpResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method SignatureHelp not implemented")
-}
-
-func (*UnimplementedLanguageServerProtocolServer) GotoDeclaration(context.Context, *DeclarationRequest) (*DeclarationResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GotoDeclaration not implemented")
-}
-
-func (*UnimplementedLanguageServerProtocolServer) GotoDefinition(context.Context, *DefinitionRequest) (*DefinitionResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GotoDefinition not implemented")
-}
-
-func (*UnimplementedLanguageServerProtocolServer) GotoTypeDefinition(context.Context, *TypeDefinitionRequest) (*TypeDefinitionResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GotoTypeDefinition not implemented")
-}
-
-func (*UnimplementedLanguageServerProtocolServer) GotoImplementation(context.Context, *ImplementationRequest) (*ImplementationResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GotoImplementation not implemented")
-}
-
-func (*UnimplementedLanguageServerProtocolServer) FindReferences(context.Context, *ReferenceRequest) (*ReferenceResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method FindReferences not implemented")
-}
-
-func (*UnimplementedLanguageServerProtocolServer) DocumentHighlights(context.Context, *DocumentHighlightRequest) (*DocumentHighlightsResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method DocumentHighlights not implemented")
-}
-
-func (*UnimplementedLanguageServerProtocolServer) DocumentSymbols(context.Context, *DocumentSymbolRequest) (*DocumentSymbolResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method DocumentSymbols not implemented")
-}
-
-func (*UnimplementedLanguageServerProtocolServer) CodeAction(context.Context, *CodeActionRequest) (*CodeActionResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method CodeAction not implemented")
-}
-
-func (*UnimplementedLanguageServerProtocolServer) CodeLens(context.Context, *CodeLensRequest) (*CodeLensResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method CodeLens not implemented")
-}
-
-func (*UnimplementedLanguageServerProtocolServer) CodeLensResolve(context.Context, *CodeLensResolveRequest) (*CodeLensResolveResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method CodeLensResolve not implemented")
-}
-
-func (*UnimplementedLanguageServerProtocolServer) DocumentLink(context.Context, *DocumentLinkRequest) (*DocumentLinkResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method DocumentLink not implemented")
-}
-
-func (*UnimplementedLanguageServerProtocolServer) DocumentLinkResolve(context.Context, *DocumentLinkResolveRequest) (*DocumentLinkResolveResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method DocumentLinkResolve not implemented")
-}
-
-func (*UnimplementedLanguageServerProtocolServer) DocumentColor(context.Context, *DocumentColorRequest) (*DocumentColorResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method DocumentColor not implemented")
-}
-
-func (*UnimplementedLanguageServerProtocolServer) ColorPresentation(context.Context, *ColorPresentationRequest) (*ColorPresentationResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method ColorPresentation not implemented")
-}
-
-func (*UnimplementedLanguageServerProtocolServer) DocumentFormatting(context.Context, *DocumentFormattingRequest) (*DocumentFormattingResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method DocumentFormatting not implemented")
-}
-
-func (*UnimplementedLanguageServerProtocolServer) DocumentRangeFormatting(context.Context, *DocumentRangeFormattingRequest) (*DocumentRangeFormattingResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method DocumentRangeFormatting not implemented")
-}
-
-func (*UnimplementedLanguageServerProtocolServer) OnTypeFormatting(context.Context, *DocumentOnTypeFormattingRequest) (*DocumentOnTypeFormattingResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method OnTypeFormatting not implemented")
-}
-
-func (*UnimplementedLanguageServerProtocolServer) Rename(context.Context, *RenameRequest) (*RenameResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method Rename not implemented")
-}
-
-func (*UnimplementedLanguageServerProtocolServer) PrepareRename(context.Context, *PrepareRenameRequest) (*PrepareRenameResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method PrepareRename not implemented")
-}
-
-func (*UnimplementedLanguageServerProtocolServer) FoldingRange(context.Context, *FoldingRangeRequest) (*FoldingRangeResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method FoldingRange not implemented")
-}
-
-func (*UnimplementedLanguageServerProtocolServer) SelectionRange(context.Context, *SelectionRangeRequest) (*SelectionRangeResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method SelectionRange not implemented")
-}
-
-func (*UnimplementedLanguageServerProtocolServer) PrepareCallHierarchy(context.Context, *CallHierarchyPrepareRequest) (*CallHierarchyPrepareResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method PrepareCallHierarchy not implemented")
-}
-
-func (*UnimplementedLanguageServerProtocolServer) CallHierarchyIncomingCalls(context.Context, *CallHierarchyIncomingCallsRequest) (*CallHierarchyIncomingCallsResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method CallHierarchyIncomingCalls not implemented")
-}
-
-func (*UnimplementedLanguageServerProtocolServer) CallHierarchyOutgoingCalls(context.Context, *CallHierarchyOutgoingCallsRequest) (*CallHierarchyOutgoingCallsResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method CallHierarchyOutgoingCalls not implemented")
-}
-
-func (*UnimplementedLanguageServerProtocolServer) mustEmbedUnimplementedLanguageServerProtocolServer() {
-}
-
-func RegisterLanguageServerProtocolServer(s *grpc.Server, srv LanguageServerProtocolServer) {
-	s.RegisterService(&_LanguageServerProtocol_serviceDesc, srv)
-}
-
-func _LanguageServerProtocol_Cancel_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(CancelRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(LanguageServerProtocolServer).Cancel(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/protocol.rpc.LanguageServerProtocol/Cancel",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(LanguageServerProtocolServer).Cancel(ctx, req.(*CancelRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _LanguageServerProtocol_Progress_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ProgressRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(LanguageServerProtocolServer).Progress(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/protocol.rpc.LanguageServerProtocol/Progress",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(LanguageServerProtocolServer).Progress(ctx, req.(*ProgressRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _LanguageServerProtocol_Initialize_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(InitializeRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(LanguageServerProtocolServer).Initialize(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/protocol.rpc.LanguageServerProtocol/Initialize",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(LanguageServerProtocolServer).Initialize(ctx, req.(*InitializeRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _LanguageServerProtocol_Initialized_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(InitializedRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(LanguageServerProtocolServer).Initialized(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/protocol.rpc.LanguageServerProtocol/Initialized",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(LanguageServerProtocolServer).Initialized(ctx, req.(*InitializedRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _LanguageServerProtocol_Shutdown_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(empty.Empty)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(LanguageServerProtocolServer).Shutdown(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/protocol.rpc.LanguageServerProtocol/Shutdown",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(LanguageServerProtocolServer).Shutdown(ctx, req.(*empty.Empty))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _LanguageServerProtocol_Exit_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(empty.Empty)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(LanguageServerProtocolServer).Exit(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/protocol.rpc.LanguageServerProtocol/Exit",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(LanguageServerProtocolServer).Exit(ctx, req.(*empty.Empty))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _LanguageServerProtocol_LogTrace_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(LogTraceRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(LanguageServerProtocolServer).LogTrace(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/protocol.rpc.LanguageServerProtocol/LogTrace",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(LanguageServerProtocolServer).LogTrace(ctx, req.(*LogTraceRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _LanguageServerProtocol_SetTrace_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(SetTraceRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(LanguageServerProtocolServer).SetTrace(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/protocol.rpc.LanguageServerProtocol/SetTrace",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(LanguageServerProtocolServer).SetTrace(ctx, req.(*SetTraceRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _LanguageServerProtocol_ShowMessage_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ShowMessageRequestParams)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(LanguageServerProtocolServer).ShowMessage(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/protocol.rpc.LanguageServerProtocol/ShowMessage",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(LanguageServerProtocolServer).ShowMessage(ctx, req.(*ShowMessageRequestParams))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _LanguageServerProtocol_ShowMessageRequest_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ShowMessageRequestRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(LanguageServerProtocolServer).ShowMessageRequest(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/protocol.rpc.LanguageServerProtocol/ShowMessageRequest",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(LanguageServerProtocolServer).ShowMessageRequest(ctx, req.(*ShowMessageRequestRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _LanguageServerProtocol_LogMessage_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(LogMessageRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(LanguageServerProtocolServer).LogMessage(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/protocol.rpc.LanguageServerProtocol/LogMessage",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(LanguageServerProtocolServer).LogMessage(ctx, req.(*LogMessageRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _LanguageServerProtocol_CreateWorkDoneProgress_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(WorkDoneProgressCreateRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(LanguageServerProtocolServer).CreateWorkDoneProgress(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/protocol.rpc.LanguageServerProtocol/CreateWorkDoneProgress",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(LanguageServerProtocolServer).CreateWorkDoneProgress(ctx, req.(*WorkDoneProgressCreateRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _LanguageServerProtocol_CancelWorkDoneProgress_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(WorkDoneProgressCancelRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(LanguageServerProtocolServer).CancelWorkDoneProgress(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/protocol.rpc.LanguageServerProtocol/CancelWorkDoneProgress",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(LanguageServerProtocolServer).CancelWorkDoneProgress(ctx, req.(*WorkDoneProgressCancelRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _LanguageServerProtocol_Telemetry_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(any.Any)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(LanguageServerProtocolServer).Telemetry(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/protocol.rpc.LanguageServerProtocol/Telemetry",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(LanguageServerProtocolServer).Telemetry(ctx, req.(*any.Any))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _LanguageServerProtocol_WorkspaceFolders_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(empty.Empty)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(LanguageServerProtocolServer).WorkspaceFolders(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/protocol.rpc.LanguageServerProtocol/WorkspaceFolders",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(LanguageServerProtocolServer).WorkspaceFolders(ctx, req.(*empty.Empty))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _LanguageServerProtocol_DidChangeWorkspaceFolders_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(DidChangeWorkspaceFoldersRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(LanguageServerProtocolServer).DidChangeWorkspaceFolders(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/protocol.rpc.LanguageServerProtocol/DidChangeWorkspaceFolders",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(LanguageServerProtocolServer).DidChangeWorkspaceFolders(ctx, req.(*DidChangeWorkspaceFoldersRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _LanguageServerProtocol_DidChangeConfiguration_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(DidChangeConfigurationRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(LanguageServerProtocolServer).DidChangeConfiguration(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/protocol.rpc.LanguageServerProtocol/DidChangeConfiguration",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(LanguageServerProtocolServer).DidChangeConfiguration(ctx, req.(*DidChangeConfigurationRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _LanguageServerProtocol_Configuration_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ConfigurationRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(LanguageServerProtocolServer).Configuration(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/protocol.rpc.LanguageServerProtocol/Configuration",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(LanguageServerProtocolServer).Configuration(ctx, req.(*ConfigurationRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _LanguageServerProtocol_DidChangeWatchedFiles_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(DidChangeWatchedFilesRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(LanguageServerProtocolServer).DidChangeWatchedFiles(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/protocol.rpc.LanguageServerProtocol/DidChangeWatchedFiles",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(LanguageServerProtocolServer).DidChangeWatchedFiles(ctx, req.(*DidChangeWatchedFilesRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _LanguageServerProtocol_WorkspaceSymbols_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ConfigurationRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(LanguageServerProtocolServer).WorkspaceSymbols(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/protocol.rpc.LanguageServerProtocol/WorkspaceSymbols",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(LanguageServerProtocolServer).WorkspaceSymbols(ctx, req.(*ConfigurationRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _LanguageServerProtocol_ExecuteCommand_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ExecuteCommandParams)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(LanguageServerProtocolServer).ExecuteCommand(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/protocol.rpc.LanguageServerProtocol/ExecuteCommand",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(LanguageServerProtocolServer).ExecuteCommand(ctx, req.(*ExecuteCommandParams))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _LanguageServerProtocol_ApplyEdit_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ApplyWorkspaceEditRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(LanguageServerProtocolServer).ApplyEdit(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/protocol.rpc.LanguageServerProtocol/ApplyEdit",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(LanguageServerProtocolServer).ApplyEdit(ctx, req.(*ApplyWorkspaceEditRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _LanguageServerProtocol_DidOpenTextDocument_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(DidOpenTextDocumentRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(LanguageServerProtocolServer).DidOpenTextDocument(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/protocol.rpc.LanguageServerProtocol/DidOpenTextDocument",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(LanguageServerProtocolServer).DidOpenTextDocument(ctx, req.(*DidOpenTextDocumentRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _LanguageServerProtocol_DidChangeTextDocument_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(DidChangeTextDocumentRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(LanguageServerProtocolServer).DidChangeTextDocument(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/protocol.rpc.LanguageServerProtocol/DidChangeTextDocument",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(LanguageServerProtocolServer).DidChangeTextDocument(ctx, req.(*DidChangeTextDocumentRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _LanguageServerProtocol_WillSaveTextDocument_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(WillSaveTextDocumentRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(LanguageServerProtocolServer).WillSaveTextDocument(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/protocol.rpc.LanguageServerProtocol/WillSaveTextDocument",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(LanguageServerProtocolServer).WillSaveTextDocument(ctx, req.(*WillSaveTextDocumentRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _LanguageServerProtocol_WillSaveWaitUntilTextDocument_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(WillSaveTextDocumentRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(LanguageServerProtocolServer).WillSaveWaitUntilTextDocument(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/protocol.rpc.LanguageServerProtocol/WillSaveWaitUntilTextDocument",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(LanguageServerProtocolServer).WillSaveWaitUntilTextDocument(ctx, req.(*WillSaveTextDocumentRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _LanguageServerProtocol_DidSaveTextDocument_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(DidSaveTextDocumentRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(LanguageServerProtocolServer).DidSaveTextDocument(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/protocol.rpc.LanguageServerProtocol/DidSaveTextDocument",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(LanguageServerProtocolServer).DidSaveTextDocument(ctx, req.(*DidSaveTextDocumentRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _LanguageServerProtocol_DidCloseTextDocument_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(DidCloseTextDocumentRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(LanguageServerProtocolServer).DidCloseTextDocument(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/protocol.rpc.LanguageServerProtocol/DidCloseTextDocument",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(LanguageServerProtocolServer).DidCloseTextDocument(ctx, req.(*DidCloseTextDocumentRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _LanguageServerProtocol_PublishDiagnostics_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(PublishDiagnosticsRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(LanguageServerProtocolServer).PublishDiagnostics(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/protocol.rpc.LanguageServerProtocol/PublishDiagnostics",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(LanguageServerProtocolServer).PublishDiagnostics(ctx, req.(*PublishDiagnosticsRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _LanguageServerProtocol_Completion_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(CompletionRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(LanguageServerProtocolServer).Completion(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/protocol.rpc.LanguageServerProtocol/Completion",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(LanguageServerProtocolServer).Completion(ctx, req.(*CompletionRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _LanguageServerProtocol_CompletionItemResolve_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(CompletionItemResolveRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(LanguageServerProtocolServer).CompletionItemResolve(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/protocol.rpc.LanguageServerProtocol/CompletionItemResolve",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(LanguageServerProtocolServer).CompletionItemResolve(ctx, req.(*CompletionItemResolveRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _LanguageServerProtocol_Hover_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(HoverRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(LanguageServerProtocolServer).Hover(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/protocol.rpc.LanguageServerProtocol/Hover",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(LanguageServerProtocolServer).Hover(ctx, req.(*HoverRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _LanguageServerProtocol_SignatureHelp_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(SignatureHelpRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(LanguageServerProtocolServer).SignatureHelp(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/protocol.rpc.LanguageServerProtocol/SignatureHelp",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(LanguageServerProtocolServer).SignatureHelp(ctx, req.(*SignatureHelpRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _LanguageServerProtocol_GotoDeclaration_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(DeclarationRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(LanguageServerProtocolServer).GotoDeclaration(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/protocol.rpc.LanguageServerProtocol/GotoDeclaration",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(LanguageServerProtocolServer).GotoDeclaration(ctx, req.(*DeclarationRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _LanguageServerProtocol_GotoDefinition_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(DefinitionRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(LanguageServerProtocolServer).GotoDefinition(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/protocol.rpc.LanguageServerProtocol/GotoDefinition",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(LanguageServerProtocolServer).GotoDefinition(ctx, req.(*DefinitionRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _LanguageServerProtocol_GotoTypeDefinition_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(TypeDefinitionRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(LanguageServerProtocolServer).GotoTypeDefinition(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/protocol.rpc.LanguageServerProtocol/GotoTypeDefinition",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(LanguageServerProtocolServer).GotoTypeDefinition(ctx, req.(*TypeDefinitionRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _LanguageServerProtocol_GotoImplementation_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ImplementationRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(LanguageServerProtocolServer).GotoImplementation(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/protocol.rpc.LanguageServerProtocol/GotoImplementation",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(LanguageServerProtocolServer).GotoImplementation(ctx, req.(*ImplementationRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _LanguageServerProtocol_FindReferences_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ReferenceRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(LanguageServerProtocolServer).FindReferences(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/protocol.rpc.LanguageServerProtocol/FindReferences",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(LanguageServerProtocolServer).FindReferences(ctx, req.(*ReferenceRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _LanguageServerProtocol_DocumentHighlights_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(DocumentHighlightRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(LanguageServerProtocolServer).DocumentHighlights(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/protocol.rpc.LanguageServerProtocol/DocumentHighlights",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(LanguageServerProtocolServer).DocumentHighlights(ctx, req.(*DocumentHighlightRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _LanguageServerProtocol_DocumentSymbols_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(DocumentSymbolRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(LanguageServerProtocolServer).DocumentSymbols(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/protocol.rpc.LanguageServerProtocol/DocumentSymbols",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(LanguageServerProtocolServer).DocumentSymbols(ctx, req.(*DocumentSymbolRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _LanguageServerProtocol_CodeAction_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(CodeActionRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(LanguageServerProtocolServer).CodeAction(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/protocol.rpc.LanguageServerProtocol/CodeAction",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(LanguageServerProtocolServer).CodeAction(ctx, req.(*CodeActionRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _LanguageServerProtocol_CodeLens_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(CodeLensRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(LanguageServerProtocolServer).CodeLens(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/protocol.rpc.LanguageServerProtocol/CodeLens",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(LanguageServerProtocolServer).CodeLens(ctx, req.(*CodeLensRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _LanguageServerProtocol_CodeLensResolve_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(CodeLensResolveRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(LanguageServerProtocolServer).CodeLensResolve(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/protocol.rpc.LanguageServerProtocol/CodeLensResolve",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(LanguageServerProtocolServer).CodeLensResolve(ctx, req.(*CodeLensResolveRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _LanguageServerProtocol_DocumentLink_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(DocumentLinkRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(LanguageServerProtocolServer).DocumentLink(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/protocol.rpc.LanguageServerProtocol/DocumentLink",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(LanguageServerProtocolServer).DocumentLink(ctx, req.(*DocumentLinkRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _LanguageServerProtocol_DocumentLinkResolve_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(DocumentLinkResolveRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(LanguageServerProtocolServer).DocumentLinkResolve(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/protocol.rpc.LanguageServerProtocol/DocumentLinkResolve",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(LanguageServerProtocolServer).DocumentLinkResolve(ctx, req.(*DocumentLinkResolveRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _LanguageServerProtocol_DocumentColor_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(DocumentColorRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(LanguageServerProtocolServer).DocumentColor(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/protocol.rpc.LanguageServerProtocol/DocumentColor",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(LanguageServerProtocolServer).DocumentColor(ctx, req.(*DocumentColorRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _LanguageServerProtocol_ColorPresentation_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ColorPresentationRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(LanguageServerProtocolServer).ColorPresentation(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/protocol.rpc.LanguageServerProtocol/ColorPresentation",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(LanguageServerProtocolServer).ColorPresentation(ctx, req.(*ColorPresentationRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _LanguageServerProtocol_DocumentFormatting_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(DocumentFormattingRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(LanguageServerProtocolServer).DocumentFormatting(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/protocol.rpc.LanguageServerProtocol/DocumentFormatting",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(LanguageServerProtocolServer).DocumentFormatting(ctx, req.(*DocumentFormattingRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _LanguageServerProtocol_DocumentRangeFormatting_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(DocumentRangeFormattingRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(LanguageServerProtocolServer).DocumentRangeFormatting(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/protocol.rpc.LanguageServerProtocol/DocumentRangeFormatting",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(LanguageServerProtocolServer).DocumentRangeFormatting(ctx, req.(*DocumentRangeFormattingRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _LanguageServerProtocol_OnTypeFormatting_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(DocumentOnTypeFormattingRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(LanguageServerProtocolServer).OnTypeFormatting(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/protocol.rpc.LanguageServerProtocol/OnTypeFormatting",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(LanguageServerProtocolServer).OnTypeFormatting(ctx, req.(*DocumentOnTypeFormattingRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _LanguageServerProtocol_Rename_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(RenameRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(LanguageServerProtocolServer).Rename(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/protocol.rpc.LanguageServerProtocol/Rename",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(LanguageServerProtocolServer).Rename(ctx, req.(*RenameRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _LanguageServerProtocol_PrepareRename_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(PrepareRenameRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(LanguageServerProtocolServer).PrepareRename(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/protocol.rpc.LanguageServerProtocol/PrepareRename",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(LanguageServerProtocolServer).PrepareRename(ctx, req.(*PrepareRenameRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _LanguageServerProtocol_FoldingRange_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(FoldingRangeRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(LanguageServerProtocolServer).FoldingRange(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/protocol.rpc.LanguageServerProtocol/FoldingRange",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(LanguageServerProtocolServer).FoldingRange(ctx, req.(*FoldingRangeRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _LanguageServerProtocol_SelectionRange_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(SelectionRangeRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(LanguageServerProtocolServer).SelectionRange(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/protocol.rpc.LanguageServerProtocol/SelectionRange",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(LanguageServerProtocolServer).SelectionRange(ctx, req.(*SelectionRangeRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _LanguageServerProtocol_PrepareCallHierarchy_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(CallHierarchyPrepareRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(LanguageServerProtocolServer).PrepareCallHierarchy(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/protocol.rpc.LanguageServerProtocol/PrepareCallHierarchy",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(LanguageServerProtocolServer).PrepareCallHierarchy(ctx, req.(*CallHierarchyPrepareRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _LanguageServerProtocol_CallHierarchyIncomingCalls_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(CallHierarchyIncomingCallsRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(LanguageServerProtocolServer).CallHierarchyIncomingCalls(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/protocol.rpc.LanguageServerProtocol/CallHierarchyIncomingCalls",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(LanguageServerProtocolServer).CallHierarchyIncomingCalls(ctx, req.(*CallHierarchyIncomingCallsRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _LanguageServerProtocol_CallHierarchyOutgoingCalls_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(CallHierarchyOutgoingCallsRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(LanguageServerProtocolServer).CallHierarchyOutgoingCalls(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/protocol.rpc.LanguageServerProtocol/CallHierarchyOutgoingCalls",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(LanguageServerProtocolServer).CallHierarchyOutgoingCalls(ctx, req.(*CallHierarchyOutgoingCallsRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-var _LanguageServerProtocol_serviceDesc = grpc.ServiceDesc{
-	ServiceName: "protocol.rpc.LanguageServerProtocol",
-	HandlerType: (*LanguageServerProtocolServer)(nil),
-	Methods: []grpc.MethodDesc{
-		{
-			MethodName: "Cancel",
-			Handler:    _LanguageServerProtocol_Cancel_Handler,
-		},
-		{
-			MethodName: "Progress",
-			Handler:    _LanguageServerProtocol_Progress_Handler,
-		},
-		{
-			MethodName: "Initialize",
-			Handler:    _LanguageServerProtocol_Initialize_Handler,
-		},
-		{
-			MethodName: "Initialized",
-			Handler:    _LanguageServerProtocol_Initialized_Handler,
-		},
-		{
-			MethodName: "Shutdown",
-			Handler:    _LanguageServerProtocol_Shutdown_Handler,
-		},
-		{
-			MethodName: "Exit",
-			Handler:    _LanguageServerProtocol_Exit_Handler,
-		},
-		{
-			MethodName: "LogTrace",
-			Handler:    _LanguageServerProtocol_LogTrace_Handler,
-		},
-		{
-			MethodName: "SetTrace",
-			Handler:    _LanguageServerProtocol_SetTrace_Handler,
-		},
-		{
-			MethodName: "ShowMessage",
-			Handler:    _LanguageServerProtocol_ShowMessage_Handler,
-		},
-		{
-			MethodName: "ShowMessageRequest",
-			Handler:    _LanguageServerProtocol_ShowMessageRequest_Handler,
-		},
-		{
-			MethodName: "LogMessage",
-			Handler:    _LanguageServerProtocol_LogMessage_Handler,
-		},
-		{
-			MethodName: "CreateWorkDoneProgress",
-			Handler:    _LanguageServerProtocol_CreateWorkDoneProgress_Handler,
-		},
-		{
-			MethodName: "CancelWorkDoneProgress",
-			Handler:    _LanguageServerProtocol_CancelWorkDoneProgress_Handler,
-		},
-		{
-			MethodName: "Telemetry",
-			Handler:    _LanguageServerProtocol_Telemetry_Handler,
-		},
-		{
-			MethodName: "WorkspaceFolders",
-			Handler:    _LanguageServerProtocol_WorkspaceFolders_Handler,
-		},
-		{
-			MethodName: "DidChangeWorkspaceFolders",
-			Handler:    _LanguageServerProtocol_DidChangeWorkspaceFolders_Handler,
-		},
-		{
-			MethodName: "DidChangeConfiguration",
-			Handler:    _LanguageServerProtocol_DidChangeConfiguration_Handler,
-		},
-		{
-			MethodName: "Configuration",
-			Handler:    _LanguageServerProtocol_Configuration_Handler,
-		},
-		{
-			MethodName: "DidChangeWatchedFiles",
-			Handler:    _LanguageServerProtocol_DidChangeWatchedFiles_Handler,
-		},
-		{
-			MethodName: "WorkspaceSymbols",
-			Handler:    _LanguageServerProtocol_WorkspaceSymbols_Handler,
-		},
-		{
-			MethodName: "ExecuteCommand",
-			Handler:    _LanguageServerProtocol_ExecuteCommand_Handler,
-		},
-		{
-			MethodName: "ApplyEdit",
-			Handler:    _LanguageServerProtocol_ApplyEdit_Handler,
-		},
-		{
-			MethodName: "DidOpenTextDocument",
-			Handler:    _LanguageServerProtocol_DidOpenTextDocument_Handler,
-		},
-		{
-			MethodName: "DidChangeTextDocument",
-			Handler:    _LanguageServerProtocol_DidChangeTextDocument_Handler,
-		},
-		{
-			MethodName: "WillSaveTextDocument",
-			Handler:    _LanguageServerProtocol_WillSaveTextDocument_Handler,
-		},
-		{
-			MethodName: "WillSaveWaitUntilTextDocument",
-			Handler:    _LanguageServerProtocol_WillSaveWaitUntilTextDocument_Handler,
-		},
-		{
-			MethodName: "DidSaveTextDocument",
-			Handler:    _LanguageServerProtocol_DidSaveTextDocument_Handler,
-		},
-		{
-			MethodName: "DidCloseTextDocument",
-			Handler:    _LanguageServerProtocol_DidCloseTextDocument_Handler,
-		},
-		{
-			MethodName: "PublishDiagnostics",
-			Handler:    _LanguageServerProtocol_PublishDiagnostics_Handler,
-		},
-		{
-			MethodName: "Completion",
-			Handler:    _LanguageServerProtocol_Completion_Handler,
-		},
-		{
-			MethodName: "CompletionItemResolve",
-			Handler:    _LanguageServerProtocol_CompletionItemResolve_Handler,
-		},
-		{
-			MethodName: "Hover",
-			Handler:    _LanguageServerProtocol_Hover_Handler,
-		},
-		{
-			MethodName: "SignatureHelp",
-			Handler:    _LanguageServerProtocol_SignatureHelp_Handler,
-		},
-		{
-			MethodName: "GotoDeclaration",
-			Handler:    _LanguageServerProtocol_GotoDeclaration_Handler,
-		},
-		{
-			MethodName: "GotoDefinition",
-			Handler:    _LanguageServerProtocol_GotoDefinition_Handler,
-		},
-		{
-			MethodName: "GotoTypeDefinition",
-			Handler:    _LanguageServerProtocol_GotoTypeDefinition_Handler,
-		},
-		{
-			MethodName: "GotoImplementation",
-			Handler:    _LanguageServerProtocol_GotoImplementation_Handler,
-		},
-		{
-			MethodName: "FindReferences",
-			Handler:    _LanguageServerProtocol_FindReferences_Handler,
-		},
-		{
-			MethodName: "DocumentHighlights",
-			Handler:    _LanguageServerProtocol_DocumentHighlights_Handler,
-		},
-		{
-			MethodName: "DocumentSymbols",
-			Handler:    _LanguageServerProtocol_DocumentSymbols_Handler,
-		},
-		{
-			MethodName: "CodeAction",
-			Handler:    _LanguageServerProtocol_CodeAction_Handler,
-		},
-		{
-			MethodName: "CodeLens",
-			Handler:    _LanguageServerProtocol_CodeLens_Handler,
-		},
-		{
-			MethodName: "CodeLensResolve",
-			Handler:    _LanguageServerProtocol_CodeLensResolve_Handler,
-		},
-		{
-			MethodName: "DocumentLink",
-			Handler:    _LanguageServerProtocol_DocumentLink_Handler,
-		},
-		{
-			MethodName: "DocumentLinkResolve",
-			Handler:    _LanguageServerProtocol_DocumentLinkResolve_Handler,
-		},
-		{
-			MethodName: "DocumentColor",
-			Handler:    _LanguageServerProtocol_DocumentColor_Handler,
-		},
-		{
-			MethodName: "ColorPresentation",
-			Handler:    _LanguageServerProtocol_ColorPresentation_Handler,
-		},
-		{
-			MethodName: "DocumentFormatting",
-			Handler:    _LanguageServerProtocol_DocumentFormatting_Handler,
-		},
-		{
-			MethodName: "DocumentRangeFormatting",
-			Handler:    _LanguageServerProtocol_DocumentRangeFormatting_Handler,
-		},
-		{
-			MethodName: "OnTypeFormatting",
-			Handler:    _LanguageServerProtocol_OnTypeFormatting_Handler,
-		},
-		{
-			MethodName: "Rename",
-			Handler:    _LanguageServerProtocol_Rename_Handler,
-		},
-		{
-			MethodName: "PrepareRename",
-			Handler:    _LanguageServerProtocol_PrepareRename_Handler,
-		},
-		{
-			MethodName: "FoldingRange",
-			Handler:    _LanguageServerProtocol_FoldingRange_Handler,
-		},
-		{
-			MethodName: "SelectionRange",
-			Handler:    _LanguageServerProtocol_SelectionRange_Handler,
-		},
-		{
-			MethodName: "PrepareCallHierarchy",
-			Handler:    _LanguageServerProtocol_PrepareCallHierarchy_Handler,
-		},
-		{
-			MethodName: "CallHierarchyIncomingCalls",
-			Handler:    _LanguageServerProtocol_CallHierarchyIncomingCalls_Handler,
-		},
-		{
-			MethodName: "CallHierarchyOutgoingCalls",
-			Handler:    _LanguageServerProtocol_CallHierarchyOutgoingCalls_Handler,
-		},
-	},
-	Streams:  []grpc.StreamDesc{},
-	Metadata: "protocol/rpc/rpc.proto",
 }
