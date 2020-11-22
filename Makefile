@@ -68,6 +68,11 @@ protoc:  ## Run protoc.
 protoc-gen-grpc-gateway:  ## Run protoc-gen-grpc-gateway.
 	docker container run --rm -it ${DOCKER_VOLUME_FLAGS} -w /go/src/${PACKAGE} ${DOCKER_CONTAINER_IMAGE} --grpc-gateway_out=${PROTOC_OUT} ${PROTOC_INCLUDES} $(foreach f,${PROTO_FILES_PROTOCOL_RPC},$(abspath /go/src/${PACKAGE}/$(f)))
 
+.PHONY: protoc-gen-openapiv2
+protoc-gen-openapiv2:  ## Run protoc-gen-openapiv2.
+	docker container run --rm -it ${DOCKER_VOLUME_FLAGS} -w /go/src/${PACKAGE} ${DOCKER_CONTAINER_IMAGE} --openapiv2_out=allow_delete_body=true,allow_merge=false,allow_repeated_fields_in_body=true,include_package_in_tags=true,simple_operation_ids=true,generate_unbound_methods=true:/go/src/${PACKAGE} ${PROTOC_INCLUDES} $(foreach f,${PROTO_FILES_PROTOCOL_RPC},$(abspath /go/src/${PACKAGE}/$(f)))
+	@mv protocol/rpc/rpc.swagger.json openapi/rpc.openapi.json
+
 .PHONY: protoc-gen-doc
 protoc-gen-doc:  ## Run protoc-gen-doc.
 	docker container run --rm -it ${DOCKER_VOLUME_FLAGS} -w /go/src/${PACKAGE} ${DOCKER_CONTAINER_IMAGE} --doc_out=/go/src/${PACKAGE}/protocol --doc_opt=/go/src/${PACKAGE}/hack/template/protoc-gen-doc.tmpl,README.md ${PROTOC_INCLUDES} $(foreach f,${PROTO_FILES_PROTOCOL},$(abspath /go/src/${PACKAGE}/$(f)))
