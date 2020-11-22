@@ -4,7 +4,7 @@ jobs:
   api-linter:
     docker:
       - name: protoc
-        image: gcr.io/containerz/go.lsp.dev/protoc:3.12.4
+        image: gcr.io/containerz/go.lsp.dev/protoc:3.14.0-1.15
         user: root
         entrypoint:
           - sh
