@@ -12,8 +12,8 @@ TOOLS_PATH = ${CURDIR}/tools/bin
 # ----------------------------------------------------------------------------
 # variables
 
-PROTOC_DIGEST ?= sha256:72410a17b2c8f2714dc8599663d69823c13b1bcda0e8627dde138b339022181a  # 3.13.0-1.15-debug
-PROTOC_VERSION ?= 3.13.0
+PROTOC_DIGEST ?= sha256:31a95363fe498a14a6e46a2c78329c192a4d5f0c52528bd9796fccea1fc6d99c  # 3.14.0-1.15-debug 
+PROTOC_VERSION ?= 3.14.0
 GOLANG_VERSION ?= 1.15
 ALPINE_VERSION ?= 3.12
 
