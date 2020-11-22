@@ -13,15 +13,16 @@ import (
 	"io"
 	"net/http"
 
-	"github.com/golang/protobuf/ptypes/any"
-	"github.com/golang/protobuf/ptypes/empty"
 	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
 	"github.com/grpc-ecosystem/grpc-gateway/v2/utilities"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/grpclog"
+	"google.golang.org/grpc/metadata"
 	"google.golang.org/grpc/status"
 	"google.golang.org/protobuf/proto"
+	"google.golang.org/protobuf/types/known/anypb"
+	"google.golang.org/protobuf/types/known/emptypb"
 )
 
 // Suppress "imported and not used" errors
@@ -31,6 +32,7 @@ var (
 	_ status.Status
 	_ = runtime.String
 	_ = utilities.NewDoubleArray
+	_ = metadata.Join
 )
 
 func request_LanguageServerProtocol_Cancel_0(ctx context.Context, marshaler runtime.Marshaler, client LanguageServerProtocolClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
@@ -162,7 +164,7 @@ func local_request_LanguageServerProtocol_Initialized_0(ctx context.Context, mar
 }
 
 func request_LanguageServerProtocol_Shutdown_0(ctx context.Context, marshaler runtime.Marshaler, client LanguageServerProtocolClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq empty.Empty
+	var protoReq emptypb.Empty
 	var metadata runtime.ServerMetadata
 
 	newReader, berr := utilities.IOReaderFactory(req.Body)
@@ -178,7 +180,7 @@ func request_LanguageServerProtocol_Shutdown_0(ctx context.Context, marshaler ru
 }
 
 func local_request_LanguageServerProtocol_Shutdown_0(ctx context.Context, marshaler runtime.Marshaler, server LanguageServerProtocolServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq empty.Empty
+	var protoReq emptypb.Empty
 	var metadata runtime.ServerMetadata
 
 	newReader, berr := utilities.IOReaderFactory(req.Body)
@@ -194,7 +196,7 @@ func local_request_LanguageServerProtocol_Shutdown_0(ctx context.Context, marsha
 }
 
 func request_LanguageServerProtocol_Exit_0(ctx context.Context, marshaler runtime.Marshaler, client LanguageServerProtocolClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq empty.Empty
+	var protoReq emptypb.Empty
 	var metadata runtime.ServerMetadata
 
 	newReader, berr := utilities.IOReaderFactory(req.Body)
@@ -210,7 +212,7 @@ func request_LanguageServerProtocol_Exit_0(ctx context.Context, marshaler runtim
 }
 
 func local_request_LanguageServerProtocol_Exit_0(ctx context.Context, marshaler runtime.Marshaler, server LanguageServerProtocolServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq empty.Empty
+	var protoReq emptypb.Empty
 	var metadata runtime.ServerMetadata
 
 	newReader, berr := utilities.IOReaderFactory(req.Body)
@@ -450,7 +452,7 @@ func local_request_LanguageServerProtocol_CancelWorkDoneProgress_0(ctx context.C
 }
 
 func request_LanguageServerProtocol_Telemetry_0(ctx context.Context, marshaler runtime.Marshaler, client LanguageServerProtocolClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq any.Any
+	var protoReq anypb.Any
 	var metadata runtime.ServerMetadata
 
 	newReader, berr := utilities.IOReaderFactory(req.Body)
@@ -466,7 +468,7 @@ func request_LanguageServerProtocol_Telemetry_0(ctx context.Context, marshaler r
 }
 
 func local_request_LanguageServerProtocol_Telemetry_0(ctx context.Context, marshaler runtime.Marshaler, server LanguageServerProtocolServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq any.Any
+	var protoReq anypb.Any
 	var metadata runtime.ServerMetadata
 
 	newReader, berr := utilities.IOReaderFactory(req.Body)
@@ -482,7 +484,7 @@ func local_request_LanguageServerProtocol_Telemetry_0(ctx context.Context, marsh
 }
 
 func request_LanguageServerProtocol_WorkspaceFolders_0(ctx context.Context, marshaler runtime.Marshaler, client LanguageServerProtocolClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq empty.Empty
+	var protoReq emptypb.Empty
 	var metadata runtime.ServerMetadata
 
 	newReader, berr := utilities.IOReaderFactory(req.Body)
@@ -498,7 +500,7 @@ func request_LanguageServerProtocol_WorkspaceFolders_0(ctx context.Context, mars
 }
 
 func local_request_LanguageServerProtocol_WorkspaceFolders_0(ctx context.Context, marshaler runtime.Marshaler, server LanguageServerProtocolServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq empty.Empty
+	var protoReq emptypb.Empty
 	var metadata runtime.ServerMetadata
 
 	newReader, berr := utilities.IOReaderFactory(req.Body)
@@ -1860,10 +1862,13 @@ func local_request_LanguageServerProtocol_CallHierarchyOutgoingCalls_0(ctx conte
 // RegisterLanguageServerProtocolHandlerServer registers the http handlers for service LanguageServerProtocol to "mux".
 // UnaryRPC     :call LanguageServerProtocolServer directly.
 // StreamingRPC :currently unsupported pending https://github.com/grpc/grpc-go/issues/906.
+// Note that using this registration option will cause many gRPC library features to stop working. Consider using RegisterLanguageServerProtocolHandlerFromEndpoint instead.
 func RegisterLanguageServerProtocolHandlerServer(ctx context.Context, mux *runtime.ServeMux, server LanguageServerProtocolServer) error {
 	mux.Handle("POST", pattern_LanguageServerProtocol_Cancel_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
+		var stream runtime.ServerTransportStream
+		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/protocol.rpc.LanguageServerProtocol/Cancel")
 		if err != nil {
@@ -1871,6 +1876,7 @@ func RegisterLanguageServerProtocolHandlerServer(ctx context.Context, mux *runti
 			return
 		}
 		resp, md, err := local_request_LanguageServerProtocol_Cancel_0(rctx, inboundMarshaler, server, req, pathParams)
+		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
@@ -1883,6 +1889,8 @@ func RegisterLanguageServerProtocolHandlerServer(ctx context.Context, mux *runti
 	mux.Handle("POST", pattern_LanguageServerProtocol_Progress_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
+		var stream runtime.ServerTransportStream
+		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/protocol.rpc.LanguageServerProtocol/Progress")
 		if err != nil {
@@ -1890,6 +1898,7 @@ func RegisterLanguageServerProtocolHandlerServer(ctx context.Context, mux *runti
 			return
 		}
 		resp, md, err := local_request_LanguageServerProtocol_Progress_0(rctx, inboundMarshaler, server, req, pathParams)
+		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
@@ -1902,6 +1911,8 @@ func RegisterLanguageServerProtocolHandlerServer(ctx context.Context, mux *runti
 	mux.Handle("POST", pattern_LanguageServerProtocol_Initialize_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
+		var stream runtime.ServerTransportStream
+		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/protocol.rpc.LanguageServerProtocol/Initialize")
 		if err != nil {
@@ -1909,6 +1920,7 @@ func RegisterLanguageServerProtocolHandlerServer(ctx context.Context, mux *runti
 			return
 		}
 		resp, md, err := local_request_LanguageServerProtocol_Initialize_0(rctx, inboundMarshaler, server, req, pathParams)
+		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
@@ -1921,6 +1933,8 @@ func RegisterLanguageServerProtocolHandlerServer(ctx context.Context, mux *runti
 	mux.Handle("POST", pattern_LanguageServerProtocol_Initialized_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
+		var stream runtime.ServerTransportStream
+		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/protocol.rpc.LanguageServerProtocol/Initialized")
 		if err != nil {
@@ -1928,6 +1942,7 @@ func RegisterLanguageServerProtocolHandlerServer(ctx context.Context, mux *runti
 			return
 		}
 		resp, md, err := local_request_LanguageServerProtocol_Initialized_0(rctx, inboundMarshaler, server, req, pathParams)
+		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
@@ -1940,6 +1955,8 @@ func RegisterLanguageServerProtocolHandlerServer(ctx context.Context, mux *runti
 	mux.Handle("POST", pattern_LanguageServerProtocol_Shutdown_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
+		var stream runtime.ServerTransportStream
+		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/protocol.rpc.LanguageServerProtocol/Shutdown")
 		if err != nil {
@@ -1947,6 +1964,7 @@ func RegisterLanguageServerProtocolHandlerServer(ctx context.Context, mux *runti
 			return
 		}
 		resp, md, err := local_request_LanguageServerProtocol_Shutdown_0(rctx, inboundMarshaler, server, req, pathParams)
+		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
@@ -1959,6 +1977,8 @@ func RegisterLanguageServerProtocolHandlerServer(ctx context.Context, mux *runti
 	mux.Handle("POST", pattern_LanguageServerProtocol_Exit_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
+		var stream runtime.ServerTransportStream
+		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/protocol.rpc.LanguageServerProtocol/Exit")
 		if err != nil {
@@ -1966,6 +1986,7 @@ func RegisterLanguageServerProtocolHandlerServer(ctx context.Context, mux *runti
 			return
 		}
 		resp, md, err := local_request_LanguageServerProtocol_Exit_0(rctx, inboundMarshaler, server, req, pathParams)
+		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
@@ -1978,6 +1999,8 @@ func RegisterLanguageServerProtocolHandlerServer(ctx context.Context, mux *runti
 	mux.Handle("POST", pattern_LanguageServerProtocol_LogTrace_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
+		var stream runtime.ServerTransportStream
+		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/protocol.rpc.LanguageServerProtocol/LogTrace")
 		if err != nil {
@@ -1985,6 +2008,7 @@ func RegisterLanguageServerProtocolHandlerServer(ctx context.Context, mux *runti
 			return
 		}
 		resp, md, err := local_request_LanguageServerProtocol_LogTrace_0(rctx, inboundMarshaler, server, req, pathParams)
+		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
@@ -1997,6 +2021,8 @@ func RegisterLanguageServerProtocolHandlerServer(ctx context.Context, mux *runti
 	mux.Handle("POST", pattern_LanguageServerProtocol_SetTrace_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
+		var stream runtime.ServerTransportStream
+		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/protocol.rpc.LanguageServerProtocol/SetTrace")
 		if err != nil {
@@ -2004,6 +2030,7 @@ func RegisterLanguageServerProtocolHandlerServer(ctx context.Context, mux *runti
 			return
 		}
 		resp, md, err := local_request_LanguageServerProtocol_SetTrace_0(rctx, inboundMarshaler, server, req, pathParams)
+		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
@@ -2016,6 +2043,8 @@ func RegisterLanguageServerProtocolHandlerServer(ctx context.Context, mux *runti
 	mux.Handle("POST", pattern_LanguageServerProtocol_ShowMessage_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
+		var stream runtime.ServerTransportStream
+		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/protocol.rpc.LanguageServerProtocol/ShowMessage")
 		if err != nil {
@@ -2023,6 +2052,7 @@ func RegisterLanguageServerProtocolHandlerServer(ctx context.Context, mux *runti
 			return
 		}
 		resp, md, err := local_request_LanguageServerProtocol_ShowMessage_0(rctx, inboundMarshaler, server, req, pathParams)
+		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
@@ -2035,6 +2065,8 @@ func RegisterLanguageServerProtocolHandlerServer(ctx context.Context, mux *runti
 	mux.Handle("POST", pattern_LanguageServerProtocol_ShowMessageRequest_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
+		var stream runtime.ServerTransportStream
+		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/protocol.rpc.LanguageServerProtocol/ShowMessageRequest")
 		if err != nil {
@@ -2042,6 +2074,7 @@ func RegisterLanguageServerProtocolHandlerServer(ctx context.Context, mux *runti
 			return
 		}
 		resp, md, err := local_request_LanguageServerProtocol_ShowMessageRequest_0(rctx, inboundMarshaler, server, req, pathParams)
+		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
@@ -2054,6 +2087,8 @@ func RegisterLanguageServerProtocolHandlerServer(ctx context.Context, mux *runti
 	mux.Handle("POST", pattern_LanguageServerProtocol_LogMessage_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
+		var stream runtime.ServerTransportStream
+		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/protocol.rpc.LanguageServerProtocol/LogMessage")
 		if err != nil {
@@ -2061,6 +2096,7 @@ func RegisterLanguageServerProtocolHandlerServer(ctx context.Context, mux *runti
 			return
 		}
 		resp, md, err := local_request_LanguageServerProtocol_LogMessage_0(rctx, inboundMarshaler, server, req, pathParams)
+		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
@@ -2073,6 +2109,8 @@ func RegisterLanguageServerProtocolHandlerServer(ctx context.Context, mux *runti
 	mux.Handle("POST", pattern_LanguageServerProtocol_CreateWorkDoneProgress_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
+		var stream runtime.ServerTransportStream
+		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/protocol.rpc.LanguageServerProtocol/CreateWorkDoneProgress")
 		if err != nil {
@@ -2080,6 +2118,7 @@ func RegisterLanguageServerProtocolHandlerServer(ctx context.Context, mux *runti
 			return
 		}
 		resp, md, err := local_request_LanguageServerProtocol_CreateWorkDoneProgress_0(rctx, inboundMarshaler, server, req, pathParams)
+		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
@@ -2092,6 +2131,8 @@ func RegisterLanguageServerProtocolHandlerServer(ctx context.Context, mux *runti
 	mux.Handle("POST", pattern_LanguageServerProtocol_CancelWorkDoneProgress_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
+		var stream runtime.ServerTransportStream
+		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/protocol.rpc.LanguageServerProtocol/CancelWorkDoneProgress")
 		if err != nil {
@@ -2099,6 +2140,7 @@ func RegisterLanguageServerProtocolHandlerServer(ctx context.Context, mux *runti
 			return
 		}
 		resp, md, err := local_request_LanguageServerProtocol_CancelWorkDoneProgress_0(rctx, inboundMarshaler, server, req, pathParams)
+		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
@@ -2111,6 +2153,8 @@ func RegisterLanguageServerProtocolHandlerServer(ctx context.Context, mux *runti
 	mux.Handle("POST", pattern_LanguageServerProtocol_Telemetry_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
+		var stream runtime.ServerTransportStream
+		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/protocol.rpc.LanguageServerProtocol/Telemetry")
 		if err != nil {
@@ -2118,6 +2162,7 @@ func RegisterLanguageServerProtocolHandlerServer(ctx context.Context, mux *runti
 			return
 		}
 		resp, md, err := local_request_LanguageServerProtocol_Telemetry_0(rctx, inboundMarshaler, server, req, pathParams)
+		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
@@ -2130,6 +2175,8 @@ func RegisterLanguageServerProtocolHandlerServer(ctx context.Context, mux *runti
 	mux.Handle("POST", pattern_LanguageServerProtocol_WorkspaceFolders_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
+		var stream runtime.ServerTransportStream
+		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/protocol.rpc.LanguageServerProtocol/WorkspaceFolders")
 		if err != nil {
@@ -2137,6 +2184,7 @@ func RegisterLanguageServerProtocolHandlerServer(ctx context.Context, mux *runti
 			return
 		}
 		resp, md, err := local_request_LanguageServerProtocol_WorkspaceFolders_0(rctx, inboundMarshaler, server, req, pathParams)
+		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
@@ -2149,6 +2197,8 @@ func RegisterLanguageServerProtocolHandlerServer(ctx context.Context, mux *runti
 	mux.Handle("POST", pattern_LanguageServerProtocol_DidChangeWorkspaceFolders_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
+		var stream runtime.ServerTransportStream
+		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/protocol.rpc.LanguageServerProtocol/DidChangeWorkspaceFolders")
 		if err != nil {
@@ -2156,6 +2206,7 @@ func RegisterLanguageServerProtocolHandlerServer(ctx context.Context, mux *runti
 			return
 		}
 		resp, md, err := local_request_LanguageServerProtocol_DidChangeWorkspaceFolders_0(rctx, inboundMarshaler, server, req, pathParams)
+		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
@@ -2168,6 +2219,8 @@ func RegisterLanguageServerProtocolHandlerServer(ctx context.Context, mux *runti
 	mux.Handle("POST", pattern_LanguageServerProtocol_DidChangeConfiguration_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
+		var stream runtime.ServerTransportStream
+		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/protocol.rpc.LanguageServerProtocol/DidChangeConfiguration")
 		if err != nil {
@@ -2175,6 +2228,7 @@ func RegisterLanguageServerProtocolHandlerServer(ctx context.Context, mux *runti
 			return
 		}
 		resp, md, err := local_request_LanguageServerProtocol_DidChangeConfiguration_0(rctx, inboundMarshaler, server, req, pathParams)
+		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
@@ -2187,6 +2241,8 @@ func RegisterLanguageServerProtocolHandlerServer(ctx context.Context, mux *runti
 	mux.Handle("POST", pattern_LanguageServerProtocol_Configuration_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
+		var stream runtime.ServerTransportStream
+		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/protocol.rpc.LanguageServerProtocol/Configuration")
 		if err != nil {
@@ -2194,6 +2250,7 @@ func RegisterLanguageServerProtocolHandlerServer(ctx context.Context, mux *runti
 			return
 		}
 		resp, md, err := local_request_LanguageServerProtocol_Configuration_0(rctx, inboundMarshaler, server, req, pathParams)
+		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
@@ -2206,6 +2263,8 @@ func RegisterLanguageServerProtocolHandlerServer(ctx context.Context, mux *runti
 	mux.Handle("POST", pattern_LanguageServerProtocol_DidChangeWatchedFiles_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
+		var stream runtime.ServerTransportStream
+		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/protocol.rpc.LanguageServerProtocol/DidChangeWatchedFiles")
 		if err != nil {
@@ -2213,6 +2272,7 @@ func RegisterLanguageServerProtocolHandlerServer(ctx context.Context, mux *runti
 			return
 		}
 		resp, md, err := local_request_LanguageServerProtocol_DidChangeWatchedFiles_0(rctx, inboundMarshaler, server, req, pathParams)
+		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
@@ -2225,6 +2285,8 @@ func RegisterLanguageServerProtocolHandlerServer(ctx context.Context, mux *runti
 	mux.Handle("POST", pattern_LanguageServerProtocol_WorkspaceSymbols_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
+		var stream runtime.ServerTransportStream
+		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/protocol.rpc.LanguageServerProtocol/WorkspaceSymbols")
 		if err != nil {
@@ -2232,6 +2294,7 @@ func RegisterLanguageServerProtocolHandlerServer(ctx context.Context, mux *runti
 			return
 		}
 		resp, md, err := local_request_LanguageServerProtocol_WorkspaceSymbols_0(rctx, inboundMarshaler, server, req, pathParams)
+		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
@@ -2244,6 +2307,8 @@ func RegisterLanguageServerProtocolHandlerServer(ctx context.Context, mux *runti
 	mux.Handle("POST", pattern_LanguageServerProtocol_ExecuteCommand_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
+		var stream runtime.ServerTransportStream
+		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/protocol.rpc.LanguageServerProtocol/ExecuteCommand")
 		if err != nil {
@@ -2251,6 +2316,7 @@ func RegisterLanguageServerProtocolHandlerServer(ctx context.Context, mux *runti
 			return
 		}
 		resp, md, err := local_request_LanguageServerProtocol_ExecuteCommand_0(rctx, inboundMarshaler, server, req, pathParams)
+		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
@@ -2263,6 +2329,8 @@ func RegisterLanguageServerProtocolHandlerServer(ctx context.Context, mux *runti
 	mux.Handle("POST", pattern_LanguageServerProtocol_ApplyEdit_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
+		var stream runtime.ServerTransportStream
+		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/protocol.rpc.LanguageServerProtocol/ApplyEdit")
 		if err != nil {
@@ -2270,6 +2338,7 @@ func RegisterLanguageServerProtocolHandlerServer(ctx context.Context, mux *runti
 			return
 		}
 		resp, md, err := local_request_LanguageServerProtocol_ApplyEdit_0(rctx, inboundMarshaler, server, req, pathParams)
+		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
@@ -2282,6 +2351,8 @@ func RegisterLanguageServerProtocolHandlerServer(ctx context.Context, mux *runti
 	mux.Handle("POST", pattern_LanguageServerProtocol_DidOpenTextDocument_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
+		var stream runtime.ServerTransportStream
+		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/protocol.rpc.LanguageServerProtocol/DidOpenTextDocument")
 		if err != nil {
@@ -2289,6 +2360,7 @@ func RegisterLanguageServerProtocolHandlerServer(ctx context.Context, mux *runti
 			return
 		}
 		resp, md, err := local_request_LanguageServerProtocol_DidOpenTextDocument_0(rctx, inboundMarshaler, server, req, pathParams)
+		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
@@ -2301,6 +2373,8 @@ func RegisterLanguageServerProtocolHandlerServer(ctx context.Context, mux *runti
 	mux.Handle("POST", pattern_LanguageServerProtocol_DidChangeTextDocument_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
+		var stream runtime.ServerTransportStream
+		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/protocol.rpc.LanguageServerProtocol/DidChangeTextDocument")
 		if err != nil {
@@ -2308,6 +2382,7 @@ func RegisterLanguageServerProtocolHandlerServer(ctx context.Context, mux *runti
 			return
 		}
 		resp, md, err := local_request_LanguageServerProtocol_DidChangeTextDocument_0(rctx, inboundMarshaler, server, req, pathParams)
+		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
@@ -2320,6 +2395,8 @@ func RegisterLanguageServerProtocolHandlerServer(ctx context.Context, mux *runti
 	mux.Handle("POST", pattern_LanguageServerProtocol_WillSaveTextDocument_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
+		var stream runtime.ServerTransportStream
+		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/protocol.rpc.LanguageServerProtocol/WillSaveTextDocument")
 		if err != nil {
@@ -2327,6 +2404,7 @@ func RegisterLanguageServerProtocolHandlerServer(ctx context.Context, mux *runti
 			return
 		}
 		resp, md, err := local_request_LanguageServerProtocol_WillSaveTextDocument_0(rctx, inboundMarshaler, server, req, pathParams)
+		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
@@ -2339,6 +2417,8 @@ func RegisterLanguageServerProtocolHandlerServer(ctx context.Context, mux *runti
 	mux.Handle("POST", pattern_LanguageServerProtocol_WillSaveWaitUntilTextDocument_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
+		var stream runtime.ServerTransportStream
+		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/protocol.rpc.LanguageServerProtocol/WillSaveWaitUntilTextDocument")
 		if err != nil {
@@ -2346,6 +2426,7 @@ func RegisterLanguageServerProtocolHandlerServer(ctx context.Context, mux *runti
 			return
 		}
 		resp, md, err := local_request_LanguageServerProtocol_WillSaveWaitUntilTextDocument_0(rctx, inboundMarshaler, server, req, pathParams)
+		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
@@ -2358,6 +2439,8 @@ func RegisterLanguageServerProtocolHandlerServer(ctx context.Context, mux *runti
 	mux.Handle("POST", pattern_LanguageServerProtocol_DidSaveTextDocument_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
+		var stream runtime.ServerTransportStream
+		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/protocol.rpc.LanguageServerProtocol/DidSaveTextDocument")
 		if err != nil {
@@ -2365,6 +2448,7 @@ func RegisterLanguageServerProtocolHandlerServer(ctx context.Context, mux *runti
 			return
 		}
 		resp, md, err := local_request_LanguageServerProtocol_DidSaveTextDocument_0(rctx, inboundMarshaler, server, req, pathParams)
+		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
@@ -2377,6 +2461,8 @@ func RegisterLanguageServerProtocolHandlerServer(ctx context.Context, mux *runti
 	mux.Handle("POST", pattern_LanguageServerProtocol_DidCloseTextDocument_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
+		var stream runtime.ServerTransportStream
+		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/protocol.rpc.LanguageServerProtocol/DidCloseTextDocument")
 		if err != nil {
@@ -2384,6 +2470,7 @@ func RegisterLanguageServerProtocolHandlerServer(ctx context.Context, mux *runti
 			return
 		}
 		resp, md, err := local_request_LanguageServerProtocol_DidCloseTextDocument_0(rctx, inboundMarshaler, server, req, pathParams)
+		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
@@ -2396,6 +2483,8 @@ func RegisterLanguageServerProtocolHandlerServer(ctx context.Context, mux *runti
 	mux.Handle("POST", pattern_LanguageServerProtocol_PublishDiagnostics_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
+		var stream runtime.ServerTransportStream
+		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/protocol.rpc.LanguageServerProtocol/PublishDiagnostics")
 		if err != nil {
@@ -2403,6 +2492,7 @@ func RegisterLanguageServerProtocolHandlerServer(ctx context.Context, mux *runti
 			return
 		}
 		resp, md, err := local_request_LanguageServerProtocol_PublishDiagnostics_0(rctx, inboundMarshaler, server, req, pathParams)
+		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
@@ -2415,6 +2505,8 @@ func RegisterLanguageServerProtocolHandlerServer(ctx context.Context, mux *runti
 	mux.Handle("POST", pattern_LanguageServerProtocol_Completion_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
+		var stream runtime.ServerTransportStream
+		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/protocol.rpc.LanguageServerProtocol/Completion")
 		if err != nil {
@@ -2422,6 +2514,7 @@ func RegisterLanguageServerProtocolHandlerServer(ctx context.Context, mux *runti
 			return
 		}
 		resp, md, err := local_request_LanguageServerProtocol_Completion_0(rctx, inboundMarshaler, server, req, pathParams)
+		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
@@ -2434,6 +2527,8 @@ func RegisterLanguageServerProtocolHandlerServer(ctx context.Context, mux *runti
 	mux.Handle("POST", pattern_LanguageServerProtocol_CompletionItemResolve_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
+		var stream runtime.ServerTransportStream
+		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/protocol.rpc.LanguageServerProtocol/CompletionItemResolve")
 		if err != nil {
@@ -2441,6 +2536,7 @@ func RegisterLanguageServerProtocolHandlerServer(ctx context.Context, mux *runti
 			return
 		}
 		resp, md, err := local_request_LanguageServerProtocol_CompletionItemResolve_0(rctx, inboundMarshaler, server, req, pathParams)
+		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
@@ -2453,6 +2549,8 @@ func RegisterLanguageServerProtocolHandlerServer(ctx context.Context, mux *runti
 	mux.Handle("POST", pattern_LanguageServerProtocol_Hover_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
+		var stream runtime.ServerTransportStream
+		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/protocol.rpc.LanguageServerProtocol/Hover")
 		if err != nil {
@@ -2460,6 +2558,7 @@ func RegisterLanguageServerProtocolHandlerServer(ctx context.Context, mux *runti
 			return
 		}
 		resp, md, err := local_request_LanguageServerProtocol_Hover_0(rctx, inboundMarshaler, server, req, pathParams)
+		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
@@ -2472,6 +2571,8 @@ func RegisterLanguageServerProtocolHandlerServer(ctx context.Context, mux *runti
 	mux.Handle("POST", pattern_LanguageServerProtocol_SignatureHelp_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
+		var stream runtime.ServerTransportStream
+		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/protocol.rpc.LanguageServerProtocol/SignatureHelp")
 		if err != nil {
@@ -2479,6 +2580,7 @@ func RegisterLanguageServerProtocolHandlerServer(ctx context.Context, mux *runti
 			return
 		}
 		resp, md, err := local_request_LanguageServerProtocol_SignatureHelp_0(rctx, inboundMarshaler, server, req, pathParams)
+		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
@@ -2491,6 +2593,8 @@ func RegisterLanguageServerProtocolHandlerServer(ctx context.Context, mux *runti
 	mux.Handle("POST", pattern_LanguageServerProtocol_GotoDeclaration_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
+		var stream runtime.ServerTransportStream
+		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/protocol.rpc.LanguageServerProtocol/GotoDeclaration")
 		if err != nil {
@@ -2498,6 +2602,7 @@ func RegisterLanguageServerProtocolHandlerServer(ctx context.Context, mux *runti
 			return
 		}
 		resp, md, err := local_request_LanguageServerProtocol_GotoDeclaration_0(rctx, inboundMarshaler, server, req, pathParams)
+		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
@@ -2510,6 +2615,8 @@ func RegisterLanguageServerProtocolHandlerServer(ctx context.Context, mux *runti
 	mux.Handle("POST", pattern_LanguageServerProtocol_GotoDefinition_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
+		var stream runtime.ServerTransportStream
+		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/protocol.rpc.LanguageServerProtocol/GotoDefinition")
 		if err != nil {
@@ -2517,6 +2624,7 @@ func RegisterLanguageServerProtocolHandlerServer(ctx context.Context, mux *runti
 			return
 		}
 		resp, md, err := local_request_LanguageServerProtocol_GotoDefinition_0(rctx, inboundMarshaler, server, req, pathParams)
+		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
@@ -2529,6 +2637,8 @@ func RegisterLanguageServerProtocolHandlerServer(ctx context.Context, mux *runti
 	mux.Handle("POST", pattern_LanguageServerProtocol_GotoTypeDefinition_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
+		var stream runtime.ServerTransportStream
+		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/protocol.rpc.LanguageServerProtocol/GotoTypeDefinition")
 		if err != nil {
@@ -2536,6 +2646,7 @@ func RegisterLanguageServerProtocolHandlerServer(ctx context.Context, mux *runti
 			return
 		}
 		resp, md, err := local_request_LanguageServerProtocol_GotoTypeDefinition_0(rctx, inboundMarshaler, server, req, pathParams)
+		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
@@ -2548,6 +2659,8 @@ func RegisterLanguageServerProtocolHandlerServer(ctx context.Context, mux *runti
 	mux.Handle("POST", pattern_LanguageServerProtocol_GotoImplementation_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
+		var stream runtime.ServerTransportStream
+		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/protocol.rpc.LanguageServerProtocol/GotoImplementation")
 		if err != nil {
@@ -2555,6 +2668,7 @@ func RegisterLanguageServerProtocolHandlerServer(ctx context.Context, mux *runti
 			return
 		}
 		resp, md, err := local_request_LanguageServerProtocol_GotoImplementation_0(rctx, inboundMarshaler, server, req, pathParams)
+		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
@@ -2567,6 +2681,8 @@ func RegisterLanguageServerProtocolHandlerServer(ctx context.Context, mux *runti
 	mux.Handle("POST", pattern_LanguageServerProtocol_FindReferences_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
+		var stream runtime.ServerTransportStream
+		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/protocol.rpc.LanguageServerProtocol/FindReferences")
 		if err != nil {
@@ -2574,6 +2690,7 @@ func RegisterLanguageServerProtocolHandlerServer(ctx context.Context, mux *runti
 			return
 		}
 		resp, md, err := local_request_LanguageServerProtocol_FindReferences_0(rctx, inboundMarshaler, server, req, pathParams)
+		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
@@ -2586,6 +2703,8 @@ func RegisterLanguageServerProtocolHandlerServer(ctx context.Context, mux *runti
 	mux.Handle("POST", pattern_LanguageServerProtocol_DocumentHighlights_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
+		var stream runtime.ServerTransportStream
+		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/protocol.rpc.LanguageServerProtocol/DocumentHighlights")
 		if err != nil {
@@ -2593,6 +2712,7 @@ func RegisterLanguageServerProtocolHandlerServer(ctx context.Context, mux *runti
 			return
 		}
 		resp, md, err := local_request_LanguageServerProtocol_DocumentHighlights_0(rctx, inboundMarshaler, server, req, pathParams)
+		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
@@ -2605,6 +2725,8 @@ func RegisterLanguageServerProtocolHandlerServer(ctx context.Context, mux *runti
 	mux.Handle("POST", pattern_LanguageServerProtocol_DocumentSymbols_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
+		var stream runtime.ServerTransportStream
+		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/protocol.rpc.LanguageServerProtocol/DocumentSymbols")
 		if err != nil {
@@ -2612,6 +2734,7 @@ func RegisterLanguageServerProtocolHandlerServer(ctx context.Context, mux *runti
 			return
 		}
 		resp, md, err := local_request_LanguageServerProtocol_DocumentSymbols_0(rctx, inboundMarshaler, server, req, pathParams)
+		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
@@ -2624,6 +2747,8 @@ func RegisterLanguageServerProtocolHandlerServer(ctx context.Context, mux *runti
 	mux.Handle("POST", pattern_LanguageServerProtocol_CodeAction_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
+		var stream runtime.ServerTransportStream
+		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/protocol.rpc.LanguageServerProtocol/CodeAction")
 		if err != nil {
@@ -2631,6 +2756,7 @@ func RegisterLanguageServerProtocolHandlerServer(ctx context.Context, mux *runti
 			return
 		}
 		resp, md, err := local_request_LanguageServerProtocol_CodeAction_0(rctx, inboundMarshaler, server, req, pathParams)
+		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
@@ -2643,6 +2769,8 @@ func RegisterLanguageServerProtocolHandlerServer(ctx context.Context, mux *runti
 	mux.Handle("POST", pattern_LanguageServerProtocol_CodeLens_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
+		var stream runtime.ServerTransportStream
+		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/protocol.rpc.LanguageServerProtocol/CodeLens")
 		if err != nil {
@@ -2650,6 +2778,7 @@ func RegisterLanguageServerProtocolHandlerServer(ctx context.Context, mux *runti
 			return
 		}
 		resp, md, err := local_request_LanguageServerProtocol_CodeLens_0(rctx, inboundMarshaler, server, req, pathParams)
+		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
@@ -2662,6 +2791,8 @@ func RegisterLanguageServerProtocolHandlerServer(ctx context.Context, mux *runti
 	mux.Handle("POST", pattern_LanguageServerProtocol_CodeLensResolve_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
+		var stream runtime.ServerTransportStream
+		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/protocol.rpc.LanguageServerProtocol/CodeLensResolve")
 		if err != nil {
@@ -2669,6 +2800,7 @@ func RegisterLanguageServerProtocolHandlerServer(ctx context.Context, mux *runti
 			return
 		}
 		resp, md, err := local_request_LanguageServerProtocol_CodeLensResolve_0(rctx, inboundMarshaler, server, req, pathParams)
+		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
@@ -2681,6 +2813,8 @@ func RegisterLanguageServerProtocolHandlerServer(ctx context.Context, mux *runti
 	mux.Handle("POST", pattern_LanguageServerProtocol_DocumentLink_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
+		var stream runtime.ServerTransportStream
+		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/protocol.rpc.LanguageServerProtocol/DocumentLink")
 		if err != nil {
@@ -2688,6 +2822,7 @@ func RegisterLanguageServerProtocolHandlerServer(ctx context.Context, mux *runti
 			return
 		}
 		resp, md, err := local_request_LanguageServerProtocol_DocumentLink_0(rctx, inboundMarshaler, server, req, pathParams)
+		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
@@ -2700,6 +2835,8 @@ func RegisterLanguageServerProtocolHandlerServer(ctx context.Context, mux *runti
 	mux.Handle("POST", pattern_LanguageServerProtocol_DocumentLinkResolve_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
+		var stream runtime.ServerTransportStream
+		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/protocol.rpc.LanguageServerProtocol/DocumentLinkResolve")
 		if err != nil {
@@ -2707,6 +2844,7 @@ func RegisterLanguageServerProtocolHandlerServer(ctx context.Context, mux *runti
 			return
 		}
 		resp, md, err := local_request_LanguageServerProtocol_DocumentLinkResolve_0(rctx, inboundMarshaler, server, req, pathParams)
+		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
@@ -2719,6 +2857,8 @@ func RegisterLanguageServerProtocolHandlerServer(ctx context.Context, mux *runti
 	mux.Handle("POST", pattern_LanguageServerProtocol_DocumentColor_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
+		var stream runtime.ServerTransportStream
+		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/protocol.rpc.LanguageServerProtocol/DocumentColor")
 		if err != nil {
@@ -2726,6 +2866,7 @@ func RegisterLanguageServerProtocolHandlerServer(ctx context.Context, mux *runti
 			return
 		}
 		resp, md, err := local_request_LanguageServerProtocol_DocumentColor_0(rctx, inboundMarshaler, server, req, pathParams)
+		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
@@ -2738,6 +2879,8 @@ func RegisterLanguageServerProtocolHandlerServer(ctx context.Context, mux *runti
 	mux.Handle("POST", pattern_LanguageServerProtocol_ColorPresentation_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
+		var stream runtime.ServerTransportStream
+		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/protocol.rpc.LanguageServerProtocol/ColorPresentation")
 		if err != nil {
@@ -2745,6 +2888,7 @@ func RegisterLanguageServerProtocolHandlerServer(ctx context.Context, mux *runti
 			return
 		}
 		resp, md, err := local_request_LanguageServerProtocol_ColorPresentation_0(rctx, inboundMarshaler, server, req, pathParams)
+		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
@@ -2757,6 +2901,8 @@ func RegisterLanguageServerProtocolHandlerServer(ctx context.Context, mux *runti
 	mux.Handle("POST", pattern_LanguageServerProtocol_DocumentFormatting_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
+		var stream runtime.ServerTransportStream
+		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/protocol.rpc.LanguageServerProtocol/DocumentFormatting")
 		if err != nil {
@@ -2764,6 +2910,7 @@ func RegisterLanguageServerProtocolHandlerServer(ctx context.Context, mux *runti
 			return
 		}
 		resp, md, err := local_request_LanguageServerProtocol_DocumentFormatting_0(rctx, inboundMarshaler, server, req, pathParams)
+		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
@@ -2776,6 +2923,8 @@ func RegisterLanguageServerProtocolHandlerServer(ctx context.Context, mux *runti
 	mux.Handle("POST", pattern_LanguageServerProtocol_DocumentRangeFormatting_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
+		var stream runtime.ServerTransportStream
+		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/protocol.rpc.LanguageServerProtocol/DocumentRangeFormatting")
 		if err != nil {
@@ -2783,6 +2932,7 @@ func RegisterLanguageServerProtocolHandlerServer(ctx context.Context, mux *runti
 			return
 		}
 		resp, md, err := local_request_LanguageServerProtocol_DocumentRangeFormatting_0(rctx, inboundMarshaler, server, req, pathParams)
+		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
@@ -2795,6 +2945,8 @@ func RegisterLanguageServerProtocolHandlerServer(ctx context.Context, mux *runti
 	mux.Handle("POST", pattern_LanguageServerProtocol_OnTypeFormatting_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
+		var stream runtime.ServerTransportStream
+		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/protocol.rpc.LanguageServerProtocol/OnTypeFormatting")
 		if err != nil {
@@ -2802,6 +2954,7 @@ func RegisterLanguageServerProtocolHandlerServer(ctx context.Context, mux *runti
 			return
 		}
 		resp, md, err := local_request_LanguageServerProtocol_OnTypeFormatting_0(rctx, inboundMarshaler, server, req, pathParams)
+		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
@@ -2814,6 +2967,8 @@ func RegisterLanguageServerProtocolHandlerServer(ctx context.Context, mux *runti
 	mux.Handle("POST", pattern_LanguageServerProtocol_Rename_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
+		var stream runtime.ServerTransportStream
+		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/protocol.rpc.LanguageServerProtocol/Rename")
 		if err != nil {
@@ -2821,6 +2976,7 @@ func RegisterLanguageServerProtocolHandlerServer(ctx context.Context, mux *runti
 			return
 		}
 		resp, md, err := local_request_LanguageServerProtocol_Rename_0(rctx, inboundMarshaler, server, req, pathParams)
+		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
@@ -2833,6 +2989,8 @@ func RegisterLanguageServerProtocolHandlerServer(ctx context.Context, mux *runti
 	mux.Handle("POST", pattern_LanguageServerProtocol_PrepareRename_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
+		var stream runtime.ServerTransportStream
+		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/protocol.rpc.LanguageServerProtocol/PrepareRename")
 		if err != nil {
@@ -2840,6 +2998,7 @@ func RegisterLanguageServerProtocolHandlerServer(ctx context.Context, mux *runti
 			return
 		}
 		resp, md, err := local_request_LanguageServerProtocol_PrepareRename_0(rctx, inboundMarshaler, server, req, pathParams)
+		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
@@ -2852,6 +3011,8 @@ func RegisterLanguageServerProtocolHandlerServer(ctx context.Context, mux *runti
 	mux.Handle("POST", pattern_LanguageServerProtocol_FoldingRange_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
+		var stream runtime.ServerTransportStream
+		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/protocol.rpc.LanguageServerProtocol/FoldingRange")
 		if err != nil {
@@ -2859,6 +3020,7 @@ func RegisterLanguageServerProtocolHandlerServer(ctx context.Context, mux *runti
 			return
 		}
 		resp, md, err := local_request_LanguageServerProtocol_FoldingRange_0(rctx, inboundMarshaler, server, req, pathParams)
+		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
@@ -2871,6 +3033,8 @@ func RegisterLanguageServerProtocolHandlerServer(ctx context.Context, mux *runti
 	mux.Handle("POST", pattern_LanguageServerProtocol_SelectionRange_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
+		var stream runtime.ServerTransportStream
+		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/protocol.rpc.LanguageServerProtocol/SelectionRange")
 		if err != nil {
@@ -2878,6 +3042,7 @@ func RegisterLanguageServerProtocolHandlerServer(ctx context.Context, mux *runti
 			return
 		}
 		resp, md, err := local_request_LanguageServerProtocol_SelectionRange_0(rctx, inboundMarshaler, server, req, pathParams)
+		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
@@ -2890,6 +3055,8 @@ func RegisterLanguageServerProtocolHandlerServer(ctx context.Context, mux *runti
 	mux.Handle("POST", pattern_LanguageServerProtocol_PrepareCallHierarchy_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
+		var stream runtime.ServerTransportStream
+		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/protocol.rpc.LanguageServerProtocol/PrepareCallHierarchy")
 		if err != nil {
@@ -2897,6 +3064,7 @@ func RegisterLanguageServerProtocolHandlerServer(ctx context.Context, mux *runti
 			return
 		}
 		resp, md, err := local_request_LanguageServerProtocol_PrepareCallHierarchy_0(rctx, inboundMarshaler, server, req, pathParams)
+		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
@@ -2909,6 +3077,8 @@ func RegisterLanguageServerProtocolHandlerServer(ctx context.Context, mux *runti
 	mux.Handle("POST", pattern_LanguageServerProtocol_CallHierarchyIncomingCalls_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
+		var stream runtime.ServerTransportStream
+		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/protocol.rpc.LanguageServerProtocol/CallHierarchyIncomingCalls")
 		if err != nil {
@@ -2916,6 +3086,7 @@ func RegisterLanguageServerProtocolHandlerServer(ctx context.Context, mux *runti
 			return
 		}
 		resp, md, err := local_request_LanguageServerProtocol_CallHierarchyIncomingCalls_0(rctx, inboundMarshaler, server, req, pathParams)
+		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
@@ -2928,6 +3099,8 @@ func RegisterLanguageServerProtocolHandlerServer(ctx context.Context, mux *runti
 	mux.Handle("POST", pattern_LanguageServerProtocol_CallHierarchyOutgoingCalls_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
+		var stream runtime.ServerTransportStream
+		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/protocol.rpc.LanguageServerProtocol/CallHierarchyOutgoingCalls")
 		if err != nil {
@@ -2935,6 +3108,7 @@ func RegisterLanguageServerProtocolHandlerServer(ctx context.Context, mux *runti
 			return
 		}
 		resp, md, err := local_request_LanguageServerProtocol_CallHierarchyOutgoingCalls_0(rctx, inboundMarshaler, server, req, pathParams)
+		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
