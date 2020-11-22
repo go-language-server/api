@@ -34,16 +34,22 @@ DOCKER_VOLUME_FLAGS ?= $(foreach volume,${DOCKER_VOLUMES},-v $(volume):cached)
 # ----------------------------------------------------------------------------
 # targets
 
-all: protoc protoc-grpc-gateway protoc-gen-doc gofumports
+all: protoc protoc-grpc-gateway protoc-gen-doc gofumpt gofumports
 
 
 ##@ tools
 
+${TOOLS_PATH}/gofumpt: tools
 ${TOOLS_PATH}/gofumports: tools
 
 .PHONY: tools
 tools:  ## Build tools container image.
 	@pushd ./tools > /dev/null 2>&1; GOBIN=${TOOLS_PATH} go install -v `go list -f '{{ join .Imports " " }}' -tags=tools`
+
+.PHONY: gofumpt
+gofumpt: ${TOOLS_PATH}/gofumpt
+gofumpt:  ## Format generated files with gofumports.
+	${TOOLS_PATH}/$@ -s -extra -w ${PROTOC_OUT_SRCS}
 
 .PHONY: gofumports
 gofumports: ${TOOLS_PATH}/gofumports
