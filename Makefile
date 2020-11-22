@@ -34,7 +34,7 @@ DOCKER_VOLUME_FLAGS ?= $(foreach volume,${DOCKER_VOLUMES},-v $(volume):cached)
 # ----------------------------------------------------------------------------
 # targets
 
-all: protoc protoc-grpc-gateway protoc-gen-doc gofumpt gofumports
+all: protoc protoc-gen-grpc-gateway protoc-gen-doc protoc-gen-openapiv2 gofumpt gofumports
 
 
 ##@ tools
@@ -64,8 +64,8 @@ tools/docker:  ## Build tools container image.
 protoc:  ## Run protoc.
 	docker container run --rm -it ${DOCKER_VOLUME_FLAGS} -w /go/src/${PACKAGE} ${DOCKER_CONTAINER_IMAGE} --go_out=annotate_code=true:${PROTOC_OUT} --go-grpc_out=annotate_code=true:${PROTOC_OUT} ${PROTOC_INCLUDES} --descriptor_set_out=fileset.pb --include_imports --include_source_info $(foreach f,${PROTO_FILES},$(abspath /go/src/${PACKAGE}/$(f)))
 
-.PHONY: protoc-grpc-gateway
-protoc-grpc-gateway:  ## Run protoc-grpc-gateway.
+.PHONY: protoc-gen-grpc-gateway
+protoc-gen-grpc-gateway:  ## Run protoc-gen-grpc-gateway.
 	docker container run --rm -it ${DOCKER_VOLUME_FLAGS} -w /go/src/${PACKAGE} ${DOCKER_CONTAINER_IMAGE} --grpc-gateway_out=${PROTOC_OUT} ${PROTOC_INCLUDES} $(foreach f,${PROTO_FILES_PROTOCOL_RPC},$(abspath /go/src/${PACKAGE}/$(f)))
 
 .PHONY: protoc-gen-doc
