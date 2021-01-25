@@ -1,0 +1,2862 @@
+# Generated with protoc-gen-openapi
+# https://github.com/googleapis/gnostic/tree/master/apps/protoc-gen-openapi
+
+openapi: "3.0"
+info:
+    title: LanguageServerProtocol
+    description: Language Server Protocol API.
+    version: 0.0.1
+paths:
+    /$/cancelRequest/*:cancel:
+        post:
+            summary: Cancel notification is the base protocol offers support for request cancellation. To cancel a request, a CancelRequest notification message is sent. A request that got canceled still needs to return from the server and send a response back. It can not be left open / hanging. This is in line with the JSON RPC protocol that requires that every request sends a response back. In addition it allows for returning partial results on cancel. If the request returns an error response on cancellation it is advised to set the error code to [Codes.RequestCancelled][protocol.Codes].
+            operationId: LanguageServerProtocol_Cancel
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/CancelRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Empty'
+    /$/logTrace/*:logTrace:
+        post:
+            summary: LogTrace notification to log the trace of the server’s execution. The amount and content of these notifications depends on the current `trace` configuration. If `trace` is `'off'`, the server should not send any `logTrace` notification. If `trace` is `'message'`, the server should not add the `'verbose'` field in the logTraceRequest. `$/logTrace` should be used for systematic trace reporting. For single debugging messages, the server should send window/logMessage notifications.
+            operationId: LanguageServerProtocol_LogTrace
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/LogTraceRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Empty'
+    /$/progress/*:progress:
+        post:
+            summary: Progress notification is the base protocol offers also support to report progress in a generic fashion. This mechanism can be used to report any kind of progress including work done progress (usually used to report progress in the user interface using a progress bar) and partial result progress to support streaming of results. Progress is reported against a token. The token is different than the request ID which allows to report progress out of band and also for notification. @since 3.15.0
+            operationId: LanguageServerProtocol_Progress
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/ProgressRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Empty'
+    /$/setTrace:setTrace:
+        post:
+            summary: SetTrace notification that should be used by the client to modify the trace setting of the server.
+            operationId: LanguageServerProtocol_SetTrace
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/SetTraceRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Empty'
+    /callHierarchy/incomingCalls:callHierarchyIncomingCalls:
+        post:
+            summary: CallHierarchyIncomingCalls request is sent from the client to the server to resolve incoming calls for a given call hierarchy item. The request doesn’t define its own client and server capabilities. It is only issued if a server registers for the `textDocument/prepareCallHierarchy` request. @since 3.16.0
+            operationId: LanguageServerProtocol_CallHierarchyIncomingCalls
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/CallHierarchyIncomingCallsRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/CallHierarchyIncomingCallsResponse'
+    /callHierarchy/outgoingCalls:callHierarchyOutgoingCalls:
+        post:
+            summary: CallHierarchyOutgoingCalls is the request is sent from the client to the server to resolve outgoing calls for a given call hierarchy item. The request doesn’t define its own client and server capabilities. It is only issued if a server registers for the textDocument/prepareCallHierarchy request. @since 3.16.0
+            operationId: LanguageServerProtocol_CallHierarchyOutgoingCalls
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/CallHierarchyOutgoingCallsRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/CallHierarchyOutgoingCallsResponse'
+    /codeLens/resolve:codeLensResolve:
+        post:
+            summary: CodeLensResolve request is the code lens resolve request is sent from the client to the server to resolve the command for a given code lens item.
+            operationId: LanguageServerProtocol_CodeLensResolve
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/CodeLensResolveRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/CodeLensResolveResponse'
+    /completionItem/resolve:completionItemResolve:
+        post:
+            summary: CompletionItemResolve request is the request is sent from the client to the server to resolve additional information for a given completion item.
+            operationId: LanguageServerProtocol_CompletionItemResolve
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/CompletionItemResolveRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/CompletionItemResolveResponse'
+    /documentLink/resolve:documentLinkResolve:
+        post:
+            summary: DocumentLinkResolve request is the document link resolve request is sent from the client to the server to resolve the target of a given document link.
+            operationId: LanguageServerProtocol_DocumentLinkResolve
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/DocumentLinkResolveRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/DocumentLinkResolveResponse'
+    /exit/*:exit:
+        post:
+            summary: Exit notification to ask the server to exit its process. The server should exit with `success` code 0 if the shutdown request has been received before; otherwise with `error` code 1.
+            operationId: LanguageServerProtocol_Exit
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/Empty'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Empty'
+    /initialize/*:initialize:
+        post:
+            summary: 'Initialize request is sent as the first request from the client to the server. If the server receives a request or notification before the initialize request it should act as follows: - For a request the response should be an error with `code: -32002`. The message can be picked by the server. - Notifications should be dropped, except for the exit notification. This will allow the exit of a server without an initialize request. Until the server has responded to the `initialize` request with an `InitializeResponse`, the client must not send any additional requests or notifications to the server. In addition the server is not allowed to send any requests or notifications to the client until it has responded with an `InitializeResponse`, with the exception that during the initialize request the server is allowed to send the notifications `window/showMessage`, `window/logMessage` and `telemetry/event` as well as the `window/showMessageRequest` request to the client. In case the client sets up a progress token in the initialize params (e.g. property `workDoneToken`) the server is also allowed to use that token (and only that token) using the `$/progress` notification sent from the server to the client. The initialize request may only be sent once.'
+            operationId: LanguageServerProtocol_Initialize
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/InitializeRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/InitializeResponse'
+    /initialized/*:initialized:
+        post:
+            summary: Initialized notification is sent from the client to the server after the client received the result of the `initialize` request but before the client is sending any other request or notification to the server. The server can use the `initialized` notification for example to dynamically register capabilities. The `initialized` notification may only be sent once.
+            operationId: LanguageServerProtocol_Initialized
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/InitializedRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Empty'
+    /shutdown/*:shutdown:
+        post:
+            summary: Shutdown request is sent from the client to the server. It asks the server to shut down, but to not exit (otherwise the response might not be delivered correctly to the client). There is a separate exit notification that asks the server to exit. Clients must not send any notifications other than exit or requests to a server to which they have sent a shutdown request. If a server receives requests after a shutdown request those requests should error with `InvalidRequest`.
+            operationId: LanguageServerProtocol_Shutdown
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/Empty'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Error'
+    /telemetry/event:telemetry:
+        post:
+            summary: Telemetry notification is the telemetry notification is sent from the server to the client to ask the client to log a telemetry event.
+            operationId: LanguageServerProtocol_Telemetry
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/Any'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Empty'
+    /textDocument/Completion:completion:
+        post:
+            summary: 'Completion request is the Completion request is sent from the client to the server to compute completion items at a given cursor position. Completion items are presented in the IntelliSense user interface. If computing full completion items is expensive, servers can additionally provide a handler for the completion item resolve request (‘completionItem/resolve’). This request is sent when a completion item is selected in the user interface. A typical use case is for example: the `textDocument/completion` request doesn’t fill in the documentation property for returned completion items since it is expensive to compute. When the item is selected in the user interface then a `completionItem/resolve` request is sent with the selected completion item as a parameter. The returned completion item should have the documentation property filled in. The request can only delay the computation of the `detail` and `documentation` properties. Other properties like `sortText`, `filterText`, `insertText`, `textEdit` and `additionalTextEdits` must be provided in the `textDocument/completion` response and must not be changed during resolve.'
+            operationId: LanguageServerProtocol_Completion
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/CompletionRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/CompletionResponse'
+    /textDocument/codeAction:codeAction:
+        post:
+            summary: 'CodeAction request is the code action request is sent from the client to the server to compute commands for a given text document and range. These commands are typically code fixes to either fix problems or to beautify/refactor code. The result of a `textDocument/codeAction` request is an array of `Command` literals which are typically presented in the user interface. To ensure that a server is useful in many clients the commands specified in a code actions should be handled by the server and not by the client (see `workspace/executeCommand` and `ServerCapabilities.executeCommandProvider`). If the client supports providing edits with a code action then the mode should be used. When the command is selected the server should be contacted again (via the `workspace/executeCommand`) request to execute the command. Since version 3.8.0: support for CodeAction literals to enable the following scenarios: - the ability to directly return a workspace edit from the code action request. This avoids having another server roundtrip to execute an actual code action. However server providers should be aware that if the code action is expensive to compute or the edits are huge it might still be beneficial if the result is simply a command and the actual edit is only computed when needed. - the ability to group code actions using a kind. Clients are allowed to ignore that information. However it allows them to better group code action for example into corresponding menus (e.g. all refactor code actions into a refactor menu). Clients need to announce their support for code action literals (e.g. literals of type `CodeAction`) and code action kinds via the corresponding client capability `codeAction.codeActionLiteralSupport`.'
+            operationId: LanguageServerProtocol_CodeAction
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/CodeActionRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/CodeActionResponse'
+    /textDocument/codeLens:codeLens:
+        post:
+            summary: CodeLens request is the code lens request is sent from the client to the server to compute code lenses for a given text document.
+            operationId: LanguageServerProtocol_CodeLens
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/CodeLensRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/CodeLensResponse'
+    /textDocument/colorPresentation:colorPresentation:
+        post:
+            summary: ColorPresentation request is the color presentation request is sent from the client to the server to obtain a list of presentations for a color value at a given location. Clients can use the result to - modify a color reference. - show in a color picker and let users pick one of the presentations This request has no special capabilities and registration options since it is send as a resolve request for the `textDocument/documentColor` request. @since 3.6.0
+            operationId: LanguageServerProtocol_ColorPresentation
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/ColorPresentationRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ColorPresentationResponse'
+    /textDocument/declaration:declaration:
+        post:
+            summary: GotoDeclaration request is the go to declaration request is sent from the client to the server to resolve the declaration location of a symbol at a given text document position. The result type [LocationLinks][LocationLinks] got introduced with version 3.14.0 and depends on the corresponding client capability `textDocument.declaration.linkSupport`. @since 3.14.0
+            operationId: LanguageServerProtocol_GotoDeclaration
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/DeclarationRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/DeclarationResponse'
+    /textDocument/definition:definition:
+        post:
+            summary: GotoTypeDefinition request is the go to type definition request is sent from the client to the server to resolve the type definition location of a symbol at a given text document position. The result type [LocationLinks][LocationLinks] got introduced with version 3.14.0 and depends on the corresponding client capability `textDocument.typeDefinition.linkSupport`. @since 3.6.0
+            operationId: LanguageServerProtocol_GotoTypeDefinition
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/TypeDefinitionRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/TypeDefinitionResponse'
+    /textDocument/didChange:didChangeTextDocument:
+        post:
+            summary: DidChangeTextDocument notification is the document change notification is sent from the client to the server to signal changes to a text document. Before a client can change a text document it must claim ownership of its content using the textDocument/didOpen notification. In 2.0 the shape of the params has changed to include proper version numbers and language ids.
+            operationId: LanguageServerProtocol_DidChangeTextDocument
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/DidChangeTextDocumentRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Empty'
+    /textDocument/didClose:didCloseTextDocument:
+        post:
+            summary: DidCloseTextDocument notification is the document close notification is sent from the client to the server when the document got closed in the client. The document’s master now exists where the document’s Uri points to (e.g. if the document’s Uri is a file Uri the master now exists on disk). As with the open notification the close notification is about managing the document’s content. Receiving a close notification doesn’t mean that the document was open in an editor before. A close notification requires a previous open notification to be sent. Note that a server’s ability to fulfill requests is independent of whether a text document is open or closed.
+            operationId: LanguageServerProtocol_DidCloseTextDocument
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/DidCloseTextDocumentRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Empty'
+    /textDocument/didOpen:didOpenTextDocument:
+        post:
+            summary: DidOpenTextDocument notification is the `DidOpenTextDocumentRequest` contain the language id the document is associated with. If the language Id of a document changes, the client needs to send a `textDocument/didClose` to the server followed by a `textDocument/didOpen` with the new language id if the server handles the new language id as well.
+            operationId: LanguageServerProtocol_DidOpenTextDocument
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/DidOpenTextDocumentRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Empty'
+    /textDocument/didSave:didSaveTextDocument:
+        post:
+            summary: DidSaveTextDocument notification is the document save notification is sent from the client to the server when the document was saved in the client.
+            operationId: LanguageServerProtocol_DidSaveTextDocument
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/DidSaveTextDocumentRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Empty'
+    /textDocument/documentColor:documentColor:
+        post:
+            summary: 'DocumentColor request is the document color request is sent from the client to the server to list all color references found in a given text document. Along with the range, a color value in RGB is returned. Clients can use the result to decorate color references in an editor. For example: - Color boxes showing the actual color next to the reference - Show a color picker when a color reference is edited @since 3.6.0'
+            operationId: LanguageServerProtocol_DocumentColor
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/DocumentColorRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/DocumentColorResponse'
+    /textDocument/documentHighlight:documentHighlight:
+        post:
+            summary: DocumentHighlights request is the document highlight request is sent from the client to the server to resolve a document highlights for a given text document position. For programming languages this usually highlights all references to the symbol scoped to this file. However we kept `textDocument/documentHighlight` and `textDocument/references` separate requests since the first one is allowed to be more fuzzy. Symbol matches usually have a DocumentHighlightKind of `Read` or `Write` whereas fuzzy or textual matches use `Text` as the kind.
+            operationId: LanguageServerProtocol_DocumentHighlights
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/DocumentHighlightRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/DocumentHighlightsResponse'
+    /textDocument/documentLink:documentLink:
+        post:
+            summary: DocumentLink request is the document links request is sent from the client to the server to request the location of links in a document.
+            operationId: LanguageServerProtocol_DocumentLink
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/DocumentLinkRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/DocumentLinkResponse'
+    /textDocument/documentSymbol:documentSymbol:
+        post:
+            summary: DocumentSymbols request is the document symbol request is sent from the client to the server. The returned result is either - SymbolInformation[] which is a flat list of all symbols found in a given text document. Then neither the symbol’s location range nor the symbol’s container name should be used to infer a hierarchy. - DocumentSymbol[] which is a hierarchy of symbols found in a given text document.
+            operationId: LanguageServerProtocol_DocumentSymbols
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/DocumentSymbolRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/DocumentSymbolResponse'
+    /textDocument/foldingRange:foldingRange:
+        post:
+            summary: FoldingRange request is the folding range request is sent from the client to the server to return all folding ranges found in a given text document. @since 3.10.0
+            operationId: LanguageServerProtocol_FoldingRange
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/FoldingRangeRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/FoldingRangeResponse'
+    /textDocument/formatting:formatting:
+        post:
+            summary: DocumentFormatting request is the document formatting request is sent from the client to the server to format a whole document.
+            operationId: LanguageServerProtocol_DocumentFormatting
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/DocumentFormattingRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/DocumentFormattingResponse'
+    /textDocument/hover:hover:
+        post:
+            summary: Hover Request is the hover request is sent from the client to the server to request hover information at a given text document position.
+            operationId: LanguageServerProtocol_Hover
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/HoverRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/HoverResponse'
+    /textDocument/implementation:implementation:
+        post:
+            summary: GotoImplementation request is the go to implementation request is sent from the client to the server to resolve the implementation location of a symbol at a given text document position. The result type [LocationLinks][LocationLinks] got introduced with version 3.14.0 and depends on the corresponding client capability `textDocument.implementation.linkSupport`. @since 3.6.0
+            operationId: LanguageServerProtocol_GotoImplementation
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/ImplementationRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ImplementationResponse'
+    /textDocument/onTypeFormatting:onTypeFormatting:
+        post:
+            summary: OnTypeFormatting request is the document on type formatting request is sent from the client to the server to format parts of the document during typing.
+            operationId: LanguageServerProtocol_OnTypeFormatting
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/DocumentOnTypeFormattingRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/DocumentOnTypeFormattingResponse'
+    /textDocument/prepareCallHierarchy:prepareCallHierarchy:
+        post:
+            summary: 'PrepareCallHierarchy request is the call hierarchy request is sent from the client to the server to return a call hierarchy for the language element of given text document positions. The call hierarchy requests are executed in two steps: - first a call hierarchy item is resolved for the given text document position - for a call hierarchy item the incoming or outgoing call hierarchy items are resolved. @since 3.16.0'
+            operationId: LanguageServerProtocol_PrepareCallHierarchy
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/CallHierarchyPrepareRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/CallHierarchyPrepareResponse'
+    /textDocument/prepareRename:prepareRename:
+        post:
+            summary: PrepareRename request is the prepare rename request is sent from the client to the server to setup and test the validity of a rename operation at a given location. @since 3.12.0
+            operationId: LanguageServerProtocol_PrepareRename
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/PrepareRenameRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/PrepareRenameResponse'
+    /textDocument/publishDiagnostics:publishDiagnostics:
+        post:
+            summary: PublishDiagnostics notification is the diagnostics notification are sent from the server to the client to signal results of validation runs.
+            operationId: LanguageServerProtocol_PublishDiagnostics
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/PublishDiagnosticsRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Empty'
+    /textDocument/rangeFormatting:rangeFormatting:
+        post:
+            summary: DocumentRangeFormatting Request is the document range formatting request is sent from the client to the server to format a given range in a document.
+            operationId: LanguageServerProtocol_DocumentRangeFormatting
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/DocumentRangeFormattingRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/DocumentRangeFormattingResponse'
+    /textDocument/references:references:
+        post:
+            summary: FindReferences request is the references request is sent from the client to the server to resolve project-wide references for the symbol denoted by the given text document position.
+            operationId: LanguageServerProtocol_FindReferences
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/ReferenceRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ReferenceResponse'
+    /textDocument/rename:rename:
+        post:
+            summary: Rename request is the rename request is sent from the client to the server to ask the server to compute a workspace change so that the client can perform a workspace-wide rename of a symbol.
+            operationId: LanguageServerProtocol_Rename
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/RenameRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/RenameResponse'
+    /textDocument/selectionRange:selectionRange:
+        post:
+            summary: SelectionRange request is the selection range request is sent from the client to the server to return suggested selection ranges at an array of given positions. A selection range is a range around the cursor position which the user might be interested in selecting. A selection range in the return array is for the position in the provided parameters at the same index. Therefore positions[i] must be contained in result[i].range. Typically, but not necessary, selection ranges correspond to the nodes of the syntax tree. @since 3.15.0
+            operationId: LanguageServerProtocol_SelectionRange
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/SelectionRangeRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/SelectionRangeResponse'
+    /textDocument/signatureHelp:signatureHelp:
+        post:
+            summary: SignatureHelp request is the signature help request is sent from the client to the server to request signature information at a given cursor position.
+            operationId: LanguageServerProtocol_SignatureHelp
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/SignatureHelpRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/SignatureHelpResponse'
+    /textDocument/willSave:willSaveTextDocument:
+        post:
+            summary: WillSaveTextDocument notification is the document will save notification is sent from the client to the server before the document is actually saved.
+            operationId: LanguageServerProtocol_WillSaveTextDocument
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/WillSaveTextDocumentRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Empty'
+    /textDocument/willSaveWaitUntil:willSaveWaitUntilTextDocument:
+        post:
+            summary: WillSaveWaitUntilTextDocument request is the document will save request is sent from the client to the server before the document is actually saved. The request can return an array of TextEdits which will be applied to the text document before it is saved. Please note that clients might drop results if computing the text edits took too long or if a server constantly fails on this request. This is done to keep the save fast and reliable.
+            operationId: LanguageServerProtocol_WillSaveWaitUntilTextDocument
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/WillSaveTextDocumentRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/WillSaveTextDocumentResponse'
+    /window/logMessage:logMessage:
+        post:
+            summary: LogMessage notification is the log message notification is sent from the server to the client to ask the client to log a particular message.
+            operationId: LanguageServerProtocol_LogMessage
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/LogMessageRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Empty'
+    /window/showMessage:showMessage:
+        post:
+            summary: ShowMessage notification is the show message notification is sent from a server to a client to ask the client to display a particular message in the user interface.
+            operationId: LanguageServerProtocol_ShowMessage
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/ShowMessageRequestParams'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Empty'
+    /window/showMessageRequest:showMessageRequest:
+        post:
+            summary: ShowMessageRequest request is the show message request is sent from a server to a client to ask the client to display a particular message in the user interface. In addition to the show message notification the request allows to pass actions and to wait for an answer from the client.
+            operationId: LanguageServerProtocol_ShowMessageRequest
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/ShowMessageRequestRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ShowMessageResponse'
+    /window/workDoneProgress/cancel:cancelWorkDoneProgress:
+        post:
+            summary: CancelWorkDoneProgress is the `window/workDoneProgress/cancel` notification is sent from the client to the server to cancel a progress initiated on the server side using the `window/workDoneProgress/create`.
+            operationId: LanguageServerProtocol_CancelWorkDoneProgress
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/WorkDoneProgressCancelRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Error'
+    /window/workDoneProgress/create:createWorkDoneProgress:
+        post:
+            summary: CreateWorkDoneProgress is the `window/workDoneProgress/create` request is sent from the server to the client to ask the client to create a work done progress.
+            operationId: LanguageServerProtocol_CreateWorkDoneProgress
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/WorkDoneProgressCreateRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Error'
+    /workspace/applyEdit:applyEdit:
+        post:
+            summary: ApplyEdit request is sent from the server to the client to modify resource on the client side.
+            operationId: LanguageServerProtocol_ApplyEdit
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/ApplyWorkspaceEditRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ApplyWorkspaceEditResponse'
+    /workspace/configuration:configuration:
+        post:
+            summary: Configuration request is the `workspace/configuration` request is sent from the server to the client to fetch configuration settings from the client. The request can fetch several configuration settings in one roundtrip. The order of the returned configuration settings correspond to the order of the passed `ConfigurationItems` (e.g. the first item in the response is the result for the first configuration item in the params). @since 3.6.0
+            operationId: LanguageServerProtocol_Configuration
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/ConfigurationRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ConfigurationResponse'
+    /workspace/didChangeConfiguration:didChangeConfiguration:
+        post:
+            summary: DidChangeConfiguration a notification sent from the client to the server to signal the change of configuration settings.
+            operationId: LanguageServerProtocol_DidChangeConfiguration
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/DidChangeConfigurationRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Empty'
+    /workspace/didChangeWatchedFiles:didChangeWatchedFiles:
+        post:
+            summary: DidChangeWatchedFiles notification is the watched files notification is sent from the client to the server when the client detects changes to files watched by the language client. It is recommended that servers register for these file events using the registration mechanism. In former implementations clients pushed file events without the server actively asking for it.
+            operationId: LanguageServerProtocol_DidChangeWatchedFiles
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/DidChangeWatchedFilesRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Empty'
+    /workspace/didChangeWorkspaceFolders:didChangeWorkspaceFolders:
+        post:
+            summary: 'DidChangeWorkspaceFolders notification is the `workspace/didChangeWorkspaceFolders` notification is sent from the client to the server to inform the server about workspace folder configuration changes. The notification is sent by default if both client capability `workspace.workspaceFolders` and the server capability `workspace.workspaceFolders.supported` are true; or if the server has registered itself to receive this notification. To register for the `workspace/didChangeWorkspaceFolders` send a client/registerCapability request from the server to the client. The `registration` parameter must have a registrations item of the following form, where id is a unique id used to unregister the capability (the example uses a UUID): @since 3.6.0'
+            operationId: LanguageServerProtocol_DidChangeWorkspaceFolders
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/DidChangeWorkspaceFoldersRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Empty'
+    /workspace/executeCommand:executeCommand:
+        post:
+            summary: ExecuteCommand is the `workspace/executeCommand` request is sent from the client to the server to trigger command execution on the server. In most cases the server creates a `WorkspaceEdit` structure and applies the changes to the workspace using the request `workspace/applyEdit` which is sent from the server to the client.
+            operationId: LanguageServerProtocol_ExecuteCommand
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/ExecuteCommandParams'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ExecuteCommandResponse'
+    /workspace/symbols:workspaceSymbols:
+        post:
+            summary: WorkspaceSymbols request is the workspace symbol request is sent from the client to the server to list project-wide symbols matching the query string.
+            operationId: LanguageServerProtocol_WorkspaceSymbols
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/ConfigurationRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/WorkspaceSymbolsResponse'
+    /workspace/workspaceFolders:workspaceFolders:
+        post:
+            summary: WorkspaceFolders request is the workspace/workspaceFolders request is sent from the server to the client to fetch the current open list of workspace folders. Returns null in the response if only a single file is open in the tool. Returns an empty array if a workspace is open but no folders are configured. @since 3.6.0
+            operationId: LanguageServerProtocol_WorkspaceFolders
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/Empty'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/WorkspaceFoldersResponse'
+components:
+    schemas:
+        Any:
+            properties:
+                type_url:
+                    type: string
+                    description: 'A URL/resource name that uniquely identifies the type of the serialized protocol buffer message. This string must contain at least one "/" character. The last segment of the URL''s path must represent the fully qualified name of the type (as in `path/google.protobuf.Duration`). The name should be in a canonical form (e.g., leading "." is not accepted). In practice, teams usually precompile into the binary all types that they expect it to use in the context of Any. However, for URLs which use the scheme `http`, `https`, or no scheme, one can optionally set up a type server that maps type URLs to message definitions as follows: * If no scheme is provided, `https` is assumed. * An HTTP GET on the URL must yield a [google.protobuf.Type][]   value in binary format, or produce an error. * Applications are allowed to cache lookup results based on the   URL, or have them precompiled into a binary to avoid any   lookup. Therefore, binary compatibility needs to be preserved   on changes to types. (Use versioned type names to manage   breaking changes.) Note: this functionality is not currently available in the official protobuf release, and it is not used for type URLs beginning with type.googleapis.com. Schemes other than `http`, `https` (or the empty scheme) might be used with implementation specific semantics.'
+                value:
+                    type: string
+                    description: Must be a valid serialized protocol buffer of the above specified type.
+                    format: bytes
+            description: '`Any` contains an arbitrary serialized protocol buffer message along with a URL that describes the type of the serialized message. Protobuf library provides support to pack/unpack Any values in the form of utility functions or additional generated methods of the Any type. Example 1: Pack and unpack a message in C++.     Foo foo = ...;     Any any;     any.PackFrom(foo);     ...     if (any.UnpackTo(&foo)) {       ...     } Example 2: Pack and unpack a message in Java.     Foo foo = ...;     Any any = Any.pack(foo);     ...     if (any.is(Foo.class)) {       foo = any.unpack(Foo.class);     }  Example 3: Pack and unpack a message in Python.     foo = Foo(...)     any = Any()     any.Pack(foo)     ...     if any.Is(Foo.DESCRIPTOR):       any.Unpack(foo)       ...  Example 4: Pack and unpack a message in Go      foo := &pb.Foo{...}      any, err := anypb.New(foo)      if err != nil {        ...      }      ...      foo := &pb.Foo{}      if err := any.UnmarshalTo(foo); err != nil {        ...      } The pack methods provided by protobuf library will by default use ''type.googleapis.com/full.type.name'' as the type URL and the unpack methods only use the fully qualified type name after the last ''/'' in the type URL, for example "foo.bar.com/x/y.z" will yield type name "y.z". JSON ==== The JSON representation of an `Any` value uses the regular representation of the deserialized, embedded message, with an additional field `@type` which contains the type URL. Example:     package google.profile;     message Person {       string first_name = 1;       string last_name = 2;     }     {       "@type": "type.googleapis.com/google.profile.Person",       "firstName": <string>,       "lastName": <string>     } If the embedded message type is well-known and has a custom JSON representation, that representation will be embedded adding a field `value` which holds the custom JSON in addition to the `@type` field. Example (for message [google.protobuf.Duration][]):     {       "@type": "type.googleapis.com/google.protobuf.Duration",       "value": "1.212s"     }'
+        ApplyWorkspaceEditRequest:
+            properties:
+                label:
+                    $ref: '#/components/schemas/StringValue'
+                edit:
+                    $ref: '#/components/schemas/WorkspaceEdit'
+            description: ApplyWorkspaceEditRequest is the parameters of a `workspace/applyEdit` request.
+        ApplyWorkspaceEditResponse:
+            properties:
+                applied:
+                    type: boolean
+                    description: Indicates whether the edit was applied or not.
+                failure_reason:
+                    $ref: '#/components/schemas/StringValue'
+            description: ApplyWorkspaceEditResponse is the parameters of a ApplyWorkspaceEdit response.
+        CallHierarchyIncomingCallsRequest:
+            properties:
+                work_done_progress_params:
+                    $ref: '#/components/schemas/WorkDoneProgressParams'
+                partial_result_params:
+                    $ref: '#/components/schemas/PartialResultParams'
+                item:
+                    $ref: '#/components/schemas/CallHierarchyItem'
+            description: CallHierarchyIncomingCallsRequest is the parameters of a `textDocument/incomingCalls` request. @since 3.16.0
+        CallHierarchyIncomingCallsResponse:
+            properties:
+                result:
+                    $ref: '#/components/schemas/Result'
+                partial_result:
+                    $ref: '#/components/schemas/PartialResult'
+                error:
+                    $ref: '#/components/schemas/Error'
+            description: CallHierarchyIncomingCallsResponse represents a CallHierarchyIncomingCalls response.
+        CallHierarchyItem:
+            properties:
+                name:
+                    type: string
+                    description: The name of this item.
+                kind:
+                    type: integer
+                    description: The kind of this item.
+                    format: enum
+                tags:
+                    type: array
+                    items:
+                        type: integer
+                    description: Tags for this item.
+                detail:
+                    $ref: '#/components/schemas/StringValue'
+                uri:
+                    $ref: '#/components/schemas/DocumentURI'
+                range:
+                    $ref: '#/components/schemas/Range'
+                selection_range:
+                    $ref: '#/components/schemas/Range'
+            description: CallHierarchyItem represents a item of call hierarchy. @since 3.16.0
+        CallHierarchyOutgoingCallsRequest:
+            properties:
+                work_done_progress_params:
+                    $ref: '#/components/schemas/WorkDoneProgressParams'
+                partial_result_params:
+                    $ref: '#/components/schemas/PartialResultParams'
+                item:
+                    $ref: '#/components/schemas/CallHierarchyItem'
+            description: CallHierarchyOutgoingCallsRequest is the parameters of a `callHierarchy/outgoingCalls` request. @since 3.16.0
+        CallHierarchyOutgoingCallsResponse:
+            properties:
+                result:
+                    $ref: '#/components/schemas/Result'
+                partial_result:
+                    $ref: '#/components/schemas/PartialResult'
+                error:
+                    $ref: '#/components/schemas/Error'
+            description: CallHierarchyIncomingCallsResponse represents a CallHierarchyOutgoingCalls response.
+        CallHierarchyPrepareRequest:
+            properties:
+                text_document_position_params:
+                    $ref: '#/components/schemas/TextDocumentPositionParams'
+                work_done_progress_params:
+                    $ref: '#/components/schemas/WorkDoneProgressParams'
+            description: CallHierarchyPrepareRequest is the parameters of a `textDocument/prepareCallHierarchy` request. @since 3.16.0
+        CallHierarchyPrepareResponse:
+            properties:
+                result:
+                    $ref: '#/components/schemas/Result'
+                error:
+                    $ref: '#/components/schemas/Error'
+            description: CallHierarchyPrepareResponse represents a PrepareCallHierarchy response.
+        CancelRequest:
+            properties:
+                id:
+                    type: integer
+                    description: Required. The request id to cancel.
+                    format: int32
+            description: CancelRequest represents a cancel notification params.
+        ClientCapabilities:
+            properties:
+                workspace:
+                    $ref: '#/components/schemas/Workspace'
+                text_document:
+                    $ref: '#/components/schemas/TextDocumentClientCapabilities'
+                window:
+                    $ref: '#/components/schemas/Window'
+                experimental:
+                    $ref: '#/components/schemas/Any'
+            description: ClientCapabilities define capabilities for dynamic registration, workspace and text document features the client supports. The experimental can be used to pass experimental capabilities under development. For future compatibility a ClientCapabilities object literal can have more properties set than currently defined. Servers receiving a ClientCapabilities object literal with unknown properties should ignore these properties. A missing property should be interpreted as an absence of the capability. If a missing property normally defines sub properties, all missing sub properties should be interpreted as an absence of the corresponding capability. Client capabilities got introduced with version 3.0 of the protocol. They therefore only describe capabilities that got introduced in 3.x or later. Capabilities that existed in the 2.x version of the protocol are still mandatory for clients. Clients cannot opt out of providing them. So even if a client omits the ClientCapabilities.textDocument.synchronization it is still required that the client provides text document synchronization (e.g. open, changed and close notifications).
+        CodeActionClientCapabilities:
+            properties:
+                dynamic_registration:
+                    type: boolean
+                    description: Optional. Whether code action supports dynamic registration.
+                code_action_literal_support:
+                    $ref: '#/components/schemas/CodeActionLiteralSupport'
+                is_preferred_support:
+                    type: boolean
+                    description: Optional. Whether code action supports the `isPreferred` property. @since 3.15.0
+            description: CodeActionClientCapabilities represents a client capabilities of `textDocument/codeAction` request.
+        CodeActionContext:
+            properties:
+                diagnostics:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/Diagnostic'
+                    description: An array of diagnostics known on the client side overlapping the range provided to the `textDocument/codeAction` request. They are provided so that the server knows which errors are currently presented to the user for the given range. There is no guarantee that these accurately reflect the error state of the resource. The primary parameter to compute code actions is the provided range.
+                only:
+                    type: array
+                    items:
+                        type: integer
+                    description: Requested kind of actions to return. Actions not of this kind are filtered out by the client before being shown. So servers can omit computing them.
+            description: CodeActionContext contains additional diagnostic information about the context in which a code action is run.
+        CodeActionOptions:
+            properties:
+                work_done_progress_options:
+                    $ref: '#/components/schemas/WorkDoneProgressOptions'
+                code_action_kinds:
+                    type: array
+                    items:
+                        type: integer
+                    description: CodeActionKinds that this server may return. The list of kinds may be generic, such as `CodeActionKind.Refactor`, or the server may list out every specific kind they provide.
+            description: CodeActionOptions represents a server capabilities option of codeActionProvider.
+        CodeActionRequest:
+            properties:
+                work_done_progress_params:
+                    $ref: '#/components/schemas/WorkDoneProgressParams'
+                partial_result_params:
+                    $ref: '#/components/schemas/PartialResultParams'
+                text_document:
+                    $ref: '#/components/schemas/TextDocumentIdentifier'
+                range:
+                    $ref: '#/components/schemas/Range'
+                context:
+                    $ref: '#/components/schemas/CodeActionContext'
+            description: CodeActionRequest params for the CodeActionRequest.
+        CodeActionResponse:
+            properties:
+                result:
+                    $ref: '#/components/schemas/Result'
+                partial_result:
+                    $ref: '#/components/schemas/PartialResult'
+                error:
+                    $ref: '#/components/schemas/Error'
+            description: CodeActionResponse represents a CodeAction response.
+        CodeLens:
+            properties:
+                range:
+                    $ref: '#/components/schemas/Range'
+                command:
+                    $ref: '#/components/schemas/Command'
+                data:
+                    $ref: '#/components/schemas/Any'
+            description: CodeLens is a code lens represents a command that should be shown along with source text, like the number of references, a way to run tests, etc. A code lens is _unresolved_ when no command is associated to it. For performance reasons the creation of a code lens and resolving should be done in two stages.
+        CodeLensClientCapabilities:
+            properties:
+                dynamic_registration:
+                    type: boolean
+                    description: Optional. Whether code lens supports dynamic registration.
+            description: CodeLensClientCapabilities represents a client capabilities of `textDocument/codeLens` request.
+        CodeLensOptions:
+            properties:
+                work_done_progress_options:
+                    $ref: '#/components/schemas/WorkDoneProgressOptions'
+                resolve_provider:
+                    type: boolean
+                    description: Optional. Code lens has a resolve provider as well.
+            description: CodeLensOptions represents a server capabilities option of codeLensProvider.
+        CodeLensRequest:
+            properties:
+                work_done_progress_params:
+                    $ref: '#/components/schemas/WorkDoneProgressParams'
+                partial_result_params:
+                    $ref: '#/components/schemas/PartialResultParams'
+                text_document:
+                    $ref: '#/components/schemas/TextDocumentIdentifier'
+            description: CodeLensRequest is the parameters of a `textDocument/codeLens` request.
+        CodeLensResolveRequest:
+            properties:
+                code_lens:
+                    $ref: '#/components/schemas/CodeLens'
+            description: CodeLensResolveRequest represents a CodeLensResolveRequest request.
+        CodeLensResolveResponse:
+            properties:
+                code_lens:
+                    $ref: '#/components/schemas/CodeLens'
+                error:
+                    $ref: '#/components/schemas/Error'
+            description: CodeLensResolveResponse represents a CodeLensResolve response.
+        CodeLensResponse:
+            properties:
+                result:
+                    $ref: '#/components/schemas/Result'
+                partial_result:
+                    $ref: '#/components/schemas/PartialResult'
+                error:
+                    $ref: '#/components/schemas/Error'
+            description: CodeLensResponse represents a CodeLens response.
+        Color:
+            properties:
+                red:
+                    readOnly: true
+                    type: integer
+                    description: The red component of this color in the range [0-1]. readonly
+                    format: int32
+                green:
+                    readOnly: true
+                    type: integer
+                    description: The green component of this color in the range [0-1]. readonly
+                    format: int32
+                blue:
+                    readOnly: true
+                    type: integer
+                    description: The blue component of this color in the range [0-1]. readonly
+                    format: int32
+                alpha:
+                    readOnly: true
+                    type: integer
+                    description: The alpha component of this color in the range [0-1]. readonly
+                    format: int32
+            description: Color represents a color in RGBA space.
+        ColorPresentationRequest:
+            properties:
+                work_done_progress_params:
+                    $ref: '#/components/schemas/WorkDoneProgressParams'
+                partial_result_params:
+                    $ref: '#/components/schemas/PartialResultParams'
+                text_document:
+                    $ref: '#/components/schemas/TextDocumentIdentifier'
+                color:
+                    $ref: '#/components/schemas/Color'
+                range:
+                    $ref: '#/components/schemas/Range'
+            description: ColorPresentationRequest is the parameters of a `textDocument/colorPresentation` request.
+        ColorPresentationResponse:
+            properties:
+                result:
+                    $ref: '#/components/schemas/Result'
+                partial_result:
+                    $ref: '#/components/schemas/PartialResult'
+                error:
+                    $ref: '#/components/schemas/Error'
+            description: ColorPresentationResponse represents a ColorPresentation response.
+        Command:
+            properties:
+                title:
+                    type: string
+                    description: Title of the command, like `save`.
+                command:
+                    type: string
+                    description: The identifier of the actual command handler.
+                arguments:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/Any'
+                    description: Arguments that the command handler should be invoked with.
+            description: Command represents a reference to a command. Provides a title which will be used to represent a command in the UI. Commands are identified by a string identifier. The recommended way to handle commands is to implement their execution on the server side if the client and server provides the corresponding capabilities. Alternatively the tool extension code could handle the command. The protocol currently doesn’t specify a set of well-known commands.
+        CompletionClientCapabilities:
+            properties:
+                dynamic_registration:
+                    type: boolean
+                    description: Whether completion supports dynamic registration.
+                completion_item:
+                    $ref: '#/components/schemas/CompletionItem'
+                completion_item_kind:
+                    $ref: '#/components/schemas/CompletionItemKind'
+                context_support:
+                    type: boolean
+                    description: Optional. The client supports to send additional context information for a `textDocument/completion` request.
+            description: CompletionClientCapabilities represents a client capabilities of `textDocument/completion` request.
+        CompletionContext:
+            properties:
+                trigger_kind:
+                    type: integer
+                    description: How the completion was triggered.
+                    format: enum
+                trigger_character:
+                    $ref: '#/components/schemas/StringValue'
+            description: CompletionContext contains additional information about the context in which a completion request is triggered.
+        CompletionItem:
+            properties:
+                label:
+                    type: string
+                    description: The label of this completion item. By default also the text that is inserted when selecting this completion.
+                kind:
+                    type: integer
+                    description: The kind of this completion item. Based of the kind an icon is chosen by the editor. The standardized set of available values is defined in `CompletionItemKind`.
+                    format: enum
+                tags:
+                    type: array
+                    items:
+                        type: integer
+                    description: Tags for this completion item. @since 3.15.0
+                detail:
+                    $ref: '#/components/schemas/StringValue'
+                markup_content:
+                    $ref: '#/components/schemas/MarkupContent'
+                content:
+                    type: string
+                deprecated:
+                    type: boolean
+                    description: Indicates if this item is deprecated. Use tags instead if supported.
+                preselect:
+                    type: boolean
+                    description: Optional. Select this item when showing. *Note* that only one completion item can be selected and that the tool / client decides which item that is. The rule is that the *first* item of those that match best is selected.
+                sort_text:
+                    $ref: '#/components/schemas/StringValue'
+                filter_text:
+                    $ref: '#/components/schemas/StringValue'
+                insert_text:
+                    $ref: '#/components/schemas/StringValue'
+                insert_text_format:
+                    type: integer
+                    description: The format of the insert text. The format applies to both the `insertText` property and the `newText` property of a provided `textEdit`. If omitted defaults to `InsertTextFormat.PlainText`.
+                    format: enum
+                text_edit:
+                    $ref: '#/components/schemas/TextEdit'
+                additional_text_edits:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/TextEdit'
+                    description: An optional array of additional text edits that are applied when selecting this completion. Edits must not overlap (including the same insert position) with the main edit nor with themselves. Additional text edits should be used to change text unrelated to the current cursor position (for example adding an import statement at the top of the file if the completion item will insert an unqualified type).
+                commit_characters:
+                    type: array
+                    items:
+                        type: string
+                    description: An optional set of characters that when pressed while this completion is active will accept it first and then type that character. *Note* that all commit characters should have `length=1` and that superfluous characters will be ignored.
+                command:
+                    $ref: '#/components/schemas/Command'
+                data:
+                    $ref: '#/components/schemas/Any'
+            description: CompletionItem is the completion items.
+        CompletionItemResolveRequest:
+            properties:
+                completion_items:
+                    $ref: '#/components/schemas/CompletionItems'
+            description: CompletionItemResolveRequest represents a CompletionItemResolve request.
+        CompletionItemResolveResponse:
+            properties:
+                completion_items:
+                    $ref: '#/components/schemas/CompletionItems'
+                error:
+                    $ref: '#/components/schemas/Error'
+            description: CompletionItemResolveRequest represents a CompletionItemResolve response.
+        CompletionItems:
+            properties:
+                completion_items:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/CompletionItems'
+            description: CompletionItems represents a list of CompletionItem.
+        CompletionList:
+            properties:
+                is_incomplete:
+                    type: boolean
+                    description: Optional. This list it not complete. Further typing should result in recomputing this list.
+                items:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/CompletionItem'
+                    description: The completion items.
+            description: CompletionList represents a collection of [completion items](#CompletionItem) to be presented in the editor.
+        CompletionOptions:
+            properties:
+                work_done_progress_options:
+                    $ref: '#/components/schemas/WorkDoneProgressOptions'
+                trigger_characters:
+                    type: array
+                    items:
+                        type: string
+                    description: Most tools trigger completion request automatically without explicitly requesting it using a keyboard shortcut (e.g. Ctrl+Space). Typically they do so when the user starts to type an identifier. For example if the user types `c` in a JavaScript file code complete will automatically pop up present `console` besides others as a completion item. Characters that make up identifiers don't need to be listed here. If code complete should automatically be trigger on characters not being valid inside an identifier (for example `.` in JavaScript) list them in `triggerCharacters`.
+                all_commit_characters:
+                    type: array
+                    items:
+                        type: string
+                    description: The list of all possible characters that commit a completion. This field can be used if clients don't support individual commit characters per completion item. See `ClientCapabilities.textDocument.completion.completionItem.commitCharactersSupport`. If a server provides both `allCommitCharacters` and commit characters on an individual completion item the ones on the completion item win. @since 3.2.0
+                resolve_provider:
+                    type: boolean
+                    description: Optional. The server provides support to resolve additional information for a completion item.
+            description: CompletionOptions represents a server capabilities option of completionProvider.
+        CompletionRequest:
+            properties:
+                text_document_position_params:
+                    $ref: '#/components/schemas/TextDocumentPositionParams'
+                work_done_progress_params:
+                    $ref: '#/components/schemas/WorkDoneProgressParams'
+                partial_result_params:
+                    $ref: '#/components/schemas/PartialResultParams'
+                context:
+                    $ref: '#/components/schemas/CompletionContext'
+            description: CompletionRequest is the parameters of a `textDocument/completion` request.
+        CompletionResponse:
+            properties:
+                completion_items:
+                    $ref: '#/components/schemas/CompletionItems'
+                completion_list:
+                    $ref: '#/components/schemas/CompletionList'
+                empty:
+                    type: integer
+                    format: enum
+                error:
+                    $ref: '#/components/schemas/Error'
+            description: CompletionResponse represents a Completion response.
+        ConfigurationItem:
+            properties:
+                scope_uri:
+                    $ref: '#/components/schemas/DocumentURI'
+                section:
+                    $ref: '#/components/schemas/StringValue'
+            description: ConfigurationItem represents a configuration section to ask for and an additional scope URI.
+        ConfigurationRequest:
+            properties:
+                items:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/ConfigurationItem'
+            description: ConfigurationRequest represents a Configuration request params. @since 3.6.0
+        ConfigurationResponse:
+            properties:
+                anys:
+                    $ref: '#/components/schemas/Anys'
+                error:
+                    $ref: '#/components/schemas/Error'
+            description: ConfigurationResponse represents a Configuration response.
+        DeclarationClientCapabilities:
+            properties:
+                dynamic_registration:
+                    type: boolean
+                    description: Optional. Whether declaration supports dynamic registration. If this is set to `true` the client supports the new `DeclarationRegistrationOptions` return value for the corresponding server capability as well.
+                link_support:
+                    type: boolean
+                    description: Optional. The client supports additional metadata in the form of declaration links.
+            description: DeclarationClientCapabilities represents a client capabilities of `textDocument/declaration` request.
+        DeclarationOptions:
+            properties:
+                work_done_progress_options:
+                    $ref: '#/components/schemas/WorkDoneProgressOptions'
+            description: DeclarationOptions represents a server capabilities option of declarationProvider.
+        DeclarationRegistrationOptions:
+            properties:
+                declaration_options:
+                    $ref: '#/components/schemas/DeclarationOptions'
+                text_document_registration_options:
+                    $ref: '#/components/schemas/TextDocumentRegistrationOptions'
+                static_registration_options:
+                    $ref: '#/components/schemas/StaticRegistrationOptions'
+            description: SignatureHelpRegistrationOptions represents a registration option of Declaration.
+        DeclarationRequest:
+            properties:
+                text_document_position_params:
+                    $ref: '#/components/schemas/TextDocumentPositionParams'
+                work_done_progress_params:
+                    $ref: '#/components/schemas/WorkDoneProgressParams'
+                partial_result_params:
+                    $ref: '#/components/schemas/PartialResultParams'
+            description: DeclarationRequest is the parameters of a `textDocument/declaration` request.
+        DeclarationResponse:
+            properties:
+                result:
+                    $ref: '#/components/schemas/Result'
+                partial_result:
+                    $ref: '#/components/schemas/PartialResult'
+                error:
+                    $ref: '#/components/schemas/Error'
+            description: DeclarationResponse represents a Declaration response.
+        DefinitionClientCapabilities:
+            properties:
+                dynamic_registration:
+                    type: boolean
+                    description: Optional. Whether definition supports dynamic registration.
+                link_support:
+                    type: boolean
+                    description: Optional. The client supports additional metadata in the form of definition links. @since 3.14.0
+            description: DefinitionClientCapabilities represents a client capabilities of `textDocument/definition` request.
+        DefinitionOptions:
+            properties:
+                work_done_progress_options:
+                    $ref: '#/components/schemas/WorkDoneProgressOptions'
+            description: DefinitionOptions represents a server capabilities option of definitionProvider.
+        DefinitionRequest:
+            properties:
+                text_document_position_params:
+                    $ref: '#/components/schemas/TextDocumentPositionParams'
+                work_done_progress_params:
+                    $ref: '#/components/schemas/WorkDoneProgressParams'
+                partial_result_params:
+                    $ref: '#/components/schemas/PartialResultParams'
+            description: DefinitionRequest is the parameters of a `textDocument/definition` request.
+        DefinitionResponse:
+            properties:
+                result:
+                    $ref: '#/components/schemas/Result'
+                partial_result:
+                    $ref: '#/components/schemas/PartialResult'
+                error:
+                    $ref: '#/components/schemas/Error'
+            description: DefinitionResponse represents a Definition response.
+        Diagnostic:
+            properties:
+                range:
+                    $ref: '#/components/schemas/Range'
+                severity:
+                    type: integer
+                    description: Optional. The diagnostic's severity. Can be omitted. If omitted it is up to the client to interpret diagnostics as error, warning, info or hint.
+                    format: enum
+                code:
+                    $ref: '#/components/schemas/Int32Value'
+                source:
+                    $ref: '#/components/schemas/StringValue'
+                message:
+                    type: string
+                    description: The diagnostic's message.
+                tags:
+                    type: array
+                    items:
+                        type: integer
+                    description: Optional. Additional metadata about the diagnostic. @since 3.15.0
+                related_information:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/DiagnosticRelatedInformation'
+                    description: Optional. An array of related diagnostic information, e.g. when symbol-names within a scope collide all definitions can be marked via this property.
+            description: Diagnostic represents a diagnostic, such as a compiler error or warning. Diagnostic objects are only valid in the scope of a resource.
+        DiagnosticRelatedInformation:
+            properties:
+                location:
+                    $ref: '#/components/schemas/Location'
+                message:
+                    type: string
+                    description: The message of this related diagnostic information.
+            description: DiagnosticRelatedInformation represents a related message and source code location for a diagnostic. This should be used to point to code locations that cause or are related to a diagnostics, e.g when duplicating a symbol in a scope.
+        DidChangeConfigurationRequest:
+            properties:
+                settings:
+                    $ref: '#/components/schemas/Any'
+            description: DidChangeConfigurationRequest represents a `workspace/didChangeConfiguration` notification params.
+        DidChangeTextDocumentRequest:
+            properties:
+                text_document:
+                    $ref: '#/components/schemas/VersionedTextDocumentIdentifier'
+                content_changes:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/TextDocumentContentChangeEvent'
+                    description: 'The actual content changes. The content changes describe single state changes to the document. So if there are two content changes c1 (at array index 0) and c2 (at array index 1) for a document in state S then c1 moves the document from S to S'' and c2 from S'' to S''''. So c1 is computed on the state S and c2 is computed on the state S''. To mirror the content of a document using change events use the following approach: - start with the same initial content - apply the ''textDocument/didChange'' notifications in the order you receive them. - apply the `TextDocumentContentChangeEvent`s in a single notification in the order   you receive them.'
+            description: DidChangeTextDocumentRequest is the parameters of a `textDocument/didChange` notification.
+        DidChangeWatchedFilesRequest:
+            properties:
+                changes:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/FileEvent'
+                    description: The actual file events.
+            description: DidChangeWatchedFilesRequest is the parameters of a `workspace/didChangeWatchedFiles` notification.
+        DidChangeWorkspaceFoldersRequest:
+            properties:
+                event:
+                    $ref: '#/components/schemas/WorkspaceFoldersChangeEvent'
+            description: DidChangeWorkspaceFoldersRequest represents a `workspace/didChangeWorkspaceFolders` notification params.
+        DidCloseTextDocumentRequest:
+            properties:
+                text_document:
+                    $ref: '#/components/schemas/TextDocumentIdentifier'
+            description: DidCloseTextDocumentRequest is the parameters of a `textDocument/didClose` notification.
+        DidOpenTextDocumentRequest:
+            properties:
+                text_document:
+                    $ref: '#/components/schemas/TextDocumentItem'
+            description: DidOpenTextDocumentRequest is the parameters of a `textDocument/didOpen` notification.
+        DidSaveTextDocumentRequest:
+            properties:
+                text_document:
+                    $ref: '#/components/schemas/TextDocumentIdentifier'
+                text:
+                    $ref: '#/components/schemas/StringValue'
+            description: DidSaveTextDocumentRequest is the parameters of a `textDocument/didSave` notification.
+        DocumentColorClientCapabilities:
+            properties:
+                dynamic_registration:
+                    type: boolean
+                    description: Optional. Whether document color supports dynamic registration.
+            description: DocumentColorClientCapabilities represents a client capabilities of `textDocument/documentColor` request.
+        DocumentColorOptions:
+            properties:
+                work_done_progress_options:
+                    $ref: '#/components/schemas/WorkDoneProgressOptions'
+            description: DocumentColorOptions represents a server capabilities option of documentColorProvider.
+        DocumentColorRegistrationOptions:
+            properties:
+                text_document_registration_options:
+                    $ref: '#/components/schemas/TextDocumentRegistrationOptions'
+                static_registration_options:
+                    $ref: '#/components/schemas/StaticRegistrationOptions'
+                document_color_options:
+                    $ref: '#/components/schemas/DocumentColorOptions'
+            description: DocumentColorRegistrationOptions represents a registration option of DocumentColor.
+        DocumentColorRequest:
+            properties:
+                work_done_progress_params:
+                    $ref: '#/components/schemas/WorkDoneProgressParams'
+                partial_result_params:
+                    $ref: '#/components/schemas/PartialResultParams'
+                text_document:
+                    $ref: '#/components/schemas/TextDocumentIdentifier'
+            description: DocumentColorRequest is the parameters of a `textDocument/documentColor` request.
+        DocumentColorResponse:
+            properties:
+                result:
+                    $ref: '#/components/schemas/Result'
+                partial_result:
+                    $ref: '#/components/schemas/PartialResult'
+                error:
+                    $ref: '#/components/schemas/Error'
+            description: DocumentColorResponse represents a DocumentColor response.
+        DocumentFormattingClientCapabilities:
+            properties:
+                dynamic_registration:
+                    type: boolean
+                    description: Optional. Whether formatting supports dynamic registration.
+            description: DocumentFormattingClientCapabilities represents a client capabilities of `textDocument/formatting` request.
+        DocumentFormattingOptions:
+            properties:
+                work_done_progress_options:
+                    $ref: '#/components/schemas/WorkDoneProgressOptions'
+            description: DocumentFormattingOptions represents a server capabilities option of documentFormattingProvider.
+        DocumentFormattingRequest:
+            properties:
+                work_done_progress_params:
+                    $ref: '#/components/schemas/WorkDoneProgressParams'
+                text_document:
+                    $ref: '#/components/schemas/TextDocumentIdentifier'
+                options:
+                    $ref: '#/components/schemas/FormattingOptions'
+            description: DocumentFormattingRequest is the parameters of a `textDocument/formatting` request.
+        DocumentFormattingResponse:
+            properties:
+                text_edit:
+                    $ref: '#/components/schemas/TextEdit'
+                empty:
+                    type: integer
+                    format: enum
+                error:
+                    $ref: '#/components/schemas/Error'
+            description: DocumentFormattingResponse represents a DocumentFormatting response.
+        DocumentHighlightClientCapabilities:
+            properties:
+                dynamic_registration:
+                    type: boolean
+                    description: Optional. Whether document highlight supports dynamic registration.
+            description: DocumentHighlightClientCapabilities represents a client capabilities of `textDocument/documentHighlight` request.
+        DocumentHighlightOptions:
+            properties:
+                work_done_progress_options:
+                    $ref: '#/components/schemas/WorkDoneProgressOptions'
+            description: DocumentHighlightOptions represents a server capabilities option of documentHighlightProvider.
+        DocumentHighlightRequest:
+            properties:
+                text_document_position_params:
+                    $ref: '#/components/schemas/TextDocumentPositionParams'
+                work_done_progress_params:
+                    $ref: '#/components/schemas/WorkDoneProgressParams'
+                partial_result_params:
+                    $ref: '#/components/schemas/PartialResultParams'
+            description: DocumentHighlightRequest is the parameters of a `textDocument/documentHighlight` request.
+        DocumentHighlightsResponse:
+            properties:
+                result:
+                    $ref: '#/components/schemas/Result'
+                partial_result:
+                    $ref: '#/components/schemas/PartialResult'
+                error:
+                    $ref: '#/components/schemas/Error'
+            description: DocumentHighlightsResponse represents a DocumentHighlights response.
+        DocumentLink:
+            properties:
+                range:
+                    $ref: '#/components/schemas/Range'
+                target:
+                    $ref: '#/components/schemas/DocumentURI'
+                tooltip:
+                    $ref: '#/components/schemas/StringValue'
+                data:
+                    $ref: '#/components/schemas/Any'
+            description: DocumentLink is a document link is a range in a text document that links to an internal or external resource, like another text document or a web site.
+        DocumentLinkClientCapabilities:
+            properties:
+                dynamic_registration:
+                    type: boolean
+                    description: Optional. Whether document link supports dynamic registration.
+                tooltip_support:
+                    type: boolean
+                    description: Optional. Whether the client supports the `tooltip` property on `DocumentLink`. @since 3.15.0
+            description: DocumentLinkClientCapabilities represents a client capabilities of `textDocument/documentLink` request.
+        DocumentLinkOptions:
+            properties:
+                work_done_progress_options:
+                    $ref: '#/components/schemas/WorkDoneProgressOptions'
+                resolve_provider:
+                    type: boolean
+                    description: Optional. Document links have a resolve provider as well.
+            description: DocumentLinkOptions represents a server capabilities option of documentLinkProvider.
+        DocumentLinkRequest:
+            properties:
+                work_done_progress_params:
+                    $ref: '#/components/schemas/WorkDoneProgressParams'
+                partial_result_params:
+                    $ref: '#/components/schemas/PartialResultParams'
+                text_document:
+                    $ref: '#/components/schemas/TextDocumentIdentifier'
+            description: DocumentLinkRequest is the parameters of a `textDocument/documentLink` request.
+        DocumentLinkResolveRequest:
+            properties:
+                document_link:
+                    $ref: '#/components/schemas/DocumentLink'
+            description: DocumentLinkResolveRequest represents a DocumentLinkResolveRequest request.
+        DocumentLinkResolveResponse:
+            properties:
+                document_link:
+                    $ref: '#/components/schemas/DocumentLink'
+                error:
+                    $ref: '#/components/schemas/Error'
+            description: DocumentLinkResolveResponse represents a DocumentLinkResolve response.
+        DocumentLinkResponse:
+            properties:
+                result:
+                    $ref: '#/components/schemas/Result'
+                partial_result:
+                    $ref: '#/components/schemas/PartialResult'
+                error:
+                    $ref: '#/components/schemas/Error'
+            description: DocumentLinkResponse represents a DocumentLink response.
+        DocumentOnTypeFormattingClientCapabilities:
+            properties:
+                dynamic_registration:
+                    type: boolean
+                    description: Optional. Whether on type formatting supports dynamic registration.
+            description: DocumentOnTypeFormattingClientCapabilities represents a client capabilities of `textDocument/onTypeFormatting` request.
+        DocumentOnTypeFormattingOptions:
+            properties:
+                first_trigger_character:
+                    type: string
+                    description: A character on which formatting should be triggered, like `}`.
+                more_trigger_character:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/StringValue'
+                    description: More trigger characters.
+            description: DocumentOnTypeFormattingOptions represents a server capabilities option of documentOnTypeFormattingProvider.
+        DocumentOnTypeFormattingRequest:
+            properties:
+                text_document_position_params:
+                    $ref: '#/components/schemas/TextDocumentPositionParams'
+                ch:
+                    type: string
+                    description: The character that has been typed.
+                options:
+                    $ref: '#/components/schemas/FormattingOptions'
+            description: DocumentOnTypeFormattingRequest is the parameters of a `textDocument/onTypeFormatting` request.
+        DocumentOnTypeFormattingResponse:
+            properties:
+                text_edit:
+                    $ref: '#/components/schemas/TextEdit'
+                empty:
+                    type: integer
+                    format: enum
+                error:
+                    $ref: '#/components/schemas/Error'
+            description: DocumentOnTypeFormattingResponse represents a OnTypeFormatting response.
+        DocumentRangeFormattingClientCapabilities:
+            properties:
+                dynamic_registration:
+                    type: boolean
+                    description: Optional. Whether formatting supports dynamic registration.
+            description: DocumentRangeFormattingClientCapabilities represents a client capabilities of `textDocument/rangeFormatting` request.
+        DocumentRangeFormattingOptions:
+            properties:
+                work_done_progress_options:
+                    $ref: '#/components/schemas/WorkDoneProgressOptions'
+            description: DocumentRangeFormattingOptions represents a server capabilities option of documentRangeFormattingProvider.
+        DocumentRangeFormattingRequest:
+            properties:
+                work_done_progress_params:
+                    $ref: '#/components/schemas/WorkDoneProgressParams'
+                text_document:
+                    $ref: '#/components/schemas/TextDocumentIdentifier'
+                range:
+                    $ref: '#/components/schemas/Range'
+                options:
+                    $ref: '#/components/schemas/FormattingOptions'
+            description: DocumentRangeFormattingRequest is the parameters of a `textDocument/rangeFormatting` request.
+        DocumentRangeFormattingResponse:
+            properties:
+                text_edit:
+                    $ref: '#/components/schemas/TextEdit'
+                empty:
+                    type: integer
+                    format: enum
+                error:
+                    $ref: '#/components/schemas/Error'
+            description: DocumentRangeFormattingResponse represents a DocumentRangeFormatting response.
+        DocumentSymbolClientCapabilities:
+            properties:
+                dynamic_registration:
+                    type: boolean
+                    description: Optional. Whether document symbol supports dynamic registration.
+                symbol_kind:
+                    $ref: '#/components/schemas/SymbolKind'
+                hierarchical_document_symbol_support:
+                    type: boolean
+                    description: Optional. The client supports hierarchical document symbols.
+            description: DocumentSymbolClientCapabilities represents a client capabilities of `textDocument/documentSymbol` request.
+        DocumentSymbolOptions:
+            properties:
+                work_done_progress_options:
+                    $ref: '#/components/schemas/WorkDoneProgressOptions'
+            description: DocumentSymbolOptions represents a server capabilities option of documentSymbolProvider.
+        DocumentSymbolRequest:
+            properties:
+                work_done_progress_params:
+                    $ref: '#/components/schemas/WorkDoneProgressParams'
+                partial_result_params:
+                    $ref: '#/components/schemas/PartialResultParams'
+                text_document:
+                    $ref: '#/components/schemas/TextDocumentIdentifier'
+            description: DocumentSymbolRequest is the parameters of a `textDocument/documentSymbol` request.
+        DocumentSymbolResponse:
+            properties:
+                result:
+                    $ref: '#/components/schemas/Result'
+                partial_result:
+                    $ref: '#/components/schemas/PartialResult'
+                error:
+                    $ref: '#/components/schemas/Error'
+            description: DocumentSymbolResponse represents a DocumentSymbol response.
+        DocumentURI:
+            properties:
+                document_uri:
+                    type: string
+            description: DocumentURI are transferred as strings. The URI’s format is defined in http://tools.ietf.org/html/rfc3986.
+        Empty:
+            properties: {}
+            description: 'A generic empty message that you can re-use to avoid defining duplicated empty messages in your APIs. A typical example is to use it as the request or the response type of an API method. For instance:     service Foo {       rpc Bar(google.protobuf.Empty) returns (google.protobuf.Empty);     } The JSON representation for `Empty` is empty JSON object `{}`.'
+        Error:
+            properties:
+                code:
+                    type: integer
+                    description: A number indicating the error type that occurred. Which may an enum value of [Code][#code].
+                    format: int32
+                message:
+                    type: string
+                    description: A string providing a short description of the error.
+                data:
+                    type: string
+                    description: A primitive or structured value that contains additional information about the error. Can be omitted.
+            description: Error represents a JSON-RPC error.
+        ExecuteCommandOptions:
+            properties:
+                work_done_progress_options:
+                    $ref: '#/components/schemas/WorkDoneProgressOptions'
+                commands:
+                    type: array
+                    items:
+                        type: string
+                    description: The commands to be executed on the server
+        ExecuteCommandParams:
+            properties:
+                work_done_progress_params:
+                    $ref: '#/components/schemas/WorkDoneProgressParams'
+                command:
+                    type: string
+                    description: The identifier of the actual command handler.
+                arguments:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/Any'
+                    description: Arguments that the command should be invoked with.
+            description: ExecuteCommandParams is the parameters of a `workspace/executeCommand` request.
+        ExecuteCommandResponse:
+            properties:
+                any:
+                    $ref: '#/components/schemas/Any'
+                error:
+                    $ref: '#/components/schemas/Error'
+            description: ExecuteCommandResponse represents a ExecuteCommand response.
+        FileEvent:
+            properties:
+                uri:
+                    $ref: '#/components/schemas/DocumentURI'
+                type:
+                    type: integer
+                    description: The change type.
+                    format: enum
+            description: FileEvent an event describing a file change.
+        FoldingRangeClientCapabilities:
+            properties:
+                dynamic_registration:
+                    type: boolean
+                    description: Optional. Whether implementation supports dynamic registration for folding range providers. If this is set to `true` the client supports the new `FoldingRangeRegistrationOptions` return value for the corresponding server capability as well.
+                range_limit:
+                    $ref: '#/components/schemas/Int32Value'
+                line_folding_only:
+                    type: boolean
+                    description: Optional. If set, the client signals that it only supports folding complete lines. If set, client will ignore specified `startCharacter` and `endCharacter` properties in a FoldingRange.
+            description: FoldingRangeClientCapabilities represents a client capabilities of `textDocument/foldingRange` request.
+        FoldingRangeOptions:
+            properties:
+                work_done_progress_options:
+                    $ref: '#/components/schemas/WorkDoneProgressOptions'
+            description: FoldingRangeOptions represents a server capabilities option of foldingRangeProvider.
+        FoldingRangeRegistrationOptions:
+            properties:
+                text_document_registration_options:
+                    $ref: '#/components/schemas/TextDocumentRegistrationOptions'
+                folding_range_options:
+                    $ref: '#/components/schemas/FoldingRangeOptions'
+                static_registration_options:
+                    $ref: '#/components/schemas/StaticRegistrationOptions'
+            description: FoldingRangeRegistrationOptions represents a registration option of FoldingRange.
+        FoldingRangeRequest:
+            properties:
+                work_done_progress_params:
+                    $ref: '#/components/schemas/WorkDoneProgressParams'
+                partial_result_params:
+                    $ref: '#/components/schemas/PartialResultParams'
+                text_document:
+                    $ref: '#/components/schemas/TextDocumentIdentifier'
+            description: FoldingRangeRequest is the parameters of a `textDocument/foldingRange` request.
+        FoldingRangeResponse:
+            properties:
+                result:
+                    $ref: '#/components/schemas/Result'
+                partial_result:
+                    $ref: '#/components/schemas/PartialResult'
+                error:
+                    $ref: '#/components/schemas/Error'
+            description: FoldingRangeResponse represents a FoldingRange response.
+        FormattingOptions:
+            properties:
+                tab_size:
+                    type: integer
+                    description: Size of a tab in spaces.
+                    format: int32
+                insert_spaces:
+                    type: boolean
+                    description: Prefer spaces over tabs.
+                trim_trailing_whitespace:
+                    type: boolean
+                    description: Optional. Trim trailing whitespace on a line. @since 3.15.0
+                insert_final_newline:
+                    type: boolean
+                    description: Optional. Insert a newline character at the end of the file if one does not exist. @since 3.15.0
+                trim_final_newlines:
+                    type: boolean
+                    description: Optional. Trim all newlines after the final newline at the end of the file. @since 3.15.0
+                key:
+                    $ref: '#/components/schemas/KeyEntry'
+            description: FormattingOptions value-object describing what options formatting should use.
+        Hover:
+            properties:
+                marked_string:
+                    $ref: '#/components/schemas/MarkedString'
+                marked_strings:
+                    $ref: '#/components/schemas/MarkedStrings'
+                markup_content:
+                    $ref: '#/components/schemas/MarkupContent'
+                range:
+                    $ref: '#/components/schemas/Range'
+            description: Hover is the result of a hover request.
+        HoverClientCapabilities:
+            properties:
+                dynamic_registration:
+                    type: boolean
+                    description: Optional. Whether hover supports dynamic registration.
+                content_format:
+                    type: array
+                    items:
+                        type: integer
+                    description: Client supports the follow content formats for the content property. The order describes the preferred format of the client.
+            description: HoverClientCapabilities represents a client capabilities of `textDocument/hover` request.
+        HoverOptions:
+            properties:
+                work_done_progress_options:
+                    $ref: '#/components/schemas/WorkDoneProgressOptions'
+            description: HoverOptions represents a server capabilities option of hoverProvider.
+        HoverRequest:
+            properties:
+                text_document_position_params:
+                    $ref: '#/components/schemas/TextDocumentPositionParams'
+                work_done_progress_params:
+                    $ref: '#/components/schemas/WorkDoneProgressParams'
+            description: HoverRequest is the parameters of a `textDocument/hover` request.
+        HoverResponse:
+            properties:
+                hover:
+                    $ref: '#/components/schemas/Hover'
+                empty:
+                    type: integer
+                    format: enum
+                error:
+                    $ref: '#/components/schemas/Error'
+            description: HoverResponse represents a Hover response.
+        ImplementationClientCapabilities:
+            properties:
+                dynamic_registration:
+                    type: boolean
+                    description: Optional. Whether implementation supports dynamic registration. If this is set to `true` the client supports the new `ImplementationRegistrationOptions` return value for the corresponding server capability as well.
+                link_support:
+                    type: boolean
+                    description: Optional. The client supports additional metadata in the form of definition links. @since 3.14.0
+            description: ImplementationClientCapabilities represents a client capabilities of `textDocument/implementation` request.
+        ImplementationOptions:
+            properties:
+                work_done_progress_options:
+                    $ref: '#/components/schemas/WorkDoneProgressOptions'
+            description: ImplementationOptions represents a server capabilities option of implementationProvider.
+        ImplementationRegistrationOptions:
+            properties:
+                text_document_registration_options:
+                    $ref: '#/components/schemas/TextDocumentRegistrationOptions'
+                implementation_options:
+                    $ref: '#/components/schemas/ImplementationOptions'
+                static_registration_options:
+                    $ref: '#/components/schemas/StaticRegistrationOptions'
+            description: ImplementationRegistrationOptions represents a registration option of Implementation.
+        ImplementationRequest:
+            properties:
+                text_document_position_params:
+                    $ref: '#/components/schemas/TextDocumentPositionParams'
+                work_done_progress_params:
+                    $ref: '#/components/schemas/WorkDoneProgressParams'
+                partial_result_params:
+                    $ref: '#/components/schemas/PartialResultParams'
+            description: ImplementationRequest is the parameters of a `textDocument/implementation` request.
+        ImplementationResponse:
+            properties:
+                result:
+                    $ref: '#/components/schemas/Result'
+                partial_result:
+                    $ref: '#/components/schemas/PartialResult'
+                error:
+                    $ref: '#/components/schemas/Error'
+            description: ImplementationResponse represents a Implementation response.
+        InitializeRequest:
+            properties:
+                work_done_progress_params:
+                    $ref: '#/components/schemas/WorkDoneProgressParams'
+                process_id:
+                    type: integer
+                    description: Required. The process Id of the parent process that started the server. Is null if the process has not been started by another process. If the parent process is not alive then the server should exit (see exit notification) its process.
+                    format: int32
+                client_info:
+                    $ref: '#/components/schemas/ClientInfo'
+                root_path:
+                    $ref: '#/components/schemas/StringValue'
+                root_uri:
+                    $ref: '#/components/schemas/DocumentURI'
+                initialization_options:
+                    $ref: '#/components/schemas/Any'
+                capabilities:
+                    $ref: '#/components/schemas/ClientCapabilities'
+                trace:
+                    type: integer
+                    description: Optional. The initial trace setting. If omitted trace is disabled ('off').
+                    format: enum
+                workspace_folders:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/WorkspaceFolder'
+                    description: Optional. The workspace folders configured in the client when the server starts. This property is only available if the client supports workspace folders. It can be `null` if the client supports workspace folders but none are configured. @since 3.6.0 nullable
+            description: 'InitializeRequest is the sent as the first request from the client to the server. If the server receives a request or notification before the initialize request it should act as follows: - For a request the response should be an error with code: -32002. The message can be picked by the server. - Notifications should be dropped, except for the exit notification. This will allow the exit of a server without an initialize request. Until the server has responded to the initialize request with an InitializeResponse, the client must not send any additional requests or notifications to the server. In addition the server is not allowed to send any requests or notifications to the client until it has responded with an InitializeResponse, with the exception that during the initialize request the server is allowed to send the notifications window/showMessage, window/logMessage and telemetry/event as well as the window/showMessageRequest request to the client. In case the client sets up a progress token in the initialize params (e.g. property workDoneToken) the server is also allowed to use that token (and only that token) using the $/progress notification sent from the server to the client. The initialize request may only be sent once.'
+        InitializeResponse:
+            properties:
+                capabilities:
+                    $ref: '#/components/schemas/ServerCapabilities'
+                server_info:
+                    $ref: '#/components/schemas/ServerInfo'
+            description: InitializeResponse result of Initialize.
+        InitializedRequest:
+            properties: {}
+            description: InitializedRequest is the initialized notification is sent from the client to the server after the client received the result of the initialize request but before the client is sending any other request or notification to the server. The server can use the initialized notification for example to dynamically register capabilities. The initialized notification may only be sent once.
+        Int32Value:
+            properties:
+                value:
+                    type: integer
+                    description: The int32 value.
+                    format: int32
+            description: Wrapper message for `int32`. The JSON representation for `Int32Value` is JSON number.
+        Location:
+            properties:
+                uri:
+                    $ref: '#/components/schemas/URI'
+                range:
+                    $ref: '#/components/schemas/Range'
+            description: Location represents a location inside a resource, such as a line inside a text file.
+        LogMessageRequest:
+            properties:
+                type:
+                    type: integer
+                    description: The message type. See [MessageType][MessageType].
+                    format: enum
+                message:
+                    type: string
+                    description: The actual message
+            description: LogMessageRequest represents a notification params.
+        LogTraceRequest:
+            properties:
+                message:
+                    type: string
+                    description: The message to be logged.
+                verbose:
+                    $ref: '#/components/schemas/StringValue'
+            description: LogTraceRequest represents a `$/logTrace` notification params.
+        MarkedString:
+            properties:
+                text:
+                    type: string
+                code_block:
+                    $ref: '#/components/schemas/CodeBlock'
+            description: 'MarkedString can be used to render human readable text. It is either a markdown string or a code-block that provides a language and a code snippet. The language identifier is semantically equal to the optional language identifier in fenced code blocks in GitHub issues. See https://help.github.com/articles/creating-and-highlighting-code-blocks/#syntax-highlighting The pair of a language and a value is an equivalent to markdown: ```${language} ${value} ``` Note that markdown strings will be sanitized - that means html will be escaped. Deprecated: use MarkupContent instead.'
+        MarkupContent:
+            properties:
+                kind:
+                    type: integer
+                    description: The type of the Markup.
+                    format: enum
+                value:
+                    type: string
+                    description: The content itself.
+            description: "MarkupContent is a MarkupContent literal represents a string value which content can be represented in different formats. Currently plaintext and markdown are supported formats. A MarkupContent is usually used in documentation properties of result literals like CompletionItem or SignatureInformation. A `MarkupContent` literal represents a string value which content is interpreted base on its kind flag. Currently the protocol supports `plaintext` and `markdown` as markup kinds. If the kind is `markdown` then the value can contain fenced code blocks like in GitHub issues. See https://help.github.com/articles/creating-and-highlighting-code-blocks/#syntax-highlighting Here is an example how such a string can be constructed using JavaScript / TypeScript: ```markdown ```typescript let markdown: MarkdownContent = {  kind: MarkupKind.Markdown,      value: [      \t'# Header',      \t'Some text',      \t'```typescript',      \t'someCode();',      \t'```'      ].join('\\n') }; ``` ``` NOTE: clients might sanitize the return markdown. A client could decide to remove HTML from the markdown to avoid script execution."
+        MessageActionItem:
+            properties:
+                title:
+                    type: string
+                    description: A short title like 'Retry', 'Open Log' etc.
+            description: MessageActionItem is the message action items to present.
+        ParameterInformation:
+            properties:
+                name:
+                    type: string
+                offset:
+                    $ref: '#/components/schemas/Offset'
+                markup:
+                    type: string
+                markup_content:
+                    $ref: '#/components/schemas/MarkupContent'
+            description: ParameterInformation represents a parameter of a callable-signature. A parameter can have a label and a doc-comment.
+        PartialResultParams:
+            properties:
+                partial_result_token:
+                    type: integer
+                    description: An optional token that a server can use to report partial results (e.g. streaming) to the client.
+                    format: int32
+            description: PartialResultParams a parameter literal used to pass a partial result token.
+        Position:
+            properties:
+                line:
+                    type: integer
+                    description: Line position in a document (zero-based).
+                    format: int32
+                character:
+                    type: integer
+                    description: Character offset on a line in a document (zero-based). Assuming that the line is represented as a string, the `character` value represents the gap between the `character` and `character + 1`. If the character value is greater than the line length it defaults back to the line length. The offsets are based on a UTF-16 string representation.
+                    format: int32
+            description: Position in a text document expressed as zero-based line and zero-based character offset. A position is between two characters like an ‘insert’ cursor in a editor. Special values like for example -1 to denote the end of a line are not supported.
+        PrepareRenameRequest:
+            properties:
+                text_document_position_params:
+                    $ref: '#/components/schemas/TextDocumentPositionParams'
+            description: PrepareRenameRequest is the parameters of a `textDocument/prepareRename` request.
+        PrepareRenameResponse:
+            properties:
+                range:
+                    $ref: '#/components/schemas/Range'
+                result:
+                    $ref: '#/components/schemas/Result'
+                empty:
+                    type: integer
+                    format: enum
+                error:
+                    $ref: '#/components/schemas/Error'
+            description: PrepareRenameResponse represents a PrepareRename response.
+        ProgressRequest:
+            properties:
+                token:
+                    $ref: '#/components/schemas/ProgressToken'
+                value:
+                    $ref: '#/components/schemas/Any'
+            description: ProgressRequest represents a progress notification params. @since 3.15.0
+        ProgressToken:
+            properties:
+                token:
+                    type: integer
+                    description: Required.
+                    format: int32
+            description: ProgressToken is the report progress token.
+        PublishDiagnosticsClientCapabilities:
+            properties:
+                related_information:
+                    type: boolean
+                    description: Optional. Whether the clients accepts diagnostics with related information.
+                tag_support:
+                    $ref: '#/components/schemas/TagSupport'
+                version_support:
+                    type: boolean
+                    description: Optional. Whether the client interprets the version property of the `textDocument/publishDiagnostics` notification's parameter. @since 3.15.0
+            description: PublishDiagnosticsClientCapabilities represents a client capabilities of `textDocument/publishDiagnostics` notification.
+        PublishDiagnosticsRequest:
+            properties:
+                uri:
+                    $ref: '#/components/schemas/DocumentURI'
+                version:
+                    type: integer
+                    description: Optional the version number of the document the diagnostics are published for. @since 3.15.0
+                    format: int32
+                diagnostics:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/Diagnostic'
+                    description: An array of diagnostic information items.
+            description: PublishDiagnosticsRequest is the parameters of a `textDocument/publishDiagnostics` notification.
+        Range:
+            properties:
+                start:
+                    $ref: '#/components/schemas/Position'
+                end:
+                    $ref: '#/components/schemas/Position'
+            description: Range in a text document expressed as (zero-based) start and end positions. A range is comparable to a selection in an editor. Therefore the end position is exclusive. If you want to specify a range that contains a line including the line ending character(s) then use an end position denoting the start of the next line.
+        ReferenceClientCapabilities:
+            properties:
+                dynamic_registration:
+                    type: boolean
+                    description: Optional. Whether references supports dynamic registration.
+            description: ImplementationClientCapabilities represents a client capabilities of `textDocument/references` request.
+        ReferenceContext:
+            properties:
+                include_declaration:
+                    type: boolean
+                    description: Include the declaration of the current symbol.
+            description: ReferenceContext whether the references supports include the declaration
+        ReferenceOptions:
+            properties:
+                work_done_progress_options:
+                    $ref: '#/components/schemas/WorkDoneProgressOptions'
+            description: ReferenceOptions represents a server capabilities option of referenceProvider.
+        ReferenceRequest:
+            properties:
+                text_document_position_params:
+                    $ref: '#/components/schemas/TextDocumentPositionParams'
+                work_done_progress_params:
+                    $ref: '#/components/schemas/WorkDoneProgressParams'
+                partial_result_params:
+                    $ref: '#/components/schemas/PartialResultParams'
+                context:
+                    $ref: '#/components/schemas/ReferenceContext'
+            description: ReferenceRequest is the parameters of a `textDocument/references` request.
+        ReferenceResponse:
+            properties:
+                result:
+                    $ref: '#/components/schemas/Result'
+                partial_result:
+                    $ref: '#/components/schemas/PartialResult'
+                error:
+                    $ref: '#/components/schemas/Error'
+            description: ReferenceResponse represents a Reference response.
+        RenameClientCapabilities:
+            properties:
+                dynamic_registration:
+                    type: boolean
+                    description: Optional. Whether rename supports dynamic registration.
+                prepare_support:
+                    type: boolean
+                    description: Optional. Client supports testing for validity of rename operations before execution. @since version 3.12.0
+            description: RenameClientCapabilities represents a client capabilities of `textDocument/rename` request.
+        RenameOptions:
+            properties:
+                work_done_progress_options:
+                    $ref: '#/components/schemas/WorkDoneProgressOptions'
+                prepare_provider:
+                    type: boolean
+                    description: Optional. Renames should be checked and tested before being executed.
+            description: RenameOptions represents a server capabilities option of renameProvider.
+        RenameRequest:
+            properties:
+                text_document_position_params:
+                    $ref: '#/components/schemas/TextDocumentPositionParams'
+                work_done_progress_params:
+                    $ref: '#/components/schemas/WorkDoneProgressParams'
+                new_name:
+                    type: string
+                    description: The new name of the symbol. If the given name is not valid the request must return a [ResponseError](#ResponseError) with an appropriate message set.
+            description: RenameRequest is the parameters of a `textDocument/rename` request.
+        RenameResponse:
+            properties:
+                workspace_edit:
+                    $ref: '#/components/schemas/WorkspaceEdit'
+                empty:
+                    type: integer
+                    format: enum
+                error:
+                    $ref: '#/components/schemas/Error'
+            description: RenameResponse represents a Rename response.
+        SaveOptions:
+            properties:
+                include_text:
+                    type: boolean
+                    description: Optional. The client is supposed to include the content on save.
+            description: SaveOptions represents a server capabilities option of textDocumentSync.save.
+        SelectionRangeClientCapabilities:
+            properties:
+                dynamic_registration:
+                    type: boolean
+                    description: Optional. Whether implementatirn supports dynamic registration for selection range providers. If this is set to `true` the client supports the new `SelectionRangeRegistrationOptions` return value for the corresponding server capability as well.
+            description: FoldingRangeClientCapabilities represents a client capabilities of `textDocument/selectionRange` request.
+        SelectionRangeOptions:
+            properties:
+                work_done_progress_options:
+                    $ref: '#/components/schemas/WorkDoneProgressOptions'
+            description: SelectionRangeOptions represents a server capabilities option of selectionRangeProvider.
+        SelectionRangeRegistrationOptions:
+            properties:
+                selection_range_options:
+                    $ref: '#/components/schemas/SelectionRangeOptions'
+                text_document_registration_options:
+                    $ref: '#/components/schemas/TextDocumentRegistrationOptions'
+                static_registration_options:
+                    $ref: '#/components/schemas/StaticRegistrationOptions'
+            description: SelectionRangeRegistrationOptions represents a registration option of SelectionRange.
+        SelectionRangeRequest:
+            properties:
+                work_done_progress_params:
+                    $ref: '#/components/schemas/WorkDoneProgressParams'
+                partial_result_params:
+                    $ref: '#/components/schemas/PartialResultParams'
+                text_document:
+                    $ref: '#/components/schemas/TextDocumentIdentifier'
+                positions:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/Position'
+                    description: The positions inside the text document.
+            description: SelectionRangeRequest is the parameters of a `textDocument/selectionRange` request.
+        SelectionRangeResponse:
+            properties:
+                result:
+                    $ref: '#/components/schemas/Result'
+                partial_result:
+                    $ref: '#/components/schemas/PartialResult'
+                error:
+                    $ref: '#/components/schemas/Error'
+            description: SelectionRangeResponse represents a SelectionRangeResponse response.
+        ServerCapabilities:
+            properties:
+                text_document_sync_options:
+                    $ref: '#/components/schemas/TextDocumentSyncOptions'
+                text_document_sync_kind:
+                    type: integer
+                    format: enum
+                completion_provider:
+                    $ref: '#/components/schemas/CompletionOptions'
+                enable_hover_provider:
+                    type: boolean
+                hover_options:
+                    $ref: '#/components/schemas/HoverOptions'
+                signature_help_provider:
+                    $ref: '#/components/schemas/SignatureHelpOptions'
+                enable_declaration_provider:
+                    type: boolean
+                declaration_options:
+                    $ref: '#/components/schemas/DeclarationOptions'
+                declaration_registration_options:
+                    $ref: '#/components/schemas/DeclarationRegistrationOptions'
+                enable_definition_provider:
+                    type: boolean
+                definition_options:
+                    $ref: '#/components/schemas/DefinitionOptions'
+                enable_type_definition_provider:
+                    type: boolean
+                type_definition_options:
+                    $ref: '#/components/schemas/TypeDefinitionOptions'
+                type_definition_registration_options:
+                    $ref: '#/components/schemas/TypeDefinitionRegistrationOptions'
+                enable_implementation_provider:
+                    type: boolean
+                implementation_options:
+                    $ref: '#/components/schemas/ImplementationOptions'
+                implementation_registration_options:
+                    $ref: '#/components/schemas/ImplementationRegistrationOptions'
+                enable_references_provider:
+                    type: boolean
+                reference_options:
+                    $ref: '#/components/schemas/ReferenceOptions'
+                enable_document_highlight_provider:
+                    type: boolean
+                document_highlight_options:
+                    $ref: '#/components/schemas/DocumentHighlightOptions'
+                enable_document_symbol_provider:
+                    type: boolean
+                document_symbol_options:
+                    $ref: '#/components/schemas/DocumentSymbolOptions'
+                enable_code_action_provider:
+                    type: boolean
+                code_action_options:
+                    $ref: '#/components/schemas/CodeActionOptions'
+                codelens_provider:
+                    $ref: '#/components/schemas/CodeLensOptions'
+                document_link_provider:
+                    $ref: '#/components/schemas/DocumentLinkOptions'
+                enable_color_provider:
+                    type: boolean
+                document_color_options:
+                    $ref: '#/components/schemas/DocumentColorOptions'
+                document_color_registration_options:
+                    $ref: '#/components/schemas/DocumentColorRegistrationOptions'
+                enable_document_formatting_provider:
+                    type: boolean
+                document_formatting_options:
+                    $ref: '#/components/schemas/DocumentFormattingOptions'
+                enable_document_range_formatting_provider:
+                    type: boolean
+                document_range_formatting_options:
+                    $ref: '#/components/schemas/DocumentRangeFormattingOptions'
+                document_on_type_formatting_provider:
+                    $ref: '#/components/schemas/DocumentOnTypeFormattingOptions'
+                enable_rename_provider:
+                    type: boolean
+                rename_options:
+                    $ref: '#/components/schemas/RenameOptions'
+                enable_folding_range_provider:
+                    type: boolean
+                folding_range_options:
+                    $ref: '#/components/schemas/FoldingRangeOptions'
+                folding_range_registration_options:
+                    $ref: '#/components/schemas/FoldingRangeRegistrationOptions'
+                execute_command_provider:
+                    $ref: '#/components/schemas/ExecuteCommandOptions'
+                enable_selection_range_provider:
+                    type: boolean
+                selection_range_options:
+                    $ref: '#/components/schemas/SelectionRangeOptions'
+                selection_range_registration_options:
+                    $ref: '#/components/schemas/SelectionRangeRegistrationOptions'
+                workspace_symbol_provider:
+                    type: boolean
+                    description: The server provides workspace symbol support.
+                workspace:
+                    $ref: '#/components/schemas/Workspace'
+                experimental:
+                    $ref: '#/components/schemas/Any'
+            description: ServerCapabilities is the signal of server capabilities.
+        SetTraceRequest:
+            properties:
+                value:
+                    type: integer
+                    description: The new value that should be assigned to the trace setting.
+                    format: enum
+            description: SetTraceRequest represents a `$/setTrace` notification params.
+        ShowMessageRequestParams:
+            properties:
+                type:
+                    type: integer
+                    description: The message type. See [MessageType][MessageType].
+                    format: enum
+                message:
+                    type: string
+                    description: The actual message.
+            description: ShowMessageRequestParams represents a `window/showMessage` notification params.
+        ShowMessageRequestRequest:
+            properties:
+                type:
+                    type: integer
+                    description: The message type. See [MessageType][MessageType].
+                    format: enum
+                message:
+                    type: string
+                    description: The actual message.
+                actions:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/MessageActionItem'
+                    description: The message action items to present.
+            description: ShowMessageRequestRequest represents a `window/showMessageRequest` request params.
+        ShowMessageResponse:
+            properties:
+                message_action_item:
+                    $ref: '#/components/schemas/MessageActionItem'
+                empty:
+                    type: integer
+                    format: enum
+                error:
+                    $ref: '#/components/schemas/Error'
+            description: ShowMessageResponse represents a ShowMessage response.
+        SignatureHelp:
+            properties:
+                signatures:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/SignatureInformation'
+                    description: One or more signatures. If no signatures are available the signature help request should return `null`.
+                active_signature:
+                    $ref: '#/components/schemas/Int32Value'
+                active_parameter:
+                    $ref: '#/components/schemas/Int32Value'
+            description: SignatureHelp represents the signature of something callable. There can be multiple signature but only one active and only one active parameter.
+        SignatureHelpClientCapabilities:
+            properties:
+                dynamic_registration:
+                    type: boolean
+                    description: Optional. Whether signature help supports dynamic registration.
+                signature_information:
+                    $ref: '#/components/schemas/SignatureInformation'
+                context_support:
+                    type: boolean
+                    description: Optional. The client supports to send additional context information for a `textDocument/signatureHelp` request. A client that opts into contextSupport will also support the `retriggerCharacters` on `SignatureHelpOptions`. @since 3.15.0
+            description: SignatureHelpClientCapabilities represents a client capabilities of `textDocument/signatureHelp` request.
+        SignatureHelpContext:
+            properties:
+                trigger_kind:
+                    type: integer
+                    description: Action that caused signature help to be triggered.
+                    format: enum
+                trigger_character:
+                    type: string
+                    description: Character that caused signature help to be triggered. This is undefined when `trigger_kind !== SignatureHelpTriggerKind.TriggerCharacter`
+                is_retrigger:
+                    type: boolean
+                    description: '`true` if signature help was already showing when it was triggered. Retriggers occur when the signature help is already active and can be caused by actions such as typing a trigger character, a cursor move, or document content changes.'
+                active_signature_help:
+                    $ref: '#/components/schemas/SignatureHelp'
+            description: Additional information about the context in which a signature help request was triggered. @since 3.15.0
+        SignatureHelpOptions:
+            properties:
+                work_done_progress_options:
+                    $ref: '#/components/schemas/WorkDoneProgressOptions'
+                trigger_characters:
+                    type: array
+                    items:
+                        type: string
+                    description: The characters that trigger signature help automatically.
+                retrigger_characters:
+                    type: array
+                    items:
+                        type: string
+                    description: List of characters that re-trigger signature help. These trigger characters are only active when signature help is already showing. All trigger characters are also counted as re-trigger characters. @since 3.15.0
+            description: SignatureHelpOptions represents a server capabilities option of signatureHelpProvider.
+        SignatureHelpRequest:
+            properties:
+                text_document_position_params:
+                    $ref: '#/components/schemas/TextDocumentPositionParams'
+                work_done_progress_params:
+                    $ref: '#/components/schemas/WorkDoneProgressParams'
+                context:
+                    $ref: '#/components/schemas/SignatureHelpContext'
+            description: SignatureHelpRequest is the parameters of a `textDocument/signatureHelp` request.
+        SignatureHelpResponse:
+            properties:
+                signature_help:
+                    $ref: '#/components/schemas/SignatureHelp'
+                empty:
+                    type: integer
+                    format: enum
+                error:
+                    $ref: '#/components/schemas/Error'
+            description: SignatureHelpResponse represents a SignatureHelp response.
+        SignatureInformation:
+            properties:
+                label:
+                    type: string
+                    description: The label of this signature. Will be shown in the UI.
+                markup:
+                    type: string
+                markup_content:
+                    $ref: '#/components/schemas/MarkupContent'
+                parameters:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/ParameterInformation'
+                    description: The parameters of this signature.
+                active_parameter:
+                    $ref: '#/components/schemas/Int32Value'
+            description: SignatureInformation represents the signature of something callable. A signature can have a label, like a function-name, a doc-comment, and a set of parameters.
+        StaticRegistrationOptions:
+            properties:
+                id:
+                    $ref: '#/components/schemas/StringValue'
+            description: StaticRegistrationOptions can be used to register a feature in the initialize result with a given server control ID to be able to un-register the feature later on. Static registration options to be returned in the initialize request.
+        StringValue:
+            properties:
+                value:
+                    type: string
+                    description: The string value.
+            description: Wrapper message for `string`. The JSON representation for `StringValue` is JSON string.
+        TextDocumentClientCapabilities:
+            properties:
+                synchronization:
+                    $ref: '#/components/schemas/TextDocumentSyncClientCapabilities'
+                completion:
+                    $ref: '#/components/schemas/CompletionClientCapabilities'
+                hover:
+                    $ref: '#/components/schemas/HoverClientCapabilities'
+                signature_help:
+                    $ref: '#/components/schemas/SignatureHelpClientCapabilities'
+                declaration:
+                    $ref: '#/components/schemas/DeclarationClientCapabilities'
+                definition:
+                    $ref: '#/components/schemas/DefinitionClientCapabilities'
+                type_definition:
+                    $ref: '#/components/schemas/TypeDefinitionClientCapabilities'
+                implementation:
+                    $ref: '#/components/schemas/ImplementationClientCapabilities'
+                references:
+                    $ref: '#/components/schemas/ReferenceClientCapabilities'
+                document_highlight:
+                    $ref: '#/components/schemas/DocumentHighlightClientCapabilities'
+                document_symbol:
+                    $ref: '#/components/schemas/DocumentSymbolClientCapabilities'
+                code_action:
+                    $ref: '#/components/schemas/CodeActionClientCapabilities'
+                code_lens:
+                    $ref: '#/components/schemas/CodeLensClientCapabilities'
+                document_link:
+                    $ref: '#/components/schemas/DocumentLinkClientCapabilities'
+                color_provider:
+                    $ref: '#/components/schemas/DocumentColorClientCapabilities'
+                formatting:
+                    $ref: '#/components/schemas/DocumentFormattingClientCapabilities'
+                range_formatting:
+                    $ref: '#/components/schemas/DocumentRangeFormattingClientCapabilities'
+                on_type_formatting:
+                    $ref: '#/components/schemas/DocumentOnTypeFormattingClientCapabilities'
+                rename:
+                    $ref: '#/components/schemas/RenameClientCapabilities'
+                publish_diagnostics:
+                    $ref: '#/components/schemas/PublishDiagnosticsClientCapabilities'
+                folding_range:
+                    $ref: '#/components/schemas/FoldingRangeClientCapabilities'
+                selection_range:
+                    $ref: '#/components/schemas/SelectionRangeClientCapabilities'
+            description: TextDocumentClientCapabilities define capabilities the editor / tool provides on text documents.
+        TextDocumentContentChangeEvent:
+            properties:
+                content_change_event:
+                    $ref: '#/components/schemas/ContentChangeEvent'
+                text:
+                    type: string
+                    description: The new text of the whole document.
+            description: TextDocumentContentChangeEvent an event describing a change to a text document. If range and rangeLength are omitted the new text is considered to be the full content of the document.
+        TextDocumentIdentifier:
+            properties:
+                uri:
+                    $ref: '#/components/schemas/URI'
+            description: 'TextDocumentIdentifier text documents are identified using a URI. On the protocol level, URIs are passed as strings. The corresponding JSON structure looks like this:'
+        TextDocumentItem:
+            properties:
+                uri:
+                    $ref: '#/components/schemas/URI'
+                language_id:
+                    type: string
+                    description: The text document's language identifier.
+                version:
+                    type: integer
+                    description: The version number of this document (it will increase after each change, including undo/redo).
+                    format: int32
+                text:
+                    type: string
+                    description: The content of the opened text document.
+            description: TextDocumentItem an item to transfer a text document from the client to the server.
+        TextDocumentPositionParams:
+            properties:
+                text_document:
+                    $ref: '#/components/schemas/TextDocumentIdentifier'
+                position:
+                    $ref: '#/components/schemas/Position'
+            description: TextDocumentPositionParams was TextDocumentPosition in 1.0 with inlined parameters. A parameter literal used in requests to pass a text document and a position inside that document.
+        TextDocumentRegistrationOptions:
+            properties:
+                selector:
+                    $ref: '#/components/schemas/DocumentSelector'
+                empty:
+                    type: integer
+                    format: enum
+            description: TextDocumentRegistrationOptions options to dynamically register for requests for a set of text documents.
+        TextDocumentSyncClientCapabilities:
+            properties:
+                dynamic_registration:
+                    type: boolean
+                    description: Optional. Whether text document synchronization supports dynamic registration.
+                will_save:
+                    type: boolean
+                    description: Optional. The client supports sending will save notifications.
+                will_save_wait_until:
+                    type: boolean
+                    description: Optional. The client supports sending a will save request and waits for a response providing text edits which will be applied to the document before it is saved.
+                did_save:
+                    type: boolean
+                    description: Optional. The client supports did save notifications.
+            description: TextDocumentSyncClientCapabilities represents a client capabilities of `textDocument/didXXX` notification.
+        TextDocumentSyncOptions:
+            properties:
+                open_close:
+                    type: boolean
+                    description: Optional. Open and close notifications are sent to the server. If omitted open close notification should not be sent.
+                change:
+                    type: integer
+                    description: Optional. Change notifications are sent to the server. See [TextDocumentSyncKind][TextDocumentSyncKind]. If omitted it defaults to TextDocumentSyncKind.None.
+                    format: enum
+                will_save:
+                    type: boolean
+                    description: Optional. If present will save notifications are sent to the server. If omitted the notification should not be sent.
+                will_save_wait_until:
+                    type: boolean
+                    description: Optional. If present will save wait until requests are sent to the server. If omitted the request should not be sent.
+                enable:
+                    type: boolean
+                save_options:
+                    $ref: '#/components/schemas/SaveOptions'
+            description: TextDocumentSyncOptions represents a server capabilities option of textDocumentSync.
+        TextEdit:
+            properties:
+                range:
+                    $ref: '#/components/schemas/Range'
+                new_text:
+                    type: string
+                    description: The string to be inserted. For delete operations use an empty string.
+            description: TextEdit is a textual edit applicable to a text document.
+        TextEdits:
+            properties:
+                text_edit:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/TextEdit'
+            description: TextEdits represents a list of TextEdit.
+        TypeDefinitionClientCapabilities:
+            properties:
+                dynamic_registration:
+                    type: boolean
+                    description: Optional. Whether implementation supports dynamic registration. If this is set to `true` the client supports the new `TypeDefinitionRegistrationOptions` return value for the corresponding server capability as well.
+                link_support:
+                    type: boolean
+                    description: Optional. The client supports additional metadata in the form of definition links. @since 3.14.0
+            description: TypeDefinitionClientCapabilities represents a client capabilities of `textDocument/typeDefinition` request.
+        TypeDefinitionOptions:
+            properties:
+                work_done_progress_options:
+                    $ref: '#/components/schemas/WorkDoneProgressOptions'
+            description: TypeDefinitionOptions represents a server capabilities option of typeDefinitionProvider.
+        TypeDefinitionRegistrationOptions:
+            properties:
+                text_document_registration_options:
+                    $ref: '#/components/schemas/TextDocumentRegistrationOptions'
+                type_definition_options:
+                    $ref: '#/components/schemas/TypeDefinitionOptions'
+                static_registration_options:
+                    $ref: '#/components/schemas/StaticRegistrationOptions'
+            description: TypeDefinitionRegistrationOptions represents a registration option of TypeDefinition.
+        TypeDefinitionRequest:
+            properties:
+                text_document_position_params:
+                    $ref: '#/components/schemas/TextDocumentPositionParams'
+                work_done_progress_params:
+                    $ref: '#/components/schemas/WorkDoneProgressParams'
+                partial_result_params:
+                    $ref: '#/components/schemas/PartialResultParams'
+            description: TypeDefinitionRequest is the parameters of a `textDocument/typeDefinition` request.
+        TypeDefinitionResponse:
+            properties:
+                result:
+                    $ref: '#/components/schemas/Result'
+                partial_result:
+                    $ref: '#/components/schemas/PartialResult'
+                error:
+                    $ref: '#/components/schemas/Error'
+            description: TypeDefinitionResponse represents a TypeDefinition response.
+        URI:
+            properties:
+                uri:
+                    type: string
+            description: URI Uniform Resource Identifier (URI) https://tools.ietf.org/html/rfc3986. This class is a simple parser which creates the basic component parts (http://tools.ietf.org/html/rfc3986#section-3) with minimal validation and encoding.        foo://example.com:8042/over/there?name=ferret#nose        \_/   \______________/\_________/ \_________/ \__/         |           |            |            |        |      scheme     authority       path        query   fragment         |   _____________________|__        / \ /                        \        urn:example:animal:ferret:nose
+        VersionedTextDocumentIdentifier:
+            properties:
+                text_document_identifier:
+                    $ref: '#/components/schemas/TextDocumentIdentifier'
+                version:
+                    type: boolean
+                    description: Optional. The version number of this document. If a versioned text document identifier is sent from the server to the client and the file is not open in the editor (the server has not received an open notification before) the server can send `null` to indicate that the version is known and the content on disk is the master (as speced with document content ownership). The version number of a document will increase after each change, including undo/redo. The number doesn't need to be consecutive.
+        WillSaveTextDocumentRequest:
+            properties:
+                text_document:
+                    $ref: '#/components/schemas/TextDocumentIdentifier'
+                reason:
+                    type: integer
+                    description: The [TextDocumentSaveReason][TextDocumentSaveReason].
+                    format: enum
+            description: WillSaveTextDocumentRequest is the parameters send in a will save `textDocument/willSave` notification.
+        WillSaveTextDocumentResponse:
+            properties:
+                text_edits:
+                    $ref: '#/components/schemas/TextEdits'
+                error:
+                    $ref: '#/components/schemas/Error'
+            description: WillSaveTextDocumentResponse represents a WillSaveTextDocument response.
+        WorkDoneProgressCancelRequest:
+            properties:
+                token:
+                    $ref: '#/components/schemas/ProgressToken'
+            description: WorkDoneProgressCancelRequest represents a canceling a work done progress notification params.
+        WorkDoneProgressCreateRequest:
+            properties:
+                token:
+                    $ref: '#/components/schemas/ProgressToken'
+            description: WorkDoneProgressCreateRequest represents a Creating Work Done Progress request params.
+        WorkDoneProgressOptions:
+            properties:
+                work_done_progress:
+                    type: boolean
+                    description: Optional.
+            description: WorkDoneProgressOptions options to signal work done progress support in server capabilities.
+        WorkDoneProgressParams:
+            properties:
+                work_done_token:
+                    $ref: '#/components/schemas/ProgressToken'
+            description: WorkDoneProgressParams a parameter literal used to pass a work done progress token.
+        WorkspaceEdit:
+            properties:
+                changes:
+                    $ref: '#/components/schemas/ChangesEntry'
+                text_document_edits:
+                    $ref: '#/components/schemas/TextDocumentEdits'
+                create_files:
+                    $ref: '#/components/schemas/CreateFiles'
+                rename_files:
+                    $ref: '#/components/schemas/RenameFiles'
+                delete_files:
+                    $ref: '#/components/schemas/DeleteFiles'
+            description: WorkspaceEdit a workspace edit represents changes to many resources managed in the workspace. The edit should either provide changes or documentChanges. If the client can handle versioned document edits and if documentChanges are present, the latter are preferred over changes.
+        WorkspaceFolder:
+            properties:
+                uri:
+                    $ref: '#/components/schemas/DocumentURI'
+                name:
+                    type: string
+                    description: The name of the workspace folder. Used to refer to this workspace folder in the user interface.
+            description: WorkspaceFolder represents a workspace root folder.
+        WorkspaceFoldersChangeEvent:
+            properties:
+                added:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/WorkspaceFolder'
+                    description: The array of added workspace folders.
+                removed:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/WorkspaceFolder'
+                    description: The array of the removed workspace folders.
+            description: WorkspaceFoldersChangeEvent is the workspace folder change event.
+        WorkspaceFoldersResponse:
+            properties:
+                workspace_folders:
+                    $ref: '#/components/schemas/WorkspaceFolders'
+                empty:
+                    type: integer
+                    format: enum
+                error:
+                    $ref: '#/components/schemas/Error'
+            description: WorkspaceFoldersResponse represents a WorkspaceFolders response.
+        WorkspaceSymbolsResponse:
+            properties:
+                symbol_informations:
+                    $ref: '#/components/schemas/SymbolInformations'
+                error:
+                    $ref: '#/components/schemas/Error'
+            description: WorkspaceSymbolsResponse represents a WorkspaceSymbols response.
