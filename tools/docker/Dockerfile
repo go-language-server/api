@@ -17,7 +17,7 @@ COPY go.mod go.sum tools.go /go/src/go.lsp.dev/proto/tools/docker/
 WORKDIR /go/src/go.lsp.dev/proto/tools/docker
 RUN \
 	--mount=target=/root/.cache/go-build,type=cache \
-	--mount=target=/go/src/mod,type=cache \
+	--mount=target=/go/pkg/mod,type=cache \
 	set -eux && \
 	GOBIN="${OUTDIR}/usr/local/bin" go install -v \
 		-tags='osusergo,netgo,static,static_build' \

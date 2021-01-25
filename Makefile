@@ -70,8 +70,8 @@ protoc-gen-grpc-gateway:  ## Run protoc-gen-grpc-gateway.
 
 .PHONY: protoc-gen-openapiv2
 protoc-gen-openapiv2:  ## Run protoc-gen-openapiv2.
-	docker container run --rm -it ${DOCKER_VOLUME_FLAGS} -w /go/src/${PACKAGE} ${DOCKER_CONTAINER_IMAGE} --openapiv2_out=allow_delete_body=true,allow_merge=false,allow_repeated_fields_in_body=true,include_package_in_tags=true,simple_operation_ids=true,generate_unbound_methods=true:/go/src/${PACKAGE} ${PROTOC_INCLUDES} $(foreach f,${PROTO_FILES_PROTOCOL_RPC},$(abspath /go/src/${PACKAGE}/$(f)))
-	@mv protocol/rpc/rpc.swagger.json openapi/rpc.openapi.json
+	docker container run --rm -it ${DOCKER_VOLUME_FLAGS} -w /go/src/${PACKAGE} ${DOCKER_CONTAINER_IMAGE} --openapi_out=/go/src/${PACKAGE} ${PROTOC_INCLUDES} $(foreach f,${PROTO_FILES_PROTOCOL_RPC},$(abspath /go/src/${PACKAGE}/$(f)))
+	# @mv protocol/rpc/rpc.swagger.json openapi/rpc.openapi.json
 
 .PHONY: protoc-gen-doc
 protoc-gen-doc:  ## Run protoc-gen-doc.
