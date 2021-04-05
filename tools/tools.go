@@ -8,4 +8,5 @@ package tools
 
 import (
 	_ "mvdan.cc/gofumpt"
+	_ "golang.org/x/tools/cmd/goimports"
 )
