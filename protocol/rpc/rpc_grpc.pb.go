@@ -16,6 +16,7 @@ import (
 
 // This is a compile-time assertion to ensure that this generated file
 // is compatible with the grpc package it is being compiled against.
+// Requires gRPC-Go v1.32.0 or later.
 const _ = grpc.SupportPackageIsVersion7
 
 // LanguageServerProtocolClient is the client API for LanguageServerProtocol service.
@@ -1369,8 +1370,7 @@ type LanguageServerProtocolServer interface {
 }
 
 // UnimplementedLanguageServerProtocolServer must be embedded to have forward compatible implementations.
-type UnimplementedLanguageServerProtocolServer struct {
-}
+type UnimplementedLanguageServerProtocolServer struct{}
 
 func (UnimplementedLanguageServerProtocolServer) Cancel(context.Context, *CancelRequest) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Cancel not implemented")
@@ -1611,7 +1611,7 @@ type UnsafeLanguageServerProtocolServer interface {
 }
 
 func RegisterLanguageServerProtocolServer(s grpc.ServiceRegistrar, srv LanguageServerProtocolServer) {
-	s.RegisterService(&_LanguageServerProtocol_serviceDesc, srv)
+	s.RegisterService(&LanguageServerProtocol_ServiceDesc, srv)
 }
 
 func _LanguageServerProtocol_Cancel_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
@@ -2640,7 +2640,10 @@ func _LanguageServerProtocol_CallHierarchyOutgoingCalls_Handler(srv interface{},
 	return interceptor(ctx, in, info, handler)
 }
 
-var _LanguageServerProtocol_serviceDesc = grpc.ServiceDesc{
+// LanguageServerProtocol_ServiceDesc is the grpc.ServiceDesc for LanguageServerProtocol service.
+// It's only intended for direct use with grpc.RegisterService,
+// and not to be introspected or modified (even as a copy)
+var LanguageServerProtocol_ServiceDesc = grpc.ServiceDesc{
 	ServiceName: "protocol.rpc.LanguageServerProtocol",
 	HandlerType: (*LanguageServerProtocolServer)(nil),
 	Methods: []grpc.MethodDesc{
