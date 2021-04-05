@@ -12,10 +12,10 @@ TOOLS_PATH = ${CURDIR}/tools/bin
 # ----------------------------------------------------------------------------
 # variables
 
-PROTOC_DIGEST ?= sha256:31a95363fe498a14a6e46a2c78329c192a4d5f0c52528bd9796fccea1fc6d99c  # 3.14.0-1.15-debug 
-PROTOC_VERSION ?= 3.14.0
-GOLANG_VERSION ?= 1.15
-ALPINE_VERSION ?= 3.12
+PROTOC_DIGEST ?= sha256:a6f44918aaa88cdcfd860f1c0c7b70ad3e4af759e99aff4aa60a2acbea27afdd  # gcr.io/containerz/protoc/golang:3.15.7-1.16-debug
+PROTOC_VERSION ?= 3.15.7
+GOLANG_VERSION ?= 1.16
+ALPINE_VERSION ?= 3.13
 
 PROTO_FILES_PROTOCOL := $(shell find protocol -maxdepth 1 -type f -name '*.proto')
 PROTO_FILES_PROTOCOL_RPC := $(shell find protocol/rpc -type f -name '*.proto')
@@ -34,7 +34,7 @@ DOCKER_VOLUME_FLAGS ?= $(foreach volume,${DOCKER_VOLUMES},-v $(volume):cached)
 # ----------------------------------------------------------------------------
 # targets
 
-all: protoc protoc-gen-grpc-gateway protoc-gen-doc protoc-gen-openapiv2 gofumpt gofumports
+all: protoc protoc-gen-grpc-gateway protoc-gen-doc protoc-gen-openapiv2 goimports gofumpt
 
 
 ##@ tools
@@ -51,9 +51,9 @@ gofumpt: ${TOOLS_PATH}/gofumpt
 gofumpt:  ## Format generated files with gofumports.
 	${TOOLS_PATH}/$@ -s -extra -w ${PROTOC_OUT_SRCS}
 
-.PHONY: gofumports
-gofumports: ${TOOLS_PATH}/gofumports
-gofumports:  ## Format generated files with gofumports.
+.PHONY: goimports
+goimports: ${TOOLS_PATH}/goimports
+goimports:  ## Format generated files with gofumports.
 	${TOOLS_PATH}/$@ -w -local=${PACKAGE} ${PROTOC_OUT_SRCS}
 
 .PHONY: tools/docker
